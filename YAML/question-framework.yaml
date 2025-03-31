@@ -1,0 +1,656 @@
+# question_framework.yaml
+# Comprehensive framework for gathering product information through strategic questioning
+
+# =============================================================================
+# Core Question Framework
+# =============================================================================
+question_framework:
+  description: "Consolidated approach for gathering comprehensive product information"
+  workflow_integration: "This framework must be completed entirely before initiating the drafting process in writing_process.yaml"
+  mandatory_requirement:
+    rule: "The first round of questions should be asked before any review draft begins"
+    procedure:
+      - "Compile all initial questions based on contextual gaps"
+      - "Present all questions in a single consolidated query"
+      - "Await responses before proceeding with review"
+    guidance:
+      - "Focus on strategic questions with highest information value"
+      - "Prioritize questions that unlock multiple insights"
+      - "Avoid asking about information already provided"
+
+  core_principles:
+    - name: "Intelligent Context Gathering"
+      definition: "Systematically identifying and filling information gaps while avoiding redundancy"
+      implementation:
+        - "Track information already provided to prevent redundant questions"
+        - "Prioritize questions that reveal product differentiation points"
+        - "Focus on areas where product understanding is incomplete"
+    
+    - name: "Purposeful Insight Generation"
+      definition: "Asking questions that reveal unexpected benefits, limitations, or use cases"
+      implementation:
+        - "Target questions toward potential hidden features or limitations"
+        - "Seek information about edge cases and unusual scenarios"
+        - "Probe for surprising discoveries during product testing"
+    
+    - name: "Narrative-driven Inquiry"
+      definition: "Questions that help develop memorable stories and experiences"
+      implementation:
+        - "Ask about specific incidents that reveal product characteristics"
+        - "Probe for emotionally resonant experiences with the product"
+        - "Seek information about how the product affected daily routines"
+        
+proactive_questioning_techniques:
+  description: "Strategies and examples for using questions to anticipate reader needs and structure the review."
+  
+  strategies:
+    - name: "Anticipating Reader Concerns"
+      description: "Formulating questions that address common purchase considerations and potential pain points."
+      examples:
+        - "For a coffee maker: 'What is the cleaning process like, and what are the long-term maintenance requirements?' (Addresses ease of use and maintenance)"
+        - "For a Bluetooth speaker: 'How is the sound quality at different volume levels, and what is the range and stability of the connection?' (Addresses performance and connectivity)"
+    
+    - name: "Structuring the Review with Questions"
+      description: "Using questions to guide the flow and organization of the review content."
+      examples:
+        - "To structure a section on features: 'What are the key features of this product, and how do they compare to competing products?'"
+        - "To structure a section on performance: 'How did this product perform in different scenarios, and what are its strengths and weaknesses?'"
+
+    - name: "Identifying Potential Limitations"
+      description: "Using the framework's gap categories to proactively identify areas where clarification is needed or limitations might exist."
+      implementation:
+        - "Use the Contextual Gaps Framework (contextual_gaps_framework) to identify potential limitations in areas such as 'Edge Case Gaps' or 'Differential Gaps'."
+        - "Formulate questions that specifically target these potential limitations."
+        - "Example: 'Under what extreme conditions (temperature, humidity, etc.) was this product tested, and what were the results?' (Targets 'Edge Case Gaps')"
+    - name: "Gathering Key Informational Details"  # New strategy
+      description: "Proactively seeking essential information that readers commonly need across product categories."
+      examples:
+        - "For consumables (like fuel): 'What is the price per unit or quantity, and how long does a typical quantity last under normal usage conditions?'"
+        - "For electronics: 'What are the key specifications (e.g., battery life, processing speed, storage capacity), and how do they compare to competing models in the same price range?'"
+        - "For apparel: 'What are the sizing details, material composition, and care instructions, and how does the fit compare to standard sizing?'"
+      emphasis: "It is important to use this framework to proactively identify potential limitations and areas requiring clarification to ensure a comprehensive and helpful review. This includes gathering key informational details like price, quantity, specifications, and usage duration, depending on the product category."
+# =============================================================================
+# Image Processing Framework
+# =============================================================================
+
+description: "Framework for extracting valuable information from product images and photos" 
+analysis_categories:
+  - name: "Physical Characteristics"
+    description: "Visual assessment of product dimensions, materials, and build quality"
+    questions:
+      - "What are the visible dimensions and proportions relative to common objects in the images?"
+      - "What materials and finishes are identifiable from close-up shots?"
+      - "Are there any visible quality indicators in the construction or assembly?"
+  
+  - name: "Usage Context"
+    description: "Understanding how and where the product is used"
+    questions:
+      - "What environmental context is shown in product usage photos?"
+      - "How does the product interact with or fit into its intended space?"
+      - "What complementary items or accessories are shown being used with the product?"
+  
+  - name: "Design Details"
+    description: "Specific design elements and features visible in images"
+    questions:
+      - "What control interfaces or adjustment mechanisms are visible?"
+      - "How are different components arranged or connected?"
+      - "What design choices are evident in the product's aesthetics?"
+
+visual_verification_checklist:
+  - category: "Size and Scale"
+    elements:
+      - "Compare to standard objects in frame"
+      - "Look for measurement references"
+      - "Note relative proportions of components"
+  
+  - category: "Quality Indicators"
+    elements:
+      - "Surface finish consistency"
+      - "Alignment of parts and seams"
+      - "Material quality indicators"
+  
+  - category: "Functional Elements"
+    elements:
+      - "Identify all visible controls and interfaces"
+      - "Note accessibility of common adjustment points"
+      - "Examine connection points and ports"
+
+implementation_guidance:
+  - "Always cross-reference image observations with provided specifications"
+  - "Use image analysis to verify or challenge written claims"
+  - "Document any discrepancies between images and product descriptions"
+  - "Look for unintentional revelations in background or context of images"
+  - "Consider both official product photos and customer-submitted images"
+
+red_flags_checklist:
+  - "Inconsistent scaling across different images"
+  - "Missing or obscured important product features"
+  - "Artificially enhanced or modified product appearance"
+  - "Misleading context or usage scenarios"
+  - "Lack of detail in critical areas"
+
+# =============================================================================
+# Contextual Gaps Framework
+# =============================================================================
+contextual_gaps_framework:
+  description: "Framework for identifying and categorizing information needs"
+  
+  gap_categories:
+    - name: "Critical Gaps"
+      definition: "Information essential to making a purchase decision"
+      examples:
+        - "Compatibility with other systems or products"
+        - "Durability for intended primary use case"
+        - "Key performance metrics relevant to product category"
+      priority: "Highest"
+    
+    - name: "Differential Gaps"
+      definition: "Information that reveals how this product differs from alternatives"
+      examples:
+        - "Unique features not found in competing products"
+        - "Performance differences compared to similar products"
+        - "Design choices that distinguish from alternatives"
+      priority: "High"
+    
+    - name: "Experience Gaps"
+      definition: "Information about real-world usage that can't be found in product descriptions"
+      examples:
+        - "How the product integrates into daily routines"
+        - "Unexpected uses discovered during testing"
+        - "Learning curve or adaptation period"
+      priority: "Medium"
+    
+    - name: "Edge Case Gaps"
+      definition: "Information about uncommon but important usage scenarios"
+      examples:
+        - "Performance under extreme conditions"
+        - "Adaptability to non-standard use cases"
+        - "Failure modes and breaking points"
+      priority: "Low-Medium"
+
+  process:
+    - "Identify all gaps in product understanding using the contextual gaps framework"
+    - "Score potential questions using the prioritization framework"
+    - "Select highest-value questions while ensuring comprehensive coverage"
+    - "Track all information received to prevent redundant questioning"
+    - "Present all initial questions before any draft attempt"
+
+# =============================================================================
+# Question Prioritization Framework
+# =============================================================================
+question_prioritization_framework:
+  description: "System for selecting highest-value questions based on multiple criteria"
+  
+  scoring_criteria:
+    - name: "Information Value"
+      description: "How likely the question is to reveal unique information"
+      scoring_guide:
+        - value: 0
+          level: "Information already explicitly provided"
+        - value: 1
+          level: "Information that can be inferred from existing data"
+        - value: 2
+          level: "New information with limited significance"
+        - value: 3
+          level: "New information with moderate significance"
+        - value: 4
+          level: "Critical new information that fills important gaps"
+        - value: 5
+          level: "High-value information that unlocks multiple insights"
+    
+    - name: "Review Impact"
+      description: "How significantly the answer would influence the final review"
+      scoring_guide:
+        - value: 1
+          level: "Minimal impact on review quality or content"
+        - value: 2
+          level: "Slight enhancement to review detail"
+        - value: 3
+          level: "Moderate improvement to review comprehensiveness"
+        - value: 4
+          level: "Significant enhancement to review value"
+        - value: 5
+          level: "Critical information that transforms review quality"
+    
+    - name: "Keyword Potential"
+      description: "Will the answer likely contain valuable search terms?"
+      scoring_guide:
+        - value: 1
+          level: "Unlikely to generate relevant keywords"
+        - value: 2
+          level: "May generate common keywords"
+        - value: 3
+          level: "Likely to generate category-specific keywords"
+        - value: 4
+          level: "High potential for unique, high-value keywords"
+        - value: 5
+          level: "Exceptional potential for distinctive search terms"
+    
+    - name: "Experience Illumination"
+      description: "How well might the question reveal authentic experiences"
+      scoring_guide:
+        - value: 1
+          level: "Unlikely to elicit experiential information"
+        - value: 2
+          level: "May generate basic experiential details"
+        - value: 3
+          level: "Likely to reveal meaningful usage experiences"
+        - value: 4
+          level: "Strong potential for compelling narrative elements"
+        - value: 5
+          level: "Exceptional potential for signature storytelling moments"
+  
+  selection_process:
+    - "Generate initial question pool covering all product aspects"
+    - "Score each question using the prioritization criteria"
+    - "Calculate total score for each question (sum of all criteria)"
+    - "Select highest-scoring questions that cover different information domains"
+    - "Eliminate redundant questions that would yield similar information"
+    - "Ensure questions address all critical information gaps"
+
+# =============================================================================
+# Information Tracking System
+# =============================================================================
+information_tracking_system:
+  description: "Framework for monitoring information collection to prevent redundancy"
+  
+  categories:
+    - name: "Technical Specifications"
+      tracking_elements:
+        - "Materials and construction"
+        - "Dimensions and measurements"
+        - "Performance metrics"
+        - "Compatibility information"
+    
+    - name: "User Experience"
+      tracking_elements:
+        - "Ease of use observations"
+        - "Learning curve details"
+        - "Comfort and ergonomics"
+        - "Integration with daily routines"
+    
+    - name: "Comparative Insights"
+      tracking_elements:
+        - "Similar products used"
+        - "Relative strengths and weaknesses"
+        - "Value proposition assessment"
+        - "Competitive positioning"
+    
+    - name: "Use Cases"
+      tracking_elements:
+        - "Primary intended uses"
+        - "Secondary applications"
+        - "Unexpected uses discovered"
+        - "Usage frequency and patterns"
+  
+  implementation_guidance:
+    - "Before asking a question, check if information exists in tracking system"
+    - "After receiving information, update relevant tracking categories"
+    - "Periodically review tracking system to identify remaining gaps"
+    - "Use tracking data to inform follow-up questions when needed"
+
+# =============================================================================
+# Adaptive Follow-Up System
+# =============================================================================
+adaptive_follow_up_system:
+  description: "Framework for handling unanswered questions and pursuing high-value emerging insights"
+  
+  unanswered_question_handler:
+    principles:
+      - "Track questions that receive incomplete or no response"
+      - "Assess information value before determining follow-up strategy"
+      - "Maintain conversational flow while ensuring critical gaps are addressed"
+    
+    response_categories:
+      - name: "Critical Information Gap"
+        definition: "Missing information that significantly impacts review quality or accuracy"
+        examples:
+          - "Product dimensions needed for compatibility assessment"
+          - "Material composition required for durability evaluation"
+          - "Usage limitations essential for target audience section"
+        strategy:
+          action: "Reframe and ask again in next message"
+          guidance:
+            - "Acknowledge previous question may have been missed"
+            - "Explain why this information is particularly valuable"
+            - "Rephrase question to be more specific or easier to answer"
+      
+      - name: "Valuable But Optional Information"
+        definition: "Information that would enhance review but isn't essential to core evaluation"
+        examples:
+          - "Comparison to specific alternative products"
+          - "Additional use case scenarios"
+          - "Secondary feature performance"
+        strategy:
+          action: "Note as information gap but proceed with review"
+          guidance:
+            - "Make reasonable assumptions based on available information"
+            - "Note limitations in knowledge within the review if relevant"
+            - "Consider including in a single consolidated follow-up after draft if multiple items accumulate"
+      
+      - name: "Nice-to-Have Detail"
+        definition: "Supplementary information that adds color but isn't crucial"
+        examples:
+          - "Brand history details"
+          - "Packaging aesthetics"
+          - "Non-essential accessories"
+        strategy:
+          action: "Skip and proceed without follow-up"
+          guidance:
+            - "Focus on information already provided"
+            - "Only revisit if conversation naturally returns to related topics"
+    
+    implementation_process:
+      - "Track all asked questions and their response status"
+      - "Categorize unanswered questions using the framework above"
+      - "Implement appropriate follow-up strategy based on category"
+      - "Limit follow-ups to highest-value information gaps"
+      - "Bundle related follow-up questions when possible"
+  
+  emergent_insight_follow_up:
+    description: "Process for pursuing valuable new lines of inquiry that emerge during conversation"
+    
+    value_assessment:
+      criteria:
+        - name: "Novelty"
+          description: "How unexpected or unique is this potential insight?"
+          scoring:
+            - value: 1
+              level: "Common or expected information"
+            - value: 3
+              level: "Somewhat unusual perspective"
+            - value: 5
+              level: "Highly unexpected or counterintuitive"
+        
+        - name: "Differentiation Value"
+          description: "How much would this enhance review uniqueness?"
+          scoring:
+            - value: 1
+              level: "Similar to information in many reviews"
+            - value: 3
+              level: "Uncommonly mentioned in reviews"
+            - value: 5
+              level: "Rarely or never mentioned in competitive reviews"
+        
+        - name: "Decision Impact"
+          description: "How significantly might this influence purchase decisions?"
+          scoring:
+            - value: 1
+              level: "Minimal impact on decisions"
+            - value: 3
+              level: "Moderate influence for some buyers"
+            - value: 5
+              level: "Critical factor for many potential buyers"
+        
+        - name: "Narrative Potential"
+          description: "How much story or engagement value does this offer?"
+          scoring:
+            - value: 1
+              level: "Factual but not especially engaging"
+            - value: 3
+              level: "Interesting anecdote or example potential"
+            - value: 5
+              level: "Exceptional story potential with high engagement"
+      
+      threshold_guidelines:
+        - name: "Immediate Follow-Up"
+          score: "16-20 total points"
+          action: "Pursue immediately with a focused follow-up question"
+        
+        - name: "Contextual Follow-Up"
+          score: "11-15 total points"
+          action: "Pursue if it naturally fits the conversation flow"
+        
+        - name: "Optional Follow-Up"
+          score: "≤10 total points"
+          action: "Note but don't actively pursue unless other avenues exhausted"
+    
+    follow_up_techniques:
+      - name: "Natural Conversation Extension"
+        description: "Seamlessly continuing the conversational thread"
+        example:
+          initial: "The silicone grips worked well in most situations."
+          emergent_insight: "Potential situational limitations of the grips"
+          follow_up: "That's interesting about the grips. Were there any specific situations where they didn't perform as well? Understanding these edge cases could help potential buyers."
+        guidance:
+          - "Acknowledge the previous statement"
+          - "Express genuine curiosity about the potential insight"
+          - "Frame as adding depth rather than changing direction"
+      
+      - name: "Value-Signaling Inquiry"
+        description: "Explicitly noting the potential value of additional information"
+        example:
+          initial: "I've used it in both hot and cold environments."
+          emergent_insight: "Performance variation across temperature conditions"
+          follow_up: "Your mention of using it in different temperatures could be really valuable for the review. Did you notice any significant performance differences between hot and cold environments? This is something few reviews cover."
+        guidance:
+          - "Explicitly note why this information would be valuable"
+          - "Highlight the uniqueness of this perspective"
+          - "Frame as enhancing review quality"
+      
+      - name: "Specific Scenario Exploration"
+        description: "Asking about particular examples or scenarios"
+        example:
+          initial: "It worked fine for my small kitchen."
+          emergent_insight: "Space limitations and product compatibility"
+          follow_up: "Could you share a bit more about your kitchen setup and how the product fits within it? Specific dimensions or examples might help readers with similar space constraints."
+        guidance:
+          - "Request concrete examples or scenarios"
+          - "Focus on details that would help similar users"
+          - "Ask for specifics rather than generalizations"
+    
+    implementation_guidance:
+      - "Identify potential high-value insights during conversation"
+      - "Quickly score using the assessment criteria"
+      - "For high-scoring insights, select appropriate follow-up technique"
+      - "Limit to one follow-up question per response to maintain conversation flow"
+      - "Frame follow-up as enhancing value rather than extending conversation length"
+      - "If multiple high-value insights emerge, prioritize based on total score"
+
+# =============================================================================
+# Common Question Considerations
+# =============================================================================
+common_question_considerations:
+  description: "Potential question areas that may be relevant depending on product context"
+  
+  core_understanding:
+    - focus: "Unique product perspectives"
+    - focus: "Real-world applications"
+    - focus: "User experience nuances"
+  
+  contextual_question_options:
+    - category: "Unboxing"
+      question: "What was your experience with the packaging and unboxing process?"
+      relevance: "Important for premium products, electronics, or items where presentation matters"
+    
+    - category: "PriceValue"
+      question: "What is the price point and how does it compare to alternatives?"
+      priority: "high"
+      relevance: "Relevant for most products, especially in competitive categories"
+    
+    - category: "Alternatives"
+      question: "Are there other similar products in the same quality/price tier?"
+      relevance: "Particularly valuable in saturated markets with multiple options"
+    
+    - category: "WarrantySupport"
+      question: "Have you had any interaction with customer service or warranty?"
+      relevance: "Only relevant if reviewer has actually needed support; not essential for most reviews"
+      
+  implementation_guidance:
+    - "Select questions based on product category and specific review context"
+    - "Do not ask questions that aren't relevant to the particular product experience"
+    - "Prioritize questions that address potential buyer concerns for the specific product"
+    - "Focus on areas where the reviewer has actual experience to share"
+
+# =============================================================================
+# Keyword Gathering Questions
+# =============================================================================
+keyword_gathering_questions:
+  description: "Questions specifically designed to elicit content with search value"
+  questions:
+    - "What are the main competing products to this item?"
+    - "What traditional methods or products might this replace?"
+    - "What specific features would buyers be searching for in this category?"
+    - "What accessories or complementary products work with this item?"
+    - "What compatibility concerns might buyers have?"
+    - "What pain points does this product specifically address?"
+
+# =============================================================================
+# Strategic Question Library
+# =============================================================================
+strategic_question_library:
+  description: "Categorized collection of high-value questions by purpose"
+  
+  categories:
+    - name: "Product Differentiation"
+      questions:
+        - "What feature surprised you most about this product compared to others you've used?"
+        - "What does this product do better than similar products you've tried?"
+        - "What specific design choices make this product stand out (positively or negatively)?"
+    
+    - name: "Usage Experience"
+      questions:
+        - "What unexpected use cases have you discovered beyond the intended purpose?"
+        - "How has this product changed or affected your daily routine?"
+        - "What specific incident best demonstrates this product's strengths or weaknesses?"
+    
+    - name: "Value Assessment"
+      questions:
+        - "How does the price-to-performance ratio compare to alternatives?"
+        - "What would make this product worth paying more (or less) for?"
+        - "How has your perception of the product's value changed after extended use?"
+    
+    - name: "Technical Validation"
+      questions:
+        - "How does the product perform under non-optimal conditions?"
+        - "What specific measurements or tests have you conducted to validate performance claims?"
+        - "How consistent is the product's performance across different use cases?"
+  
+  thematic_gathering_notes:
+    - "Include one thematic discovery question with your regular product questions"
+    - "These questions should complement rather than replace your standard questioning framework"
+    - "Select the discovery question most likely to yield insights for the specific product category"
+    - "Position the theme question after establishing rapport with more conventional questions"
+  
+  high_risk_reward_questions:
+    description: "Unconventional questions designed to uncover unique insights that might not emerge through standard questioning"
+    principles:
+      - "Ask one deliberately unexpected question per product review"
+      - "Select questions that could reveal signature content opportunities"
+      - "Focus on areas typically overlooked in standard reviews"
+    question_examples:
+      - question: "If this product were a character in a movie, who would it be and why?"
+        value: "Reveals how the product's personality and performance characteristics are perceived"
+      
+      - question: "What's the most ridiculous situation where you've found this product surprisingly useful?"
+        value: "Uncovers edge case applications that demonstrate versatility or limitations"
+      
+      - question: "How would you modify this product if you had complete design control?"
+        value: "Identifies non-obvious improvement opportunities and unmet needs"
+      
+      - question: "What unexpected emotional response did this product trigger during use?"
+        value: "Explores the psychological dimension of product interaction"
+      
+      - question: "Which seemingly unrelated product does this most remind you of in function or design?"
+        value: "Creates analogies that can become unique framing devices for reviews"
+      
+      - question: "What's the strangest thing you've discovered you can do with this product?"
+        value: "Reveals unconventional uses that might become signature review content"
+      
+      - question: "If you had to explain this product to someone from 100 years ago, how would you describe it?"
+        value: "Forces articulation of core functionality in novel, accessible terms"
+    
+    implementation_guidance:
+      - "Include exactly one high risk/reward question in each initial question set"
+      - "Select the question that best matches the product category and potential"
+      - "Position the question after more conventional questions once rapport is established"
+      - "Be prepared to explain the purpose if the question seems confusing"
+      - "Pay special attention to answers that could become thematic anchors for the review"
+      
+# =============================================================================
+# Category-Specific Question Frameworks
+# =============================================================================
+category_specific_questions:
+  description: "Specialized question sets designed to gather the most relevant information for specific product categories"
+  
+  implementation_guidance:
+    - "Adapt base question framework to product-specific needs"
+    - "Include questions that address unique aspects of product category"
+    - "Focus on usage scenarios specific to the product type"
+    - "Prioritize questions that reveal category-specific limitations or benefits"
+  
+  example_frameworks:
+    - category: "Electronics/Tech Devices"
+      essential_questions:
+        - "What was the initial setup experience like in terms of time and difficulty?"
+        - "How intuitive is the interface for both new and experienced users?"
+        - "What connectivity or compatibility issues have you encountered?"
+        - "How has the device performed under non-optimal conditions (low battery, poor signal, etc.)?"
+        - "What unexpected limitations or capabilities have you discovered?"
+      high_value_follow_ups:
+        - "Could you describe how the device integrates with your existing technology ecosystem?"
+        - "What specific features do you find yourself using most frequently, and why?"
+        - "How has the performance changed over time since your initial use?"
+    
+    - category: "Skincare/Beauty Products"
+      essential_questions:
+        - "What is your specific skin type/hair type/coloring and how did this product perform for you?"
+        - "How does this compare to similar products you've used in the past?"
+        - "What was the application experience like in terms of texture, scent, and ease of use?"
+        - "How long did it take to notice results, and what specific changes did you observe?"
+        - "What unexpected reactions or results did you experience?"
+      high_value_follow_ups:
+        - "How did the product perform in different environmental conditions (humidity, temperature, etc.)?"
+        - "Did you notice any changes in effectiveness with consistent use over time?"
+        - "What specific application techniques yielded the best results for you?"
+  
+  template_for_new_categories:
+    steps:
+      - "Identify unique attributes of the product category"
+      - "Determine what information would be most valuable to potential buyers"
+      - "Create 4-6 essential questions that address category-specific concerns"
+      - "Develop 2-3 high-value follow-ups for deeper insights"
+      - "Test questions with actual product users if possible"
+    
+    framework_structure:
+      - "Begin with usage experience questions"
+      - "Follow with comparison to alternatives"
+      - "Include questions about unexpected discoveries"
+      - "End with long-term performance assessment"
+
+# =============================================================================
+# Question Evaluation System
+# =============================================================================
+question_evaluation_system:
+  description: "Framework for assessing and improving question quality"
+  
+  high_value_questions:
+    - category: "TechnicalSpecification"
+      sample: "What specific magnification capabilities did you achieve with different lenses?"
+      impact: "Yields concrete numerical data that establishes reviewer credibility"
+    
+    - category: "Compatibility"
+      sample: "What specific lenses have you used these extension tubes with?"
+      impact: "Reveals broad compatibility testing across equipment"
+    
+    - category: "Limitations"
+      sample: "What would you consider the most unexpected limitation you discovered?"
+      impact: "Reveals critical limitations that become key review elements"
+
+# =============================================================================
+# Relationships to Other Framework Components
+# =============================================================================
+framework_relationships:
+  - component: "review_strategy.yaml"
+    relationship: "Implements the strategic information gathering approach"
+  
+  - component: "keyword_strategy.yaml"
+    relationship: "Questions drive keyword-rich content generation"
+  
+  - component: "content_structure.yaml"
+    relationship: "Questions generate content that populates review structure"
+  
+  - component: "writing_process.yaml"
+    relationship: "Question framework is the first step in the writing process"
+    additional_framework_relationships:
+      relationship: "Provides product-specific section guidance through product_specific_sections"

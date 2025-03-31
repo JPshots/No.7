@@ -1,0 +1,155 @@
+# review_strategy.yaml
+# High-level goals and review philosophy for Amazon Vine program reviews
+
+# =============================================================================
+# Core Review Goals and Strategies
+# =============================================================================
+review_goal:
+  primary: "Get invited to Amazon Vine program"
+  strategies:
+    - "Write the most helpful reviews possible"
+    - "Provide genuine, comprehensive product insights"
+
+# =============================================================================
+# Review Process Overview
+# =============================================================================
+review_process:
+  description: "Unified workflow that combines preparation, writing, and quality control"
+  phases:
+    - preparation:
+        description: "Gather information, identify keywords, and understand product context"
+        key_activities:
+          - "Ask strategic questions to gather complete product understanding"
+          - "Identify primary and secondary keywords for search optimization"
+          - "Research competing products and alternatives"
+    
+    - content_creation:
+        description: "Process of drafting and refining the review"
+        reference: "See writing_process.yaml for detailed implementation workflow"
+        key_activities:
+          - "Create well-structured review with appropriate sections"
+          - "Balance information and personality for engagement"
+          - "Include specific testing scenarios and experiences"
+    
+    - quality_control:
+        description: "Ensure review meets all quality benchmarks"
+        key_activities:
+          - "Verify information accuracy and completeness"
+          - "Check for proper information/personality balance"
+          - "Eliminate redundancy and optimize structure"
+
+# =============================================================================
+# Core Value Drivers
+# =============================================================================
+value_drivers:
+  - driver: "Authentic Personal Experience"
+    description: "Genuine testing and usage provides credibility and insight"
+    implementation:
+      - "Include specific usage scenarios with contextual details"
+      - "Document real-world application beyond theoretical use"
+      - "Share unexpected discoveries during testing"
+    examples:
+      - "After three years of struggling with butterfly popcorn dissolving on contact, these mushroom kernels..."
+      - "The silicone grip eliminates that plastic-on-countertop clatter that wakes sleeping babies."
+
+  - driver: "Comprehensive Information"
+    description: "Complete product understanding that goes beyond surface details"
+    implementation:
+      - "Cover technical specifications with actual measurements"
+      - "Discuss performance across multiple use cases"
+      - "Address both expected and unexpected applications"
+    examples:
+      - "The 70ml capacity and dual measurement systems (oz/ml) make it perfect for precise coffee measurement."
+      - "At $8 per bag with an average 15-use lifespan, each popcorn session costs about 53 cents."
+
+  - driver: "Strategic Balance"
+    description: "Optimized mix of information and personality creates engaging, helpful content"
+    implementation:
+      - "Maintain 55% informational, 40% personality, 5% flexibility ratio"
+      - "Front-load information before adding personality"
+      - "Adjust balance based on product category and section purpose"
+    reference: "See personality-balance.yaml for detailed implementation"
+
+  - driver: "Differentiated Insight"
+    description: "Unique perspectives that distinguish review from standard content"
+    implementation:
+      - "Test product in unconventional scenarios"
+      - "Compare with alternatives not mentioned in product description"
+      - "Document edge cases and performance limitations"
+    examples:
+      - "Unlike our nearly indestructible glass baby bottles that laugh in the face of gravity..."
+      - "While standard air poppers don't create the same perfect spheres, the cannon method gives you popcorn with architectural integrity."
+
+# =============================================================================
+# Success Metrics
+# =============================================================================
+success_metrics:
+  quantitative:
+    - metric: "Helpful Votes"
+      description: "Number of readers who found review useful"
+      target: "Top 10% of category reviews"
+      
+    - metric: "Length Effectiveness Ratio"
+      description: "Helpful votes per word count"
+      target: "Maximum value delivered with optimal length"
+      
+    - metric: "Search Visibility"
+      description: "Review appears in product search results"
+      target: "Inclusion of strategic keywords that maintain natural flow"
+      
+  qualitative:
+    - metric: "Information Completeness"
+      description: "Review answers potential buyer questions"
+      assessment: "Review addresses all critical information gaps identified"
+      
+    - metric: "Authentic Voice"
+      description: "Review reads as genuine user experience"
+      assessment: "Passes authentic voice guidelines verification"
+      reference: "See personality-balance.yaml for authenticity verification framework"
+      
+    - metric: "Purchase Guidance Clarity"
+      description: "Review helps reader make informed decision"
+      assessment: "Clear identification of ideal and non-ideal users"
+      
+# =============================================================================
+# Core Principles
+# =============================================================================
+core_principles:
+  - principle: "Information First, Personality Second"
+    description: "Essential information must never be sacrificed for style"
+    implementation: "Always place factual content before personality elements"
+    
+  - principle: "Authentic Experience Over Marketing Language"
+    description: "Share genuine experiences rather than manufactured enthusiasm"
+    implementation: "Document specific incidents, limitations, and realistic usage"
+    
+  - principle: "Buyer-Focused Perspective"
+    description: "Content serves potential buyers rather than personal expression"
+    implementation: "Address common buyer concerns and decision factors"
+    
+  - principle: "Strategic Structure"
+    description: "Organization enhances information accessibility"
+    implementation: "Use consistent, scannable format with clear section purpose"
+    
+  - principle: "Testing Depth"
+    description: "Comprehensive testing across multiple scenarios"
+    implementation: "Test product in varied contexts beyond primary use case"
+
+# =============================================================================
+# Relationships to Other Framework Components
+# =============================================================================
+framework_relationships:
+  - component: "question_framework.yaml"
+    relationship: "Provides methodology for gathering comprehensive product information"
+    
+  - component: "keyword_strategy.yaml"
+    relationship: "Guides strategic keyword implementation for discoverability"
+    
+  - component: "content_structure.yaml"
+    relationship: "Defines review organization and section components"
+    
+  - component: "personality-balance.yaml"
+    relationship: "Details information/personality ratio implementation"
+    
+  - component: "writing_process.yaml"
+    relationship: "Outlines workflow from preparation to final submission"
