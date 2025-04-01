@@ -11,6 +11,7 @@ const inquirer = require('inquirer');
 const { ClaudeAPI } = require('./claude-api');
 const { ImageHandler } = require('./images');
 const { FrameworkLoader } = require('./framework-loader');
+const { SimplifiedResearchPlanner } = require('./simplified-research-planner');
 
 // Session directory
 const SESSION_DIR = path.join(process.cwd(), '.sessions');
@@ -45,13 +46,55 @@ class Session {
       [PHASES.REFINE]: { complete: false, data: {} },
       [PHASES.QUALITY]: { complete: false, data: {} }
     };
+    this.webSearchEnabled = options.webSearchEnabled || false;
     
     // Initialize API clients
     this.claude = new ClaudeAPI();
     this.imageHandler = new ImageHandler(this.imageDir);
     this.frameworkLoader = new FrameworkLoader();
+    this.researchPlanner = new SimplifiedResearchPlanner();
   }
 
+  /**
+   * Conduct product research using SimplifiedResearchPlanner
+   */
+  async conductProductResearch() {
+    if (!this.webSearchEnabled) {
+      console.log(chalk.yellow('Web search is disabled. Skipping research phase.'));
+      return null;
+    }
+
+    console.log(chalk.cyan('\nConducting product research...'));
+    
+    const searchContext = {
+      productName: this.productName,
+      productType: this.productType,
+      description: this.phaseData[PHASES.INTAKE].data.initialDescription
+    };
+
+    try {
+      const researchResults = await this.researchPlanner.planAndExecuteResearch(searchContext);
+      this.phaseData[PHASES.INTAKE].data.researchResults = researchResults;
+      return researchResults;
+    } catch (error) {
+      console.error(chalk.red('Research error:'), error.message);
+      return null;
+    }
+  }
+
+  /**
+   * Process research results into insights
+   */
+  processResearchInsights() {
+    const results = this.phaseData[PHASES.INTAKE].data.researchResults;
+    if (!results) return '';
+
+    return `Research insights:
+- Product category: ${results.category || 'Unknown'}
+- Key features: ${results.keyFeatures?.join(', ') || 'None found'}
+- Common concerns: ${results.commonIssues?.join(', ') || 'None found'}
+- Market positioning: ${results.marketContext || 'Unknown'}`;
+  }
   /**
    * Start or resume the session
    */
@@ -101,7 +144,10 @@ class Session {
   async runIntakePhase() {
     // Load phase-specific framework and prompts
     const framework = await this.frameworkLoader.getPhaseFramework(PHASES.INTAKE);
-    const systemPrompt = await this.frameworkLoader.loadSystemPrompt(PHASES.INTAKE);
+    const systemPrompt = await this.frameworkLoader.createDynamicPrompt(PHASES.INTAKE, {
+      researchInsights: this.processResearchInsights(),
+      hasImages: this.phaseData[PHASES.INTAKE].data.hasImages
+    });
     
     console.log(chalk.cyan("\n=== INTAKE & QUESTIONING PHASE ==="));
     console.log(chalk.yellow("In this phase, I'll gather information about your product experience."));
@@ -136,6 +182,17 @@ class Session {
         };
         
         this.messages.push(firstUserMessage);
+        // Conduct product research if enabled
+      const researchResults = await this.conductProductResearch();
+      if (researchResults) {
+        console.log(chalk.green('\nResearch completed successfully.'));
+        
+        // Add research insights to messages
+        this.messages.push({
+          role: 'system',
+          content: this.processResearchInsights()
+        });
+      }
       } else {
         // Create first message without images
         this.messages.push({
@@ -673,18 +730,22 @@ class Session {
   /**
    * Convert session to JSON for storage
    */
-  toJSON() {
-    return {
-      id: this.id,
-      productName: this.productName,
-      phase: this.phase,
-      imageDir: this.imageDir,
-      messages: this.messages,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-      productType: this.productType,
-      keywords: this.keywords,
-      imageAnalysis: this.imageAnalysis,
-      phaseData: this.phaseData
-    };
-  
+    toJSON() {
+      return {
+        id: this.id,
+        productName: this.productName,
+        phase: this.phase,
+        imageDir: this.imageDir,
+        messages: this.messages,
+        createdAt: this.createdAt,
+        updatedAt: this.updatedAt,
+        productType: this.productType,
+        keywords: this.keywords,
+        imageAnalysis: this.imageAnalysis,
+        phaseData: this.phaseData,
+        webSearchEnabled: this.webSearchEnabled,
+        phaseData: this.phaseData,
+        webSearchEnabled: this.webSearchEnabled
+      };
+    }
+  }
