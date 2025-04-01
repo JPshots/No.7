@@ -1,0 +1,37 @@
+{
+  "name": "amazon-review-framework-cli",
+  "version": "1.0.0",
+  "description": "Command-line tool for creating exceptional product reviews using the Amazon Review Framework",
+  "main": "amazon-review.js",
+  "bin": {
+    "amazon-review": "./amazon-review.js"
+  },
+  "scripts": {
+    "start": "node amazon-review.js",
+    "setup": "node setup-dirs.js",
+    "postinstall": "node setup-dirs.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "amazon",
+    "review",
+    "framework",
+    "cli",
+    "product",
+    "reviews"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.15.0",
+    "chalk": "^4.1.2",
+    "commander": "^10.0.1",
+    "dotenv": "^16.3.1",
+    "figlet": "^1.6.0",
+    "inquirer": "^8.2.5",
+    "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
