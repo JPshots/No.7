@@ -1,0 +1,209 @@
+# core-principles.yaml
+# Consolidated core principles from across the Amazon Review Framework
+
+# =============================================================================
+# Framework Purpose & Role Definition
+# =============================================================================
+framework_purpose:
+  description: "Comprehensive system for creating exceptional product reviews to qualify for the Amazon Vine program"
+  primary_goal: "Create reviews of exceptional quality that help gain invitation to Amazon Vine program"
+  key_strategies:
+    - "Write the most helpful reviews possible"
+    - "Provide genuine, comprehensive product insights"
+    - "Balance information and personality effectively"
+
+ai_role_and_workflow:
+  primary_role: "AI is the primary writer, creating a framework-based review using the human's input"
+  workflow_clarification: "The human provides product experiences and observations; AI crafts these into a complete review"
+  correct_understanding:
+    - "The human provides authentic product experiences and observations as input"
+    - "AI is the primary writer, applying the framework to create a well-structured review"
+    - "AI must not fabricate core experiences, especially negative attributes not mentioned by the human"
+    - "The final review should reflect the general premise and substance of what the human shared"
+    - "AI has creative freedom in structure and presentation, but not in inventing core experiences"
+  creative_permissions:
+    - area: "Opening Hook"
+      permission: "Enhanced narrative is encouraged if it makes the review more compelling without changing the message"
+      example: "Crafting a vivid story-based introduction that captures attention while remaining true to the experience"
+    - area: "Tips and Advice"
+      permission: "AI may add helpful tips and advice even if not explicitly mentioned by the human"
+      example: "Including practical usage suggestions, maintenance recommendations, or compatibility notes"
+    - area: "Stylistic Elements"
+      permission: "Small harmless anecdotal fabrications, exaggerations, and obvious jokes are acceptable"
+      example: "Adding humorous exaggerations for effect while ensuring they don't mislead about functionality"
+    - area: "Boundary"
+      restriction: "The key constraint is not to mislead readers or generate content far beyond what the human's input suggests"
+      example: "Avoid inventing specific negative experiences, technical specifications, or comparative claims not supported"
+
+# =============================================================================
+# Core Value Drivers
+# =============================================================================
+value_drivers:
+  - driver: "Authentic Personal Experience"
+    description: "Genuine testing and usage provides credibility and insight"
+    implementation:
+      - "Include specific usage scenarios with contextual details"
+      - "Document real-world application beyond theoretical use"
+      - "Share unexpected discoveries during testing"
+    examples:
+      - "After three years of struggling with butterfly popcorn dissolving on contact, these mushroom kernels..."
+      - "The silicone grip eliminates that plastic-on-countertop clatter that wakes sleeping babies."
+
+  - driver: "Comprehensive Information"
+    description: "Complete product understanding that goes beyond surface details"
+    implementation:
+      - "Cover technical specifications with actual measurements"
+      - "Discuss performance across multiple use cases"
+      - "Address both expected and unexpected applications"
+    examples:
+      - "The 70ml capacity and dual measurement systems (oz/ml) make it perfect for precise coffee measurement."
+      - "At $8 per bag with an average 15-use lifespan, each popcorn session costs about 53 cents."
+
+  - driver: "Strategic Balance"
+    description: "Optimized mix of information and personality creates engaging, helpful content"
+    implementation:
+      - "Maintain 55% informational, 40% personality, 5% flexibility ratio"
+      - "Front-load information before adding personality"
+      - "Adjust balance based on product category and section purpose"
+
+  - driver: "Differentiated Insight"
+    description: "Unique perspectives that distinguish review from standard content"
+    implementation:
+      - "Test product in unconventional scenarios"
+      - "Compare with alternatives not mentioned in product description"
+      - "Document edge cases and performance limitations"
+    examples:
+      - "Unlike our nearly indestructible glass baby bottles that laugh in the face of gravity..."
+      - "While standard air poppers don't create the same perfect spheres, the cannon method gives you popcorn with architectural integrity."
+
+# =============================================================================
+# Core Principles
+# =============================================================================
+core_principles:
+  - principle: "Information First, Personality Second"
+    description: "Essential information must never be sacrificed for style"
+    implementation: "Always place factual content before personality elements"
+    
+  - principle: "Authentic Experience Over Marketing Language"
+    description: "Share genuine experiences rather than manufactured enthusiasm"
+    implementation: "Document specific incidents, limitations, and realistic usage"
+    
+  - principle: "Buyer-Focused Perspective"
+    description: "Content serves potential buyers rather than personal expression"
+    implementation: "Address common buyer concerns and decision factors"
+    
+  - principle: "Strategic Structure"
+    description: "Organization enhances information accessibility"
+    implementation: "Use consistent, scannable format with clear section purpose"
+    
+  - principle: "Testing Depth"
+    description: "Comprehensive testing across multiple scenarios"
+    implementation: "Test product in varied contexts beyond primary use case"
+
+# =============================================================================
+# Review Process Phases
+# =============================================================================
+review_process_phases:
+  - phase: "Intake & Questioning"
+    description: "Gather information, identify keywords, and understand product context"
+    key_activities:
+      - "Ask strategic questions to gather complete product understanding"
+      - "Identify primary and secondary keywords for search optimization"
+      - "Research competing products and alternatives"
+      - "Analyze product images for important details"
+    transition_criteria:
+      - "All critical information has been gathered"
+      - "Complete understanding of user experience has been established"
+      - "Key product attributes and limitations are identified"
+  
+  - phase: "Draft Creation"
+    description: "Process of drafting the review based on gathered information"
+    key_activities:
+      - "Create well-structured review with appropriate sections"
+      - "Balance information and personality for engagement"
+      - "Include specific testing scenarios and experiences"
+    transition_criteria:
+      - "Complete draft with all required sections is created"
+      - "Information/personality balance targets are met"
+      - "All critical product insights are incorporated"
+  
+  - phase: "Refinement"
+    description: "Collaborative process to optimize based on user feedback"
+    key_activities:
+      - "Implement targeted improvements based on feedback"
+      - "Maintain framework compliance during revisions"
+      - "Ensure authentic voice throughout the content"
+    transition_criteria:
+      - "All user feedback has been addressed"
+      - "Review maintains framework compliance"
+      - "Explicit confirmation from user to finalize"
+  
+  - phase: "Quality Control"
+    description: "Final verification to ensure exceptional quality"
+    key_activities:
+      - "Verify information accuracy and completeness"
+      - "Check for proper information/personality balance"
+      - "Eliminate redundancy and optimize structure"
+    transition_criteria:
+      - "Review meets all framework quality standards"
+      - "Final polish has been applied"
+      - "User has approved the finalized review"
+
+# =============================================================================
+# Success Metrics
+# =============================================================================
+success_metrics:
+  quantitative:
+    - metric: "Helpful Votes"
+      description: "Number of readers who found review useful"
+      target: "Top 10% of category reviews"
+      
+    - metric: "Length Effectiveness Ratio"
+      description: "Helpful votes per word count"
+      target: "Maximum value delivered with optimal length"
+      
+    - metric: "Search Visibility"
+      description: "Review appears in product search results"
+      target: "Inclusion of strategic keywords that maintain natural flow"
+      
+  qualitative:
+    - metric: "Information Completeness"
+      description: "Review answers potential buyer questions"
+      assessment: "Review addresses all critical information gaps identified"
+      
+    - metric: "Authentic Voice"
+      description: "Review reads as genuine user experience"
+      assessment: "Passes authentic voice guidelines verification"
+      
+    - metric: "Purchase Guidance Clarity"
+      description: "Review helps reader make informed decision"
+      assessment: "Clear identification of ideal and non-ideal users"
+
+# =============================================================================
+# Framework Implementation Sequence
+# =============================================================================
+implementation_sequence:
+  - order: 1
+    action: "Complete information gathering before any drafting begins"
+    rationale: "Reviews based on incomplete information require extensive revision"
+    implementation: "Use question framework to identify and fill all critical information gaps"
+    
+  - order: 2
+    action: "Complete pre-writing planning before drafting begins"
+    rationale: "Planning creates cohesive structure and consistent implementation"
+    implementation: "Determine structure, keywords, and personality approach before writing"
+    
+  - order: 3
+    action: "Create complete draft with integrated personality"
+    rationale: "Integration from the start is more effective than adding personality later"
+    implementation: "Write with the predetermined balance targets for each section"
+    
+  - order: 4
+    action: "Apply all quality checks before presenting draft"
+    rationale: "Internal quality control ensures higher initial draft quality"
+    implementation: "Verify balance, redundancy, authenticity, and formatting before sharing"
+    
+  - order: 5
+    action: "Implement refinements based on feedback"
+    rationale: "Targeted improvements based on specific feedback maintain overall quality"
+    implementation: "Apply changes while maintaining framework compliance"

@@ -1,0 +1,552 @@
+# draft.yaml
+# Framework for the Draft Creation phase of the Amazon Review Framework
+
+# =============================================================================
+# Phase Overview
+# =============================================================================
+phase_overview:
+  description: "The Draft Creation phase transforms gathered information into a well-structured review"
+  critical_requirement:
+    priority: "HIGHEST"
+    instruction: "MANDATORY: Complete all pre-writing planning before beginning the actual draft"
+    rationale: "Planning ensures consistent implementation of all framework elements"
+  objectives:
+    - "Create a complete, polished review draft that reflects the gathered information"
+    - "Apply appropriate structure and formatting for maximum readability"
+    - "Balance informational content with engaging personality"
+    - "Integrate strategic keywords naturally throughout the content"
+    - "Implement creative techniques that enhance without obscuring information"
+  success_criteria:
+    - "Draft includes all required sections with appropriate content"
+    - "Information and personality are properly balanced per guidelines"
+    - "Strategic keywords are naturally integrated throughout"
+    - "Content is organized for maximum clarity and impact"
+    - "Draft passes all internal quality checks before presentation"
+
+# =============================================================================
+# Pre-Writing Planning
+# =============================================================================
+pre_writing_planning:
+  description: "Essential preparation steps that must be completed before drafting begins"
+  
+  mandatory_steps:
+    - order: 1
+      action: "Select appropriate review structure based on product complexity"
+      guidance:
+        - "Choose from simple, standard, or complex structure templates"
+        - "Adapt section organization based on product category"
+        - "Identify product-specific sections that may be needed"
+    
+    - order: 2
+      action: "Determine personality/information balance targets for each section"
+      guidance:
+        - "Assign specific ratio targets to each planned section"
+        - "Adjust based on content purpose and product category"
+        - "Document targets to guide drafting"
+    
+    - order: 3
+      action: "Plan keyword placement throughout the review structure"
+      guidance:
+        - "Map primary keywords to high-impact locations"
+        - "Distribute secondary keywords across appropriate sections"
+        - "Plan natural integration of comparison and compatibility terms"
+    
+    - order: 4
+      action: "Select creative techniques appropriate for the product"
+      guidance:
+        - "Choose thematic approach if applicable"
+        - "Identify opportunities for narrative elements"
+        - "Plan sensory details to enhance product description"
+    
+    - order: 5
+      action: "Pre-select list items for personality enhancement"
+      guidance:
+        - "Identify which 30-40% of list items will receive enhancement"
+        - "Focus on the most distinctive or important features"
+        - "Plan enhancement style that complements each feature"
+
+  review_structure_guidance:
+    description: "Adaptable guidance for organizing review content based on product complexity"
+    
+    principles:
+      - "Structure should serve the product experience, not the other way around"
+      - "Adapt sections based on what matters most for the specific product"
+      - "Include only sections that add genuine value to potential buyers"
+      - "Organize content to prioritize what readers need most"
+      - "Word count should reflect information value, not arbitrary targets"
+    
+    complexity_considerations:
+      - complexity: "Simpler products"
+        considerations:
+          - "May require fewer sections with more focused content"
+          - "Often benefit from highlighting specific use cases"
+          - "Typically range from 800-900 words but can vary"
+          - "Value often comes from depth of testing rather than breadth of features"
+      
+      - complexity: "Moderate complexity products"
+        considerations:
+          - "Often benefit from a balance of experiential and technical content"
+          - "May warrant dedicated sections for specific feature sets"
+          - "Typically range from 900-1100 words but can vary"
+          - "Usually benefit from clearly identified ideal use cases"
+      
+      - complexity: "Complex products"
+        considerations:
+          - "May require more detailed testing documentation"
+          - "Often benefit from comparative analysis with alternatives"
+          - "Typically range from 1100-1200 words but can vary"
+          - "Usually warrant more extensive technical assessment"
+    
+    common_section_types:
+      description: "Potential section types that can be included or omitted as appropriate"
+      types:
+        - "Introduction/hook (engaging opening based on experience)"
+        - "Usage experience (real-world application scenarios)"
+        - "Technical aspects (specifications and performance details)"
+        - "Strengths assessment (advantages with specific context)"
+        - "Limitations assessment (drawbacks with specific context)"
+        - "Comparative insights (contrasts with alternatives)"
+        - "Ideal usage scenarios (best applications for the product)"
+        - "Practical advice (tips discovered through experience)"
+        - "Value assessment (price-to-performance evaluation)"
+        - "Final recommendation (overall assessment and guidance)"
+      
+    implementation_guidance:
+      - "Select and arrange sections based on what best serves the product and user experience"
+      - "Combine or split sections as needed for logical flow"
+      - "Create custom section types if standard options don't fit the product"
+      - "Name sections creatively to match product theme and review style"
+      - "Focus on value to potential buyers rather than following a fixed template"
+
+# =============================================================================
+# Content Structure
+# =============================================================================
+content_structure:
+  description: "Framework for organizing review content into logical, engaging structures"
+  
+  section_purposes:
+    - type: "Introduction section"
+      purpose: "Create immediate engagement and establish authenticity"
+      content_elements:
+        - "Specific incident or experience with the product"
+        - "Problem-solution context if applicable"
+        - "Initial thematic elements if using a thematic approach"
+      examples:
+        - "I heard the clink from the next room - that all-too-familiar sound of glass meeting hardwood. Standard glass-breakage scenario initiated: broom deployment, dustpan maneuvers, followed by tactical tweezer operations for rogue foot-shard extraction."
+    
+    - type: "Experience/usage section"
+      purpose: "Provide authentic usage context and practical insights"
+      content_elements:
+        - "Specific usage scenarios in real-world context"
+        - "Unexpected discoveries or applications"
+        - "Integration into daily routines"
+      examples:
+        - "The surviving cup found its calling under my espresso machine. That pour spout? Actually understands fluid dynamics - directing my precious caffeine without the usual counter splatter. But here's the real discovery: fill one past the final 70ml marking, and you've got the perfect kernel load for a Chinese popcorn cannon."
+    
+    - type: "Technical section"
+      purpose: "Present specifications and performance details"
+      content_elements:
+        - "Key measurements and specifications"
+        - "Material composition and quality"
+        - "Technical performance metrics"
+      examples:
+        - "The 70ml capacity features dual measurement systems (oz/ml) clearly marked on both sides. The borosilicate glass provides excellent heat resistance up to 500°F, making it safe for hot liquids and microwave use."
+    
+    - type: "Evaluation section"
+      purpose: "Assess strengths and limitations"
+      content_elements:
+        - "Key advantages with specific details"
+        - "Limitations or drawbacks with context"
+        - "Personality enhancement on 30-40% of items"
+      examples:
+        - "Advantages:\n* Perfect size between bulky measuring cups and tiny shot glasses\n* Speaks both metric and imperial (sophisticated!)\n* Pour spout that actually works\n\nLimitations:\n- Fragile as my ego after someone criticizes my coffee technique\n- Glass thickness suggests it was designed for a gentler universe"
+    
+    - type: "Audience section"
+      purpose: "Help readers self-identify whether product meets their needs"
+      content_elements:
+        - "Specific user profiles or scenarios"
+        - "Usage contexts where product excels"
+        - "Situations where product underperforms"
+      examples:
+        - "Ideal for:\n* Coffee enthusiasts needing precise measurements\n* Recipe developers working with small amounts\n\nLess suitable for:\n- Households with young kids (fragile glass)\n- Anyone cooking primarily large-batch recipes"
+    
+    - type: "Practical advice section"
+      purpose: "Provide actionable guidance from personal experience"
+      content_elements:
+        - "Discoveries not in product documentation"
+        - "Workarounds for limitations"
+        - "Maintenance or longevity advice"
+      examples:
+        - "Helpful tips:\n* Keep the box for storage - these aren't drawer-rummaging tools\n* Perfect for pour-over coffee measurements\n* Use with a scale for ultimate kitchen science"
+    
+    - type: "Conclusion section"
+      purpose: "Provide clear recommendation and purchase guidance"
+      content_elements:
+        - "Summary of key value proposition"
+        - "Price-value assessment"
+        - "Final recommendation with context"
+      examples:
+        - "At $9 for two, they're solid tools for kitchen precision - just maybe keep one in a protective bunker as backup. Perfect for coffee enthusiasts, careful measurers, and anyone who's muttered \"but how much is a 'splash' exactly?\" while cooking."
+
+  formatting_guidelines:
+    - "Use decorative title formatting: ********** [TITLE] **********"
+    - "Create section headers with symbol prefixes: >> SECTION NAME"
+    - "Format PROS with asterisks: * Advantage description"
+    - "Format CONS with hyphens: - Limitation description"
+    - "Keep paragraphs brief (3-5 sentences) for scannability"
+    - "Use horizontal dividers (---------------) between major sections"
+    - "Limit decorative elements to 15 characters for mobile compatibility"
+
+# =============================================================================
+# Information-Personality Balance
+# =============================================================================
+information_personality_balance:
+  description: "Framework for balancing informational content and personality in reviews"
+  
+  baseline_ratios:
+    informational: 55
+    personality: 40
+    flexibility: 5
+    note: "These percentages represent content allocation across the entire review"
+  
+  section_specific_adjustments:
+    - content_type: "Opening/Introduction Content"
+      personality_adjustment: "+5%"
+      rationale: "Higher personality engages readers initially"
+    
+    - content_type: "Experience Narrative Content"
+      personality_adjustment: "0%"
+      rationale: "Maintains baseline balance while sharing experiences"
+    
+    - content_type: "Technical/Specification Content"
+      personality_adjustment: "-15%"
+      rationale: "Technical details require more direct information"
+    
+    - content_type: "Evaluation Content"
+      personality_adjustment: "-10%"
+      rationale: "Assessment needs clarity with some personality"
+    
+    - content_type: "Conclusion/Verdict Content"
+      personality_adjustment: "+5%"
+      rationale: "Slightly higher personality creates memorable closing"
+  
+  implementation_techniques:
+    - technique: "Front Loading"
+      description: "Always place essential information FIRST in every sentence or list item"
+      example:
+        bad: "Like upgrading from economy to business class, this battery charges quickly"
+        good: "This battery charges in under 2 hours, like upgrading from economy to business class"
+    
+    - technique: "List Item Enhancement"
+      description: "Enhance 30-40% of list items with personality, always after core information"
+      example:
+        basic: "Charges 10 AA/AAA batteries plus 2 9V simultaneously"
+        enhanced: "Charges 10 AA/AAA batteries plus 2 9V simultaneously, perfect for flash-addicted photographers with battery dependencies"
+    
+    - technique: "Contextual Personality"
+      description: "Add personality elements that directly enhance understanding of product features"
+      example:
+        weak: "The silicone grip is good."
+        strong: "The silicone grip eliminates that plastic-on-countertop clatter that wakes sleeping babies."
+
+  personality_techniques:
+    - name: "Unexpected Analogies"
+      description: "Creating comparisons that surprise while clarifying"
+      example: "There's a locking function that I've never used - it's like having a parachute on a submarine. Nice to know it's there, probably won't need it."
+      frequency: "1-2 per review"
+    
+    - name: "Deliberate Understatement"
+      description: "Understating something significant for humorous effect"
+      example: "Battery compartment has all the durability of wet tissue paper"
+      frequency: "1 per review"
+    
+    - name: "Absurd Specificity"
+      description: "Using unexpectedly detailed descriptions"
+      example: "Perfect for photographers whose flashes consume batteries like a toddler with Halloween candy"
+      frequency: "1-2 per review"
+    
+    - name: "Self-Deprecating Observations"
+      description: "Using personal shortcomings to highlight product features"
+      example: "We've become popcorn snobs, vacuum-sealing kernels for optimal freshness"
+      frequency: "1 per review"
+
+# =============================================================================
+# Keyword Implementation
+# =============================================================================
+keyword_implementation:
+  description: "Framework for incorporating search-optimized keywords in reviews"
+  
+  placement_strategy:
+    - location: "Review title/headline"
+      keywords: "1-2 primary keywords"
+      guidelines:
+        - "Include most important primary keyword"
+        - "Keep natural and benefit-focused"
+        - "Avoid keyword stuffing in title"
+    
+    - location: "Opening paragraph"
+      keywords: "Primary keywords, problem-solution keywords"
+      guidelines:
+        - "Introduce primary keywords naturally"
+        - "Set context with product category terms"
+        - "Avoid awkward phrasing to include keywords"
+    
+    - location: "Feature descriptions"
+      keywords: "Feature keywords, technical specification terms"
+      guidelines:
+        - "Use specific feature terminology"
+        - "Include measurement units and specific values"
+        - "Pair technical terms with benefits"
+    
+    - location: "Pros and cons section"
+      keywords: "Feature keywords, comparison terms"
+      guidelines:
+        - "Include key differentiating features"
+        - "Use terminology buyers would search for"
+        - "Frame limitations with standard terminology"
+    
+    - location: "Verdict/summary"
+      keywords: "Primary keywords, user-focused terms"
+      guidelines:
+        - "Reinforce primary keywords"
+        - "Include ideal use cases with relevant terms"
+        - "Reference key benefits with targeted terminology"
+
+  natural_integration_techniques:
+    - name: "Contextual Enhancement"
+      description: "Adding useful context around keywords"
+      example:
+        awkward: "This 75mm lens has bokeh that is very good."
+        natural: "This 75mm lens produces beautifully smooth bokeh that separates subjects from backgrounds effectively."
+    
+    - name: "Variant Usage"
+      description: "Using different forms of the same keyword"
+      example:
+        repetitive: "The noise cancelling is great. I love the noise cancelling on flights. The noise cancelling works well."
+        natural: "The noise cancellation is remarkably effective. I particularly appreciate how it silences engine noise on flights. The cancelling technology works consistently across various environments."
+    
+    - name: "Experience Integration"
+      description: "Embedding keywords within experience narratives"
+      example:
+        forced: "The forehead thermometer is easy to use."
+        natural: "Taking my toddler's temperature with this forehead thermometer was mercifully simple, even with a squirming child."
+
+# =============================================================================
+# Creative Elements
+# =============================================================================
+creative_elements:
+  description: "Framework for enhancing reviews with thematic elements and narrative structures"
+  
+  thematic_approach:
+    description: "Using a consistent theme throughout the review to create cohesion"
+    example_themes:
+      - theme: "Kitchen Lab/Scientific"
+        section_headers:
+          - original: "DAILY USE"
+            themed: ">> THE DAILY EXPERIMENTS"
+          - original: "PROS AND CONS"
+            themed: "** LABORATORY OBSERVATIONS"
+          - original: "TECHNICAL SPECIFICATIONS"
+            themed: "** SPECIMEN SPECIFICATIONS"
+          - original: "TARGET AUDIENCE"
+            themed: ">> RESEARCHER PROFILES"
+          - original: "PRACTICAL TIPS"
+            themed: "*** FIELD NOTES"
+          - original: "VERDICT"
+            themed: ">> RESEARCH CONCLUSIONS"
+      
+      - theme: "Adventure/Expedition"
+        section_headers:
+          - original: "DAILY USE"
+            themed: ">> THE JOURNEY"
+          - original: "PROS AND CONS"
+            themed: "** TRAIL MARKERS"
+          - original: "TECHNICAL SPECIFICATIONS"
+            themed: "** EXPEDITION EQUIPMENT"
+          - original: "TARGET AUDIENCE"
+            themed: ">> EXPEDITION TEAM"
+          - original: "PRACTICAL TIPS"
+            themed: "*** SURVIVAL TACTICS"
+          - original: "VERDICT"
+            themed: ">> EXPEDITION REPORT"
+    
+    theme_generation_questions:
+      - "What metaphorical domain naturally connects to this product's function?"
+      - "What unexpected comparison came to mind during product testing?"
+      - "What storytelling framework would make this product's review memorable?"
+  
+  narrative_structures:
+    - name: "Micro-Narratives"
+      description: "Concise stories demonstrating product integration into real-life contexts"
+      implementation:
+        - "Limit to 3-5 sentences for maximum impact"
+        - "Use first-person perspective for authenticity"
+        - "Include specific time/place details to create immediacy"
+      example: "Saturday morning. Toddler fever spike. Fumbling for the thermometer in the dark while trying not to wake the finally-sleeping baby. One-handed operation actually worked as advertised. Reading appeared in three seconds. Back to bed with appropriate medication and minimal drama."
+    
+    - name: "Emotional Journey Mapping"
+      description: "Technique for documenting emotional states associated with product usage"
+      structure:
+        - "Before state (frustration, anticipation, concern)"
+        - "During usage (realization, surprise, confirmation)"
+        - "After state (relief, satisfaction, disappointment)"
+      example: "The relief when this thermometer gave consistent readings ended three days of parental anxiety gymnastics."
+    
+    - name: "Comparison Narratives"
+      description: "Structured narratives for comparing product reality with expectations"
+      formats:
+        - "Better than/worse than direct comparisons"
+        - "Promise vs. delivery contrasts"
+      example: "Promises effortless installation; delivers a weekend project requiring three trips to the hardware store"
+
+  sensory_crafting:
+    description: "A structured approach to ensure multiple sensory dimensions are captured"
+    sensory_dimensions:
+      - name: "Visual"
+        aspects: "Appearance, color, finish, design elements"
+      - name: "Tactile"
+        aspects: "Texture, weight, temperature, ergonomics"
+      - name: "Auditory"
+        aspects: "Sounds during operation, acoustic properties"
+      - name: "Olfactory"
+        aspects: "Scent, smell during use, off-gassing"
+    example: "The silicone grip eliminates that plastic-on-countertop clatter that wakes sleeping babies while providing a non-slip surface even with wet hands."
+
+# =============================================================================
+# Quality Checks
+# =============================================================================
+quality_checks:
+  description: "Framework for ensuring review quality before presentation"
+  
+  pre_submission_checks:
+    - check: "Information Completeness"
+      method: "Verify all key product aspects are covered"
+      acceptance: "All critical information from the Intake phase is included"
+    
+    - check: "Personality Balance"
+      method: "Confirm each section meets its target information/personality ratio"
+      acceptance: "All sections within 5% of target ratio"
+    
+    - check: "Keyword Distribution"
+      method: "Verify that keywords appear throughout the review"
+      acceptance: "Keywords naturally distributed across at least 3 different sections"
+    
+    - check: "Redundancy Review"
+      method: "Eliminate unnecessary repetition"
+      acceptance: "No information is repeated without adding new dimensions"
+    
+    - check: "Authentic Voice"
+      method: "Ensure genuine voice throughout"
+      acceptance: "No marketing-style language or manufactured enthusiasm"
+    
+    - check: "Formatting Verification"
+      method: "Confirm proper formatting throughout"
+      acceptance: "All formatting follows guidelines for maximum readability"
+  
+  authenticity_markers:
+    - "Specific personal context about usage situation"
+    - "Imperfect observations including limitations and quirks"
+    - "Contextual enthusiasm that varies based on actual reaction"
+    - "Quirky observations that don't fit a perfect narrative"
+  
+  red_flag_patterns:
+    - pattern: "Universal Claims"
+      marketing: "This will transform your cooking experience"
+      authentic: "This significantly improved my weeknight dinner prep"
+    
+    - pattern: "Too-Perfect Narrative"
+      marketing: "This solves every popcorn problem perfectly"
+      authentic: "These kernels solve my specific frustration with regular popcorn, though they require the right popping method"
+    
+    - pattern: "Superlative Overuse"
+      marketing: "The perfect popcorn solution"
+      authentic: "These kernels work better for my needs than regular varieties"
+    
+    - pattern: "Future-Focused Language"
+      marketing: "You'll love how it revolutionizes your snacking!"
+      authentic: "I found it significantly improved my movie night routine"
+
+# =============================================================================
+# Transition Requirements
+# =============================================================================
+transition_requirements:
+  description: "Criteria that must be met before transitioning to the Refinement phase"
+  
+  mandatory_requirements:
+    - requirement: "Complete draft includes all required sections"
+      validation: "Verify all planned sections are present and properly formatted"
+    
+    - requirement: "Information/personality balance meets targets"
+      validation: "Confirm each section is within 5% of target ratio"
+    
+    - requirement: "All keywords are naturally integrated"
+      validation: "Check for appropriate keyword distribution and natural integration"
+    
+    - requirement: "Content passes all quality checks"
+      validation: "Verify all pre-submission checks have been completed"
+    
+    - requirement: "Draft accurately represents the gathered information"
+      validation: "Ensure all critical details from Intake phase are included"
+  
+  completion_checklist:
+    - "Draft meets word count target for product complexity level"
+    - "All sections are properly formatted with appropriate headers"
+    - "Personality techniques are implemented consistently throughout"
+    - "Primary keywords appear in high-impact locations"
+    - "Narrative elements enhance rather than obscure information"
+    - "Content flows logically from section to section"
+    - "Review provides clear value assessment and recommendation"
+    - "Draft is ready for presentation without further internal revisions"
+
+# =============================================================================
+# API Implementation Guidance
+# =============================================================================
+api_implementation:
+  description: "Guidelines for implementing the Draft Creation phase in an API"
+  
+  system_prompt_components:
+    - "Include content structure guidelines appropriate for product complexity"
+    - "Include information/personality balance framework"
+    - "Include keyword implementation strategy"
+    - "Include creative elements guidance"
+    - "Include quality check requirements"
+  
+  message_structure:
+    - order: 1
+      type: "Planning confirmation"
+      content: "Outline of planned review structure and approach"
+    
+    - order: 2
+      type: "Quality verification"
+      content: "Internal quality checks and adjustments before presentation"
+    
+    - order: 3
+      type: "Complete draft"
+      content: "Fully-formed review draft ready for evaluation"
+    
+    - order: 4
+      type: "Transition recommendation"
+      content: "Recommendation to proceed to Refinement phase with draft"
+  
+  processing_steps:
+    - "Complete all pre-writing planning before actual drafting"
+    - "Select appropriate content structure based on product complexity"
+    - "Determine information/personality balance for each section"
+    - "Plan keyword placement throughout the review"
+    - "Select creative techniques appropriate for the product"
+    - "Create complete draft with integrated personality"
+    - "Perform all quality checks before presenting draft"
+    - "Verify transition requirements are met before proceeding"
+  
+  error_handling:
+    - scenario: "Insufficient information for complete draft"
+      response: "Identify specific information gaps and recommend return to Intake phase"
+    
+    - scenario: "Quality check failures"
+      response: "Address specific quality issues before presenting draft"
+    
+    - scenario: "Structure mismatch for product complexity"
+      response: "Adjust structure to better match product characteristics"
+    
+    - scenario: "Authenticity verification failure"
+      response: "Revise sections with marketing-style language to reflect genuine experience"

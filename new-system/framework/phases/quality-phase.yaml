@@ -1,0 +1,503 @@
+# quality.yaml
+# Framework for the Quality Control phase of the Amazon Review Framework
+
+# =============================================================================
+# Phase Overview
+# =============================================================================
+phase_overview:
+  description: "The Quality Control phase ensures the review meets all framework standards and delivers exceptional value"
+  critical_requirement:
+    priority: "HIGHEST"
+    instruction: "Apply comprehensive quality assessment before finalizing the review"
+    rationale: "Final quality verification ensures the review meets all success criteria"
+  objectives:
+    - "Verify the review meets all framework quality standards"
+    - "Apply final polish to optimize the review"
+    - "Assess the review against quantitative and qualitative metrics"
+    - "Document strengths and potential improvement areas"
+    - "Produce a finalized review ready for submission"
+  success_criteria:
+    - "Review passes all final verification checklist items"
+    - "Final polish has been applied to optimize the review"
+    - "Review has been scored across all quality dimensions"
+    - "User has approved the finalized review"
+    - "Review is ready for submission without further revisions"
+
+# =============================================================================
+# Quality Assessment Framework
+# =============================================================================
+quality_assessment_framework:
+  description: "Comprehensive quality assessment framework to ensure review excellence"
+  
+  assessment_criteria:
+    - criterion: "Detailed product testing evidence"
+      description: "Documentation of thorough, multi-faceted product testing"
+      examples:
+        - "Specific use cases documented"
+        - "Multiple scenarios tested"
+        - "Long-term usage insights"
+      improvements:
+        weak: "I've used this product a few times and it works well"
+        better: "After 3 weeks of daily use, I've tested this in 5 different scenarios: [specific examples]"
+    
+    - criterion: "Comprehensive information"
+      description: "Complete coverage of relevant product aspects"
+      examples:
+        - "Technical specifications covered"
+        - "Real-world performance described"
+        - "Comparative insights provided"
+      improvements:
+        weak: "It has good features and works as expected"
+        better: "The 70ml capacity and dual measurement systems (oz/ml) make it perfect for precise coffee measurement. Compared to standard measuring cups, the improved pour spout prevents dripping."
+    
+    - criterion: "Usage-Based Value Assessment"
+      description: "Clear evaluation of price-to-value relationship with specific metrics"
+      examples:
+        - "Cost per use calculated"
+        - "Expected lifespan documented"
+        - "Maintenance costs considered"
+        - "Replacement frequency analyzed"
+      improvements:
+        weak: "It's worth the money"
+        better: "At $8 per bag with an average 15-use lifespan, each popcorn session costs about 53 cents in equipment - making this a reasonable investment for regular popcorn enthusiasts"
+    
+    - criterion: "Customer-focused insights"
+      description: "Information specifically tailored to help potential buyers"
+      examples:
+        - "Practical usage tips included"
+        - "Potential user groups identified"
+        - "Common concerns addressed"
+      improvements:
+        weak: "Most people would find this useful"
+        better: "Perfect for coffee enthusiasts measuring shots, bakers needing precise small measurements, and anyone tired of guessing what a 'splash' means"
+    
+    - criterion: "Balanced evaluation"
+      description: "Fair assessment of both strengths and limitations"
+      examples:
+        - "Both strengths and weaknesses discussed"
+        - "Fair assessment of value proposition"
+        - "Clear purchase guidance provided"
+      improvements:
+        weak: "Has some pros and cons but overall good"
+        better: "While the glass could be more durable (one broke from a 3-foot fall), the precision and versatility make it worth the $9 price for two, especially if you're mindful during use"
+    
+    - criterion: "Authentic voice markers"
+      description: "Elements that demonstrate genuine personal experience"
+      checkpoints:
+        - "Contains specific personal incidents and experiences"
+        - "Uses authentic language free of marketing patterns"
+        - "Includes genuine discoveries and observations"
+      improvements:
+        weak: "I like using this product"
+        better: "Discovered by accident that filling to the top line creates the perfect measure for my morning pour-over coffee ritual"
+    
+    - criterion: "Readability"
+      description: "Assessment of how easily the review can be read and understood"
+      checkpoints:
+        - "Appropriate sentence length with good variety"
+        - "Clear paragraph structure (3-5 sentences per paragraph)"
+        - "Logical flow between sections with smooth transitions"
+        - "Appropriate use of formatting elements"
+        - "Information presented in accessible language"
+      improvements:
+        weak: "This product has numerous features and specifications that make it stand out among competitors in the marketplace with its innovative design elements and functional capabilities that solve multiple problems simultaneously while maintaining a reasonable price point."
+        better: "This product stands out with its innovative design. It solves multiple problems simultaneously, from storage issues to ease of use. Despite these advanced features, it maintains a reasonable price point."
+
+# =============================================================================
+# Scoring System
+# =============================================================================
+scoring_system:
+  description: "Quantifiable assessment system for evaluating review quality"
+  
+  categories:
+    - name: "Testing Depth"
+      max_points: 20
+      metrics:
+        - name: "Usage Duration"
+          points: "0-5"
+          guidance: |
+            1pt: Brief use
+            3pts: Several weeks
+            5pts: Extended period with specific timeframe
+        
+        - name: "Scenario Variety"
+          points: "0-10"
+          guidance: |
+            2pts: Single use case
+            5pts: 2-3 different applications
+            10pts: 4+ varied use cases with details
+        
+        - name: "Testing Depth"
+          points: "0-5"
+          guidance: |
+            1pt: Surface level testing
+            3pts: Moderate experimentation
+            5pts: Thorough testing with specific results
+    
+    - name: "Information Quality"
+      max_points: 20
+      metrics:
+        - name: "Technical Details"
+          points: "0-5"
+        
+        - name: "Comparative Analysis"
+          points: "0-5"
+        
+        - name: "Practical Tips"
+          points: "0-5"
+        
+        - name: "Value Assessment"
+          points: "0-5"
+    
+    - name: "Authenticity"
+      max_points: 20
+      metrics:
+        - name: "Personal Experience"
+          points: "0-10"
+        
+        - name: "Specific Incidents"
+          points: "0-5"
+        
+        - name: "Discovered Features"
+          points: "0-5"
+    
+    - name: "Writing Quality"
+      max_points: 20
+      metrics:
+        - name: "Engagement"
+          points: "0-5"
+        
+        - name: "Readability"
+          points: "0-5"
+          guidance: |
+            1pt: Difficult to follow with complex sentences and dense paragraphs
+            3pts: Generally readable with some inconsistency in structure
+            5pts: Excellent readability with appropriate sentence variety and clear paragraph structure
+        
+        - name: "Voice Consistency"
+          points: "0-5"
+        
+        - name: "Personality"
+          points: "0-5"
+    
+    - name: "Helpfulness"
+      max_points: 20
+      metrics:
+        - name: "Purchase Guidance"
+          points: "0-10"
+        
+        - name: "User Identification"
+          points: "0-5"
+        
+        - name: "Problem Solving"
+          points: "0-5"
+
+# =============================================================================
+# Final Verification Checklist
+# =============================================================================
+final_verification_checklist:
+  description: "Final quality check to ensure all requirements are met before submission"
+  
+  sections:
+    - name: "Image Information Verification"
+      items:
+        - "Visual defects or quality issues from images are addressed"
+        - "Size/scale context from images is provided in text"
+        - "Any visible usage demonstrations are described"
+        - "Product condition on arrival (as shown in images) is noted"
+
+    - name: "Content Balance"
+      items:
+        - "Information/personality ratio matches pre-planned allocations"
+        - "Personality techniques are distributed appropriately"
+        - "No section exceeds its planned personality allocation"
+    
+    - name: "Personality Integration"
+      items:
+        - "Personality elements enhance rather than obscure information"
+        - "Humor techniques from pre-planning are used consistently"
+        - "Personality is front-loaded after essential information"
+    
+    - name: "Structure Verification"
+      items:
+        - "Proper section headers with symbols are used"
+        - "Designated list items have personality enhancement"
+        - "Formatting follows style guidelines for review type"
+    
+    - name: "Authenticity Verification"
+      items:
+        - "All content uses authentic voice rather than marketing language"
+        - "Personal experiences are specific and credible"
+        - "Enthusiasm is proportional to actual experience"
+        - "Limitations and quirks are honestly presented"
+    
+    - name: "Keyword Implementation"
+      items:
+        - "Primary keywords appear in title and opening paragraph"
+        - "Secondary keywords are distributed appropriately"
+        - "Keywords are integrated naturally without forced phrasing"
+        - "Keyword density is appropriate for readability"
+    
+    - name: "Value Assessment"
+      items:
+        - "Price-performance relationship is clearly evaluated"
+        - "Value is assessed relative to alternatives when possible"
+        - "Long-term value considerations are included"
+        - "Cost per use is calculated where applicable"
+    
+    - name: "Purchase Guidance"
+      items:
+        - "Ideal users are clearly identified"
+        - "Non-ideal users or use cases are specified"
+        - "Clear recommendation with appropriate context is provided"
+        - "Decision factors for potential buyers are highlighted"
+
+# =============================================================================
+# Redundancy Review
+# =============================================================================
+redundancy_review:
+  description: "Comprehensive process for identifying and eliminating unnecessary repetition in reviews"
+  
+  section_specialization:
+    - priority: "high"
+      guideline: "Each section should serve a unique informational purpose with minimal overlap"
+    - priority: "high"
+      guideline: "Information should generally appear in its most optimal section only"
+  
+  information_progression:
+    - priority: "medium"
+      guideline: "Later mentions of key points should typically add new dimensions rather than repeating"
+  
+  format_differentiation:
+    - priority: "high"
+      guideline: "Paragraph content, list items, and tips sections should contain distinct information types"
+    - priority: "high"
+      guideline: "List items should generally not be reformulations of paragraph content"
+    - priority: "high"
+      guideline: "Tips should provide actionable guidance not extensively covered elsewhere"
+  
+  strategic_exceptions:
+    - priority: "medium"
+      guideline: "Key information may be restated when doing so significantly enhances clarity or comprehension"
+    - priority: "medium"
+      guideline: "Critical safety or compatibility information may appear in multiple sections when warranted"
+    - priority: "medium"
+      guideline: "Complex technical points may be introduced in technical sections then reframed in simpler terms elsewhere"
+  
+  resolution_strategies:
+    optimal_placement:
+      description: "Identify the single best location for each piece of information"
+      implementation:
+        - "Determine which section most logically houses each information element"
+        - "Move information to optimal section and remove from other locations"
+        - "Add brief references/callbacks rather than full repetition when needed"
+    
+    dimension_addition:
+      description: "Transform repetition into valuable elaboration"
+      implementation:
+        - "When information must appear in multiple sections, ensure each mention adds new dimension"
+        - "First mention: Basic factual information"
+        - "Second mention: Contextual significance or application"
+        - "Third mention: Comparative insight or unique perspective"
+      example:
+        first_mention: "The 20-second recovery time means rapid-fire stress situations require patience."
+        second_mention: "Unlike my rubber banana which responds instantly, the butter stick's 20-second recovery creates a deliberate, mindful stress relief experience."
+    
+    phrasal_variation:
+      description: "Using alternative language for necessary concept repetition"
+      implementation:
+        - "Identify concepts that must appear multiple times"
+        - "Create varied phrasings that convey same information"
+        - "Distribute varied phrasings across sections"
+      example:
+        variation1: "Its delayed recovery after squeezing..."
+        variation2: "The foam's 20-second reformation period..."
+        variation3: "The pause between stress-relief sessions..."
+
+# =============================================================================
+# Final Polish Process
+# =============================================================================
+final_polish_process:
+  description: "Steps for finalizing review before submission"
+  
+  polish_steps:
+    - order: 1
+      action: "Complete redundancy check"
+      reference: "See redundancy_review section"
+    
+    - order: 2
+      action: "Apply final formatting"
+      description: "Ensure proper section headers, paragraph structure, and visual elements"
+      implementation:
+        - "Verify all section headers use the correct format"
+        - "Check paragraph lengths for scannability (3-5 sentences)"
+        - "Ensure consistent formatting of lists and special elements"
+        - "Verify mobile-friendly formatting (15 character limit for decorative elements)"
+    
+    - order: 3
+      action: "Verify authentic voice"
+      description: "Check for marketing-style language and convert to authentic experience"
+      implementation:
+        - "Scan for universal claims vs. personal experience"
+        - "Check for suspiciously perfect narratives"
+        - "Identify and revise future-focused language"
+        - "Ensure enthusiasm matches actual experience"
+    
+    - order: 4
+      action: "Verify keyword implementation"
+      description: "Ensure strategic keywords are naturally integrated"
+      implementation:
+        - "Check primary keyword placement in high-impact locations"
+        - "Verify natural integration throughout the review"
+        - "Ensure appropriate keyword density"
+        - "Check for awkward phrasing around keywords"
+    
+    - order: 5
+      action: "Final readability check"
+      description: "Ensure content flows naturally and is easily scannable"
+      implementation:
+        - "Check sentence variety and length"
+        - "Verify paragraph structure and length"
+        - "Ensure smooth transitions between sections"
+        - "Check overall flow from beginning to end"
+
+# =============================================================================
+# Content Quality Analysis
+# =============================================================================
+content_quality_analysis:
+  description: "Framework for identifying strengths and improvement areas in reviews"
+  
+  strengths_analysis:
+    process:
+      - "Identify particularly effective sections or elements"
+      - "Analyze what makes these elements successful"
+      - "Document specific techniques that created high impact"
+    categories:
+      - category: "TechnicalDetail"
+        impact: "high"
+        example: "Precise measurements and compatibility information"
+      
+      - category: "ExperientialContent"
+        impact: "high"
+        example: "Real-world usage scenarios with specific subjects"
+      
+      - category: "ComparativeAnalysis"
+        impact: "medium"
+        example: "Effective comparisons to other brands and first-party accessories"
+  
+  areas_for_enhancement:
+    process:
+      - "Identify sections that could benefit from improvement"
+      - "Analyze specific enhancement opportunities"
+      - "Suggest concrete improvements for future reviews"
+    categories:
+      - category: "LongTermDurability"
+        priority: "medium"
+        example: "Information about long-term durability and performance over time"
+      
+      - category: "PhysicalSpecifications"
+        priority: "low"
+        example: "Weight or exact dimensions information"
+      
+      - category: "WeatherSealingTesting"
+        priority: "medium"
+        example: "Testing information for protective features"
+
+# =============================================================================
+# Transition to Completion
+# =============================================================================
+completion_transition:
+  description: "Final steps to complete the review process"
+  
+  final_approval:
+    process:
+      - "Present completed review with quality assessment"
+      - "Highlight key strengths and unique aspects"
+      - "Note any areas for potential enhancement"
+      - "Seek explicit final approval"
+    
+    finalization_options:
+      - option: "Direct Submission"
+        description: "Review is submitted as-is with no further changes"
+      
+      - option: "Final Adjustment"
+        description: "Minor adjustments before finalization"
+        implementation:
+          - "Make targeted changes to address any final concerns"
+          - "Verify changes maintain overall quality"
+          - "Present final version for submission"
+      
+      - option: "Enhancement Plan"
+        description: "Provide guidance for future review improvements"
+        implementation:
+          - "Finalize current review for submission"
+          - "Provide separate guidance for future reviews"
+          - "Document specific techniques to enhance future content"
+  
+  review_documentation:
+    elements:
+      - "Complete review text in submission-ready format"
+      - "Quality assessment scores across all categories"
+      - "Notable strengths and unique aspects"
+      - "Potential areas for enhancement in future reviews"
+      - "Any specific techniques that were particularly effective"
+
+# =============================================================================
+# API Implementation Guidance
+# =============================================================================
+api_implementation:
+  description: "Guidelines for implementing the Quality Control phase in an API"
+  
+  system_prompt_components:
+    - "Include comprehensive quality assessment framework"
+    - "Include final verification checklist"
+    - "Include redundancy review process"
+    - "Include final polish guidance"
+  
+  message_structure:
+    - order: 1
+      type: "Quality assessment"
+      content: "Comprehensive evaluation of review quality with scoring"
+    
+    - order: 2
+      type: "Final polish confirmation"
+      content: "Explanation of polish steps applied to optimize the review"
+    
+    - order: 3
+      type: "Finalized review"
+      content: "Complete polished review ready for submission"
+    
+    - order: 4
+      type: "Strengths analysis"
+      content: "Identification of particularly effective elements"
+    
+    - order: 5
+      type: "Enhancement opportunities"
+      content: "Suggestions for potential improvements in future reviews"
+    
+    - order: 6
+      type: "Final approval request"
+      content: "Request for final approval to complete the process"
+  
+  processing_steps:
+    - "Apply comprehensive quality assessment framework"
+    - "Complete all final verification checklist items"
+    - "Perform redundancy review and eliminate any unnecessary repetition"
+    - "Apply final polish process to optimize the review"
+    - "Score review across all quality dimensions"
+    - "Analyze strengths and potential enhancement areas"
+    - "Present finalized review with quality assessment"
+    - "Seek final approval from user"
+  
+  error_handling:
+    - scenario: "Quality check failures"
+      response: "Address specific quality issues before finalization"
+    
+    - scenario: "User requests additional revisions"
+      response: "Return to Refinement phase for targeted improvements"
+    
+    - scenario: "User dissatisfaction with final quality"
+      response: "Identify specific concerns and address through final adjustments"
+    
+    - scenario: "Final approval withheld"
+      response: "Determine specific reasons and address through appropriate phase"

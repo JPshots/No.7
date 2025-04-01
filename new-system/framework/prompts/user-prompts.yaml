@@ -1,0 +1,432 @@
+# user-prompts.yaml
+# Templates for user-facing prompts in the Amazon Review Framework
+
+# =============================================================================
+# Application Welcome Prompts
+# =============================================================================
+welcome_prompts:
+  description: "Initial prompts displayed when the application starts"
+  
+  first_time_welcome:
+    message: |
+      Welcome to the Amazon Review Framework!
+      
+      This tool will help you create exceptional product reviews by guiding you through a structured process:
+      
+      1. Intake & Questioning: I'll ask strategic questions about your product experience
+      2. Draft Creation: I'll create a well-structured review based on your responses
+      3. Refinement: We'll collaborate to improve the draft based on your feedback
+      4. Quality Control: I'll verify the review meets all quality standards
+      
+      To get started, please tell me about your product experience. What product are you reviewing, and what has your experience been like?
+      
+      Note: If you have product images, you can upload them now to enhance the review.
+  
+  returning_user_welcome:
+    message: |
+      Welcome back to the Amazon Review Framework!
+      
+      You have an existing review session in progress. Would you like to:
+      
+      1. Continue your existing review
+      2. Start a new review
+      
+      Please select an option to proceed.
+
+# =============================================================================
+# Phase Introduction Prompts
+# =============================================================================
+phase_introductions:
+  - phase: "Intake & Questioning"
+    introduction: |
+      We're now in the Intake & Questioning phase. I'll ask strategic questions to gather comprehensive information about your product experience.
+      
+      This is a crucial phase - the quality of the final review depends on the depth of information we gather now. Please provide detailed responses to help create an exceptional review.
+      
+      Let's start with understanding your overall experience with [PRODUCT_NAME].
+  
+  - phase: "Draft Creation"
+    introduction: |
+      Great! We've gathered comprehensive information about your product experience. We're now moving to the Draft Creation phase.
+      
+      Based on the information you've provided, I'll create a well-structured review that balances informative content with engaging personality. This will include:
+      
+      - An engaging introduction based on your experience
+      - Detailed sections covering key aspects of the product
+      - Clear pros and cons with context
+      - Targeted guidance for potential buyers
+      - A balanced verdict with value assessment
+      
+      Please give me a moment to create your review draft...
+  
+  - phase: "Refinement"
+    introduction: |
+      I've created a complete review draft based on your input. We're now in the Refinement phase.
+      
+      Please review the draft and let me know what you'd like to improve. You can request changes to:
+      
+      - Add or remove specific content
+      - Adjust the style or tone
+      - Reorganize the structure
+      - Change emphasis on certain aspects
+      - Modify any aspect you feel needs improvement
+      
+      I'll implement your feedback while maintaining the quality standards of the framework.
+  
+  - phase: "Quality Control"
+    introduction: |
+      Thank you for your feedback! All of your requested changes have been implemented, and we're now in the Quality Control phase.
+      
+      In this final phase, I'll:
+      
+      - Apply comprehensive quality assessment
+      - Perform final polish to optimize the review
+      - Score the review across quality dimensions
+      - Highlight particular strengths and potential improvements
+      
+      The goal is to ensure your review meets all framework standards and delivers exceptional value to potential buyers.
+
+# =============================================================================
+# Question Templates
+# =============================================================================
+question_templates:
+  - category: "Product Basics"
+    questions:
+      - template: "How long have you been using [PRODUCT_NAME]?"
+        follow_up: "Does this represent typical usage for this type of product?"
+      
+      - template: "What specific model/version of [PRODUCT_NAME] are you reviewing?"
+        follow_up: "Are there other variations available that you're aware of?"
+      
+      - template: "What was your primary reason for purchasing [PRODUCT_NAME]?"
+        follow_up: "Has it fulfilled that specific need effectively?"
+  
+  - category: "User Experience"
+    questions:
+      - template: "What feature surprised you most about [PRODUCT_NAME] compared to similar products you've used?"
+        follow_up: "Was this surprise positive or negative, and why?"
+      
+      - template: "How has [PRODUCT_NAME] integrated into your daily routine or workflow?"
+        follow_up: "Has this integration been seamless or challenging?"
+      
+      - template: "Can you describe a specific situation where [PRODUCT_NAME] particularly impressed you or disappointed you?"
+        follow_up: "What specific aspects stood out in that situation?"
+  
+  - category: "Technical Details"
+    questions:
+      - template: "What are the key technical specifications of [PRODUCT_NAME] that matter most to you?"
+        follow_up: "Do these specifications translate to noticeable performance differences in real-world use?"
+      
+      - template: "Have you tested [PRODUCT_NAME] under any challenging or non-typical conditions?"
+        follow_up: "How did it perform in those conditions compared to normal use?"
+      
+      - template: "How durable has [PRODUCT_NAME] been during your usage period?"
+        follow_up: "Have you noticed any wear and tear or performance degradation over time?"
+  
+  - category: "Comparative Insights"
+    questions:
+      - template: "How does [PRODUCT_NAME] compare to similar products you've used in the past?"
+        follow_up: "What specific advantages or disadvantages stand out in comparison?"
+      
+      - template: "What alternatives did you consider before purchasing [PRODUCT_NAME]?"
+        follow_up: "What ultimately led you to choose this specific product?"
+      
+      - template: "How does the price-to-performance ratio of [PRODUCT_NAME] compare to alternatives?"
+        follow_up: "Do you feel the product provides good value for the price?"
+  
+  - category: "High-Risk/Reward"
+    questions:
+      - template: "If [PRODUCT_NAME] were a character in a movie, who would it be and why?"
+        follow_up: "What specific qualities led you to make that comparison?"
+      
+      - template: "What's the most unexpected way you've found yourself using [PRODUCT_NAME]?"
+        follow_up: "How well did it perform in that unexpected application?"
+      
+      - template: "If you could redesign one aspect of [PRODUCT_NAME], what would it be and why?"
+        follow_up: "How would this change impact your overall satisfaction with the product?"
+
+# =============================================================================
+# Feedback Request Templates
+# =============================================================================
+feedback_request_templates:
+  - category: "Draft Review Request"
+    templates:
+      - message: |
+          Here's the complete review draft based on your input. Please take a moment to review it and let me know what you think.
+          
+          I'd appreciate your feedback on:
+          - Does the review accurately reflect your experience?
+          - Is there any information missing that you'd like to add?
+          - Are there any sections you'd like to expand or reduce?
+          - Is the tone and personality appropriate for your style?
+          - Any other changes you'd like to make?
+      
+      - message: |
+          I've created your review draft! This is based on the information you've shared about [PRODUCT_NAME].
+          
+          Please let me know:
+          - What aspects of the review do you like?
+          - What would you like to change or improve?
+          - Is there anything missing that should be included?
+          - Does the review capture your authentic experience?
+  
+  - category: "Revision Confirmation"
+    templates:
+      - message: |
+          I've made the following changes based on your feedback:
+          
+          [SUMMARY_OF_CHANGES]
+          
+          Here's the revised review. Does this address your feedback, or would you like to make additional changes?
+      
+      - message: |
+          I've updated the review with your requested changes:
+          
+          [SUMMARY_OF_CHANGES]
+          
+          Please review the updated version and let me know if it meets your expectations or if you'd like further adjustments.
+  
+  - category: "Final Approval"
+    templates:
+      - message: |
+          Your review has been finalized! It scored [TOTAL_SCORE]/100 on our quality assessment, with particular strengths in [STRENGTH_AREAS].
+          
+          The review is now ready for submission to Amazon. Is there anything else you'd like to adjust before we consider it complete?
+      
+      - message: |
+          The final review is complete! Here's a summary of its quality assessment:
+          
+          - Testing Depth: [SCORE]/20
+          - Information Quality: [SCORE]/20
+          - Authenticity: [SCORE]/20
+          - Writing Quality: [SCORE]/20
+          - Helpfulness: [SCORE]/20
+          
+          Total Score: [TOTAL_SCORE]/100
+          
+          Is this review ready for submission, or would you like to make any final adjustments?
+
+# =============================================================================
+# Error Response Templates
+# =============================================================================
+error_response_templates:
+  - category: "Information Gaps"
+    templates:
+      - message: |
+          I notice we're missing some important information about [SPECIFIC_ASPECT]. Having this information would significantly improve the quality of your review.
+          
+          Could you share more details about [SPECIFIC_ASPECT]? This will help create a more comprehensive and helpful review.
+      
+      - message: |
+          To create the best possible review, I'd need a bit more information about [SPECIFIC_ASPECT]. This appears to be a critical aspect that potential buyers would want to know about.
+          
+          Could you provide some additional details on this?
+  
+  - category: "Insufficient Experience"
+    templates:
+      - message: |
+          It seems like you may not have had extensive experience with some aspects of [PRODUCT_NAME] yet. That's completely fine! We can focus the review on the aspects you have experience with.
+          
+          Would you prefer to:
+          1. Focus the review on your current experience
+          2. Wait until you've had more time with the product to complete the review
+      
+      - message: |
+          I notice you mentioned limited experience with [SPECIFIC_ASPECT]. For a comprehensive review, this would normally be an important element to cover.
+          
+          We can either focus on the aspects you have experience with or note the limited testing in this area. Which would you prefer?
+  
+  - category: "Technical Issues"
+    templates:
+      - message: |
+          I apologize, but I encountered a technical issue while processing your review. This doesn't affect any of your data, but we'll need to try again.
+          
+          Would you like to:
+          1. Resume from your last saved point
+          2. Restart the current phase
+      
+      - message: |
+          Sorry for the interruption! A technical error occurred, but I've recovered your session data.
+          
+          Let's continue from where we left off. We were discussing [CURRENT_TOPIC].
+
+# =============================================================================
+# Help Templates
+# =============================================================================
+help_templates:
+  general_help: |
+    Here's how to get the most out of the Amazon Review Framework:
+    
+    - Phase Navigation: Type "phase" to see your current phase and available options
+    - Save Progress: Type "save" to save your current progress
+    - View Review: Type "show review" to see the current draft
+    - Help: Type "help [topic]" for specific guidance
+    - Exit: Type "exit" to save and quit
+    
+    What would you like to do next?
+  
+  phase_specific_help:
+    - phase: "Intake & Questioning"
+      help: |
+        Intake & Questioning Phase Help:
+        
+        In this phase, I'll ask questions to gather comprehensive information about your product experience. For best results:
+        
+        - Provide detailed, specific responses
+        - Include real-world examples whenever possible
+        - Share both positive and negative aspects
+        - Describe your actual usage scenarios
+        - Mention any comparisons to alternatives
+        
+        The more detailed your responses, the better the final review will be.
+    
+    - phase: "Draft Creation"
+      help: |
+        Draft Creation Phase Help:
+        
+        In this phase, I'm creating a complete review draft based on your input. You can:
+        
+        - Type "structure" to see the planned review structure
+        - Type "keywords" to see the identified keywords
+        - Type "progress" to check creation progress
+        - Just wait for the draft to be completed
+        
+        Once the draft is complete, we'll move to the Refinement phase for collaborative improvements.
+    
+    - phase: "Refinement"
+      help: |
+        Refinement Phase Help:
+        
+        In this phase, we're improving the review based on your feedback. Effective feedback includes:
+        
+        - Specific sections to modify
+        - Clear descriptions of desired changes
+        - Both strengths to preserve and areas to improve
+        - Preferences for tone and style
+        
+        Type "compare" to see changes between versions.
+    
+    - phase: "Quality Control"
+      help: |
+        Quality Control Phase Help:
+        
+        In this phase, I'm finalizing your review and ensuring it meets all quality standards. You can:
+        
+        - Type "score" to see the quality assessment
+        - Type "strengths" to see particular strengths
+        - Type "enhance" to see potential improvements
+        - Type "final" to view the finalized review
+        
+        Once you approve the final version, the review will be ready for submission.
+
+# =============================================================================
+# Command Response Templates
+# =============================================================================
+command_response_templates:
+  - command: "phase"
+    response: |
+      Current Phase: [CURRENT_PHASE]
+      
+      Progress Overview:
+      [✓] Intake & Questioning - [PHASE_STATUS]
+      [✓] Draft Creation - [PHASE_STATUS]
+      [✓] Refinement - [PHASE_STATUS]
+      [✓] Quality Control - [PHASE_STATUS]
+      
+      In the current phase, you can:
+      [AVAILABLE_ACTIONS]
+  
+  - command: "save"
+    response: |
+      Progress saved successfully!
+      
+      Your review session for [PRODUCT_NAME] has been saved. You can resume exactly where you left off by selecting "Continue existing review" when you return.
+      
+      Session ID: [SESSION_ID]
+  
+  - command: "show review"
+    response: |
+      Current Review Draft:
+      
+      [CURRENT_REVIEW_CONTENT]
+      
+      Status: [DRAFT_STATUS]
+      Phase: [CURRENT_PHASE]
+  
+  - command: "exit"
+    response: |
+      Thank you for using the Amazon Review Framework!
+      
+      Your progress has been saved. You can resume your review session anytime by selecting "Continue existing review" when you return.
+      
+      Session ID: [SESSION_ID]
+      Product: [PRODUCT_NAME]
+      Current Phase: [CURRENT_PHASE]
+  
+  - command: "compare"
+    response: |
+      Review Comparison:
+      
+      Original Version:
+      [ORIGINAL_SECTION]
+      
+      Current Version:
+      [UPDATED_SECTION]
+      
+      Changes made:
+      [CHANGE_SUMMARY]
+
+# =============================================================================
+# Notification Templates
+# =============================================================================
+notification_templates:
+  - category: "Phase Transitions"
+    templates:
+      - message: |
+          We've completed the [COMPLETED_PHASE] phase!
+          
+          Based on our progress, we're ready to move to the [NEXT_PHASE] phase. In this phase, we'll [PHASE_DESCRIPTION].
+          
+          Would you like to proceed to the next phase now?
+      
+      - message: |
+          Congratulations! The [COMPLETED_PHASE] phase is complete.
+          
+          Next, we'll move to the [NEXT_PHASE] phase, where [PHASE_DESCRIPTION].
+          
+          Type "continue" when you're ready to proceed.
+  
+  - category: "Progress Updates"
+    templates:
+      - message: |
+          Progress Update: [PROGRESS_PERCENTAGE]% complete
+          
+          We've made significant progress in gathering information about [PRODUCT_NAME]. We still need details on:
+          
+          [REMAINING_ITEMS]
+          
+          Let's continue with a few more questions.
+      
+      - message: |
+          Draft creation in progress: [PROGRESS_PERCENTAGE]%
+          
+          I'm currently working on the [CURRENT_SECTION] section of your review. The draft will be ready for your review shortly.
+  
+  - category: "Session Management"
+    templates:
+      - message: |
+          Your session has been inactive for [INACTIVE_MINUTES] minutes.
+          
+          Would you like to:
+          1. Continue the session
+          2. Save and exit
+          3. Resume later
+          
+          Your progress is automatically saved, so you won't lose any work.
+      
+      - message: |
+          Session restored successfully!
+          
+          Welcome back to your review of [PRODUCT_NAME]. We're currently in the [CURRENT_PHASE] phase. Let's continue where we left off.
+          
+          Last activity: [LAST_ACTIVITY]

@@ -1,0 +1,298 @@
+# intake.yaml
+# Framework for the Intake & Questioning phase of the Amazon Review Framework
+
+# =============================================================================
+# Phase Overview
+# =============================================================================
+phase_overview:
+  description: "The Intake & Questioning phase focuses on gathering comprehensive product information before any drafting begins"
+  critical_requirement:
+    priority: "HIGHEST"
+    instruction: "MANDATORY: Complete information gathering before proceeding to Draft Creation phase"
+    rationale: "Review drafting must not begin until information gathering is complete"
+  objectives:
+    - "Establish complete understanding of product experience"
+    - "Identify key differentiators and unique features"
+    - "Document specific testing scenarios and outcomes"
+    - "Analyze product images for additional context"
+    - "Collect technical specifications and performance metrics"
+  success_criteria:
+    - "All critical information gaps have been identified and filled"
+    - "Product strengths and limitations are clearly documented"
+    - "Unique user experiences and discoveries are captured"
+    - "Key insights from product images have been extracted"
+    - "Primary and secondary keywords have been identified"
+
+# =============================================================================
+# Strategic Questioning Framework
+# =============================================================================
+strategic_questioning:
+  description: "A structured approach to gathering comprehensive product information efficiently"
+  
+  question_categories:
+    - name: "Critical Gaps"
+      definition: "Information essential to making a purchase decision"
+      examples:
+        - "Compatibility with other systems or products"
+        - "Durability for intended primary use case"
+        - "Key performance metrics relevant to product category"
+      priority: "Highest"
+    
+    - name: "Differential Gaps"
+      definition: "Information that reveals how this product differs from alternatives"
+      examples:
+        - "Unique features not found in competing products"
+        - "Performance differences compared to similar products"
+        - "Design choices that distinguish from alternatives"
+      priority: "High"
+    
+    - name: "Experience Gaps"
+      definition: "Information about real-world usage that can't be found in product descriptions"
+      examples:
+        - "How the product integrates into daily routines"
+        - "Unexpected uses discovered during testing"
+        - "Learning curve or adaptation period"
+      priority: "Medium"
+    
+    - name: "Edge Case Gaps"
+      definition: "Information about uncommon but important usage scenarios"
+      examples:
+        - "Performance under extreme conditions"
+        - "Adaptability to non-standard use cases"
+        - "Failure modes and breaking points"
+      priority: "Low-Medium"
+
+  high_value_questions:
+    - category: "Product Differentiation"
+      questions:
+        - "What feature surprised you most about this product compared to others you've used?"
+        - "What does this product do better than similar products you've tried?"
+        - "What specific design choices make this product stand out (positively or negatively)?"
+    
+    - category: "Usage Experience"
+      questions:
+        - "What unexpected use cases have you discovered beyond the intended purpose?"
+        - "How has this product changed or affected your daily routine?"
+        - "What specific incident best demonstrates this product's strengths or weaknesses?"
+    
+    - category: "Value Assessment"
+      questions:
+        - "How does the price-to-performance ratio compare to alternatives?"
+        - "What would make this product worth paying more (or less) for?"
+        - "How has your perception of the product's value changed after extended use?"
+    
+    - category: "Technical Validation"
+      questions:
+        - "How does the product perform under non-optimal conditions?"
+        - "What specific measurements or tests have you conducted to validate performance claims?"
+        - "How consistent is the product's performance across different use cases?"
+
+  high_risk_reward_questions:
+    description: "Unconventional questions designed to uncover unique insights"
+    principle: "Ask one deliberately unexpected question to reveal signature content opportunities"
+    examples:
+      - "If this product were a character in a movie, who would it be and why?"
+      - "What's the most ridiculous situation where you've found this product surprisingly useful?"
+      - "How would you modify this product if you had complete design control?"
+      - "What unexpected emotional response did this product trigger during use?"
+      - "Which seemingly unrelated product does this most remind you of in function or design?"
+
+# =============================================================================
+# Image Analysis Framework
+# =============================================================================
+image_analysis:
+  description: "Framework for extracting valuable information from product images" 
+  
+  analysis_categories:
+    - name: "Physical Characteristics"
+      description: "Visual assessment of product dimensions, materials, and build quality"
+      questions:
+        - "What are the visible dimensions and proportions relative to common objects in the images?"
+        - "What materials and finishes are identifiable from close-up shots?"
+        - "Are there any visible quality indicators in the construction or assembly?"
+    
+    - name: "Usage Context"
+      description: "Understanding how and where the product is used"
+      questions:
+        - "What environmental context is shown in product usage photos?"
+        - "How does the product interact with or fit into its intended space?"
+        - "What complementary items or accessories are shown being used with the product?"
+    
+    - name: "Design Details"
+      description: "Specific design elements and features visible in images"
+      questions:
+        - "What control interfaces or adjustment mechanisms are visible?"
+        - "How are different components arranged or connected?"
+        - "What design choices are evident in the product's aesthetics?"
+
+  implementation_guidance:
+    - "Cross-reference image observations with provided specifications"
+    - "Use image analysis to verify or challenge written claims"
+    - "Document any discrepancies between images and product descriptions"
+    - "Look for unintentional revelations in background or context of images"
+    - "Consider both official product photos and customer-submitted images"
+
+# =============================================================================
+# Keyword Strategy
+# =============================================================================
+keyword_strategy:
+  description: "Framework for identifying and categorizing key search terms during the Intake phase"
+  
+  keyword_categories:
+    - name: "Primary Keywords"
+      description: "What someone would type to find this specific product"
+      examples: "'75mm lens', 'noise cancelling headphones', 'forehead thermometer'"
+      priority: "Highest"
+    
+    - name: "Secondary/Feature Keywords"
+      description: "Specific features or benefits searchers look for"
+      examples: "'battery life', 'waterproof', 'bokeh', 'comfortable'"
+      priority: "High"
+    
+    - name: "Comparison Keywords"
+      description: "Terms related to alternatives and competitors"
+      examples: "'vs Canon 75mm', 'better than Apple AirPods', 'compared to Braun'"
+      priority: "Medium"
+    
+    - name: "Compatibility Keywords"
+      description: "Terms about what the product works with"
+      examples: "'compatible with iPhone 14', 'fits Medela pump', 'works with Xbox'"
+      priority: "Medium-High"
+    
+    - name: "Problem-Solution Keywords"
+      description: "Terms related to specific pain points the product addresses"
+      examples: "'hands-free pumping', 'accurate fever reading', 'noise cancellation on airplane'"
+      priority: "High"
+
+  keyword_gathering_questions:
+    - "What are the main competing products to this item?"
+    - "What traditional methods or products might this replace?"
+    - "What specific features would buyers be searching for in this category?"
+    - "What accessories or complementary products work with this item?"
+    - "What compatibility concerns might buyers have?"
+    - "What pain points does this product specifically address?"
+
+# =============================================================================
+# Information Tracking
+# =============================================================================
+information_tracking:
+  description: "Framework for monitoring information collection to prevent redundancy"
+  
+  categories:
+    - name: "Technical Specifications"
+      tracking_elements:
+        - "Materials and construction"
+        - "Dimensions and measurements"
+        - "Performance metrics"
+        - "Compatibility information"
+    
+    - name: "User Experience"
+      tracking_elements:
+        - "Ease of use observations"
+        - "Learning curve details"
+        - "Comfort and ergonomics"
+        - "Integration with daily routines"
+    
+    - name: "Comparative Insights"
+      tracking_elements:
+        - "Similar products used"
+        - "Relative strengths and weaknesses"
+        - "Value proposition assessment"
+        - "Competitive positioning"
+    
+    - name: "Use Cases"
+      tracking_elements:
+        - "Primary intended uses"
+        - "Secondary applications"
+        - "Unexpected uses discovered"
+        - "Usage frequency and patterns"
+  
+  implementation_guidance:
+    - "Before asking a question, check if information exists in tracking system"
+    - "After receiving information, update relevant tracking categories"
+    - "Periodically review tracking system to identify remaining gaps"
+    - "Use tracking data to inform follow-up questions when needed"
+
+# =============================================================================
+# Transition Requirements
+# =============================================================================
+transition_requirements:
+  description: "Criteria that must be met before transitioning to the Draft Creation phase"
+  
+  mandatory_requirements:
+    - requirement: "All critical information gaps have been filled"
+      validation: "Verify all items in the Critical Gaps category have responses"
+    
+    - requirement: "Product strengths and limitations are documented"
+      validation: "Confirm both positive and negative aspects are recorded"
+    
+    - requirement: "At least 3 specific usage scenarios are captured"
+      validation: "Check that real-world applications are detailed enough to include in review"
+    
+    - requirement: "Primary and secondary keywords are identified"
+      validation: "Ensure at least 3-5 primary keywords and 5-8 feature keywords are documented"
+    
+    - requirement: "If images are available, key visual insights are extracted"
+      validation: "Confirm all relevant information from images has been documented"
+  
+  completion_checklist:
+    - "Product specifications and technical details are complete"
+    - "User experience observations are sufficiently detailed"
+    - "Comparative insights against alternatives are documented"
+    - "Unique selling points and differentiators are identified"
+    - "Use cases and applications are thoroughly captured"
+    - "Image analysis has been completed (if applicable)"
+    - "All high-priority questions have received adequate responses"
+    - "Information is sufficient to create a comprehensive review"
+
+# =============================================================================
+# API Implementation Guidance
+# =============================================================================
+api_implementation:
+  description: "Guidelines for implementing the Intake & Questioning phase in an API"
+  
+  system_prompt_components:
+    - "Include core questioning framework from strategic_questioning section"
+    - "Include image analysis framework if images are provided"
+    - "Include information tracking system instructions"
+    - "Include appropriate transition requirements"
+  
+  message_structure:
+    - order: 1
+      type: "Initial assessment"
+      content: "Brief analysis of the initial product description and any provided images"
+    
+    - order: 2
+      type: "Strategic questions"
+      content: "First batch of high-priority questions based on identified information gaps"
+    
+    - order: 3
+      type: "Follow-up questions"
+      content: "Additional questions based on initial responses and remaining information needs"
+    
+    - order: 4
+      type: "Transition assessment"
+      content: "Evaluation of information completeness and recommendation to proceed to Draft phase"
+  
+  processing_steps:
+    - "Parse initial product description for basic understanding"
+    - "Process any provided images using the image analysis framework"
+    - "Identify information gaps based on available data"
+    - "Generate strategic questions prioritized by information value"
+    - "Process responses and update information tracking system"
+    - "Continue with follow-up questions until sufficient information is gathered"
+    - "Verify all transition requirements are met before proceeding"
+    - "Prepare gathered information for handoff to Draft Creation phase"
+  
+  error_handling:
+    - scenario: "Insufficient initial information"
+      response: "Request more details about the product experience before proceeding with questions"
+    
+    - scenario: "Vague or incomplete responses"
+      response: "Ask more specific follow-up questions to extract concrete details"
+    
+    - scenario: "User wishes to proceed with incomplete information"
+      response: "Advise on potential impact on review quality and identify critical missing elements"
+    
+    - scenario: "Information contradictions or inconsistencies"
+      response: "Highlight discrepancies and seek clarification before proceeding"
