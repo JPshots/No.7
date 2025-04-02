@@ -1,347 +1,332 @@
-# Integrated Review Framework: Balanced Authenticity with Strategic Humor and Helpfulness
+# personality-balance.yaml
+# Framework for balancing informational content and personality in reviews
 
-# =============================================================================
-# Core Principles
-# =============================================================================
-core_principles:
-  - name: "Authentic Voice Foundation"
-    description: "Reviews should sound like a real person with genuine experiences"
-    implementation:
-      - "Balance positive observations with honest criticisms from the start"
-      - "Include specific, detailed interactions rather than general impressions"
-      - "Incorporate authentic reactions that acknowledge both pros and cons"
-      - "Establish mixed assessment in opening paragraphs"
-  
-  - name: "Strategic Humor Integration"
-    description: "Use humor to enhance information, not replace it"
-    implementation:
-      - "Include minimum 3 humor elements throughout the review"
-      - "Vary techniques for different sections (don't rely on a single approach)"
-      - "Ensure humor enhances rather than detracts from informational value"
-      - "Use humor to make key points more memorable and engaging"
-  
-  - name: "Information-First Priority"
-    description: "Every section must deliver substantive information"
-    implementation:
-      - "Front-load essential details before adding personality elements"
-      - "Ensure critical assessment points are clear regardless of style"
-      - "Maintain a balanced perspective throughout the entire review"
-      - "Never sacrifice information for style"
-  
-  - name: "Buyer-Focused Helpfulness"
-    description: "Reviews should directly help potential buyers make informed decisions"
-    implementation:
-      - "Include specific comparative context with alternatives or previous models"
-      - "Document multiple real-world usage scenarios with detailed outcomes"
-      - "Provide explicit price-to-performance value assessment"
-      - "Translate technical specifications into practical implications"
-      - "Identify both ideal and non-ideal users with clear reasoning"
-      - "Share non-obvious practical tips derived from extended usage"
+framework_philosophy:
+  description: "Critical guidance for implementing this framework"
+  key_principles:
+    - "These guidelines provide structure but should not restrict creativity"
+    - "Adapt ratios and approaches based on the specific product being reviewed"
+    - "Include sections based on relevance, not completeness"
+    - "Use judgment to determine the most effective balance for each review"
+    - "Focus on the outcome of an effective, helpful review rather than strict adherence to percentages"
+  implementation_approach: "View these guidelines as a starting point, not a rigid template"
 
-# =============================================================================
-# Information-Personality Balance
-# =============================================================================
 information_personality_balance:
-  baseline_ratio:
+  description: "Framework for balancing informational content and personality in reviews"
+  
+  baseline_ratios:
     informational: 55
     personality: 40
     flexibility: 5
-    note: "These percentages represent content allocation across the entire review"
+    note: "These percentages represent target allocations across the entire review"
   
-  section_adjustments:
-    - section: "Introduction (First Impressions)"
+  section_specific_adjustments:
+    - content_type: "Opening/Introduction Content"
       personality_adjustment: "+5%"
-      information_priority: "Initial expectations, testing duration, general impression"
-      effective_techniques: ["Relatable experiences", "Crafted analogies"]
-      key_implementation: "Express mixed but predominantly positive/negative assessment early"
-      helpfulness_requirements:
-        - "Establish testing duration and methodology"
-        - "Provide overview of assessment (mixed, positive, negative)"
-        - "Indicate primary use cases tested"
+      rationale: "Higher personality engages readers initially"
     
-    - section: "Usage Experience (Everyday Use)"
+    - content_type: "Experience Narrative Content"
       personality_adjustment: "0%"
-      information_priority: "Realistic usage scenarios, performance in different environments"
-      effective_techniques: ["Situational comedy", "Self-deprecating observations", "Crafted analogies"]
-      key_implementation: "Connect humor directly to product functionality"
-      helpfulness_requirements:
-        - "Document performance in at least 3 different environments/scenarios"
-        - "Include unexpected discoveries during testing"
-        - "Note adaptations required for optimal use"
+      rationale: "Maintains baseline balance while sharing experiences"
     
-    - section: "Technical Details"
+    - content_type: "Technical/Specification Content"
       personality_adjustment: "-15%"
-      information_priority: "Specifications, measurements, performance metrics"
-      effective_techniques: ["Unexpected comparisons", "Dry wit"]
-      key_implementation: "Use humor to clarify technical concepts"
-      helpfulness_requirements:
-        - "Translate specifications into real-world implications"
-        - "Compare performance to category standards or expectations"
-        - "Specify actual testing methods used for evaluation"
+      rationale: "Technical details require more direct information"
     
-    - section: "Pros & Cons"
+    - content_type: "Evaluation Content"
       personality_adjustment: "-10%"
-      information_priority: "Clear, concise feature assessment"
-      implementation: "Enhance 30-40% of list items with brief humor"
-      key_requirement: "Place humor after the core information in each point"
-      helpfulness_requirements:
-        - "Ensure each point has practical relevance to buyers"
-        - "Provide context for why each point matters to users"
-        - "Include both major and minor considerations"
+      rationale: "Assessment needs clarity with some personality"
     
-    - section: "Target Audience"
-      personality_adjustment: "0%"
-      information_priority: "Specific use cases and user profiles"
-      effective_techniques: ["Situational comedy", "Unexpected comparisons"]
-      key_implementation: "Use humor to clarify user-product fit"
-      helpfulness_requirements:
-        - "Create specific user profiles rather than generic categories"
-        - "Include both ideal and non-ideal users with clear reasoning"
-        - "Connect user needs to specific product attributes"
-    
-    - section: "Practical Tips"
-      personality_adjustment: "-5%"
-      information_priority: "Actionable recommendations"
-      effective_techniques: ["Self-deprecating humor", "Situational comedy"]
-      key_implementation: "Connect humor to the reason behind each tip"
-      helpfulness_requirements:
-        - "Focus on non-obvious discoveries from extended use"
-        - "Include firmware/software update experiences if applicable"
-        - "Address common usage challenges with solutions"
-    
-    - section: "Conclusion"
+    - content_type: "Conclusion/Verdict Content"
       personality_adjustment: "+5%"
-      information_priority: "Final recommendation, value proposition"
-      effective_techniques: ["Unexpected comparisons", "Crafted analogies"]
-      key_implementation: "End with a humorous yet informative final thought"
-      helpfulness_requirements:
-        - "Provide clear value assessment with price context"
-        - "Summarize primary strengths and limitations"
-        - "Offer final recommendation for specific user groups"
+      rationale: "Slightly higher personality creates memorable closing"
+  
+  implementation_techniques:
+    - technique: "Front Loading"
+      description: "Always place essential information FIRST in every sentence or list item"
+      example:
+        bad: "Like upgrading from economy to business class, this battery charges quickly"
+        good: "This battery charges in under 2 hours, like upgrading from economy to business class"
+    
+    - technique: "List Item Enhancement"
+      description: "Enhance 30-40% of list items with personality, always after core information"
+      example:
+        basic: "Charges 10 AA/AAA batteries plus 2 9V simultaneously"
+        enhanced: "Charges 10 AA/AAA batteries plus 2 9V simultaneously, perfect for flash-addicted photographers with battery dependencies"
+    
+    - technique: "Contextual Personality"
+      description: "Add personality elements that directly enhance understanding of product features"
+      example:
+        weak: "The silicone grip is good."
+        strong: "The silicone grip eliminates that plastic-on-countertop clatter that wakes sleeping babies."
 
-# =============================================================================
-# Humor Techniques Toolkit
-# =============================================================================
-humor_techniques:
-  primary_techniques:
-    - name: "Relatable Exaggeration & Hyperbole"
-      description: "Exaggerate common experiences with the product for comic effect"
-      examples:
-        - "The battery lasted so long I had to check if it was secretly plugged into a nuclear reactor"
-        - "These headphones block noise so well I missed three fire alarms and a tornado warning"
-      best_for: "Highlighting standout features or notable drawbacks"
-      usage: "Liberal"
-    
-    - name: "Self-Deprecating Humor"
-      description: "Frame product benefits through personal shortcomings"
-      examples:
-        - "As someone who can barely keep a cactus alive, I appreciated the water-resistant design"
-        - "My coordination skills of a newborn giraffe were no match for these stabilized controls"
-      best_for: "Accessibility features, durability, ease-of-use"
-      usage: "Liberal"
-    
-    - name: "Crafted Analogies & Metaphors"
-      description: "Create vivid, unexpected comparisons that illuminate product qualities"
-      examples:
-        - "The noise cancellation is like having an invisibility cloak for your ears—subway screeches become mere whispers"
-        - "These earbuds connect to devices faster than my relatives discover I have technical skills at family gatherings"
-      best_for: "Communicating subjective experiences in memorable ways"
-      usage: "Liberal"
-    
-    - name: "Situational Comedy"
-      description: "Brief anecdotes that highlight product performance in real-world scenarios"
-      examples:
-        - "Called my mom while jogging in a thunderstorm and she didn't realize I wasn't sitting in my living room"
-        - "The automatic shut-off feature saved me after falling asleep with them on, waking up six hours later still at 70% battery"
-      best_for: "Demonstrating product capabilities in unexpected situations"
-      usage: "Liberal"
+personality_techniques:
+  description: "Tools for adding personality, to be used selectively based on judgment"
   
-  advanced_techniques:
-    - name: "Dry Wit"
-      description: "Understated humor delivered with minimal emotion"
-      examples:
-        - "The product promises 'revolutionary design.' So did my toaster. At least the toaster delivered consistent results."
-        - "The manual suggests a 'quick 3-minute setup.' They forgot to include the 40 minutes spent deciphering the instructions."
-      best_for: "Pointing out marketing hyperbole, addressing minor disappointments"
-      usage: "Judicious"
+  creative_elements:
+    - name: "Unexpected Analogies"
+      description: "Creating comparisons that surprise while clarifying"
+      example: "There's a locking function that I've never used - it's like having a parachute on a submarine. Nice to know it's there, probably won't need it."
+      frequency: "1-2 per review, where naturally fitting"
     
-    - name: "Strategic Understatement"
-      description: "Downplay significant features for comic effect"
-      examples:
-        - "It's mildly convenient that I haven't had to charge these headphones in two weeks"
-        - "The waterproofing is somewhat helpful if you happen to be caught in a torrential downpour"
-      best_for: "Emphasizing impressive features without sounding promotional"
-      usage: "Judicious"
+    - name: "Deliberate Understatement"
+      description: "Understating something significant for humorous effect"
+      example: "Battery compartment has all the durability of wet tissue paper"
+      frequency: "Consider using 1 per review if appropriate"
     
-    - name: "Sarcasm"
-      description: "Saying the opposite of what's meant for humorous effect"
-      examples:
-        - "The battery lasted a whole 45 minutes. Perfect for those who enjoy frequent charging breaks."
-        - "The app crashed only seven times today. A new record!"
-      best_for: "Highlighting clear product shortcomings"
-      usage: "Sparing (1-2 instances per review)"
-      note: "Use only when meaning is absolutely clear from context"
+    - name: "Absurd Specificity"
+      description: "Using unexpectedly detailed descriptions"
+      example: "Perfect for photographers whose flashes consume batteries like a toddler with Halloween candy"
+      frequency: "1-2 per review, where naturally fitting"
+    
+    - name: "Self-Deprecating Observations"
+      description: "Using personal shortcomings to highlight product features"
+      example: "We've become popcorn snobs, vacuum-sealing kernels for optimal freshness"
+      frequency: "Consider using 1 per review if naturally fitting"
+  
+  implementation_note: "Choose techniques that best fit the product and review - not all techniques need to be used in every review"
 
-# =============================================================================
-# Implementation Techniques
-# =============================================================================
-implementation_techniques:
-  front_loading:
-    description: "Always place essential information FIRST in every sentence or list item"
-    rationale: "Ensures critical details are never sacrificed for style"
-    guidelines: "Information should precede personality elements"
-    examples:
-      poor:
-        - "Like upgrading from economy to business class, this battery charges quickly"
-        - "In a hilarious twist of fate, the touch controls stopped working in cold weather"
-      good:
-        - "This battery charges in under 2 hours—like upgrading from economy to business class"
-        - "The touch controls stop working in cold weather, which led to an unfortunate 20 minutes of the same song on repeat during my winter run"
+humor_framework:
+  description: "Guidance for effectively incorporating humor in reviews"
   
-  list_item_enhancement:
-    description: "Enhance 30-40% of list items with personality (not all of them)"
-    guidelines:
-      - "Always add personality after core information is presented"
-      - "Select the most distinctive or important features for enhancement"
-    examples:
-      poor:
-        - "Hilariously long battery life that outlasts my patience for podcasts"
-        - "A charging case slippery as a politician's promises"
-      good:
-        - "30-hour battery life that outlasts my patience for even the longest podcasts"
-        - "Smooth-finish charging case that's surprisingly slippery—like trying to hold onto a politician's promises"
+  philosophy:
+    key_principles:
+      - "Humor should enhance understanding of the product, not distract from it"
+      - "Different products naturally lend themselves to different types of humor"
+      - "Authentic humor that arises from genuine experiences is most effective"
+      - "Humor should fit the overall tone of the review and the product itself"
+    implementation_approach: "View these as options to consider based on the product and experience, not requirements to include"
   
-  section_balance:
-    description: "Apply the appropriate balance adjustments for each section"
-    guidelines:
-      - "Technical sections should be less personality-driven"
-      - "Opening and conclusion can have more personality"
-      - "Maintain consistent voice while adjusting density of humor"
+  humor_techniques:
+    description: "Suggested approaches for incorporating humor effectively"
+    
+    approaches:
+      - technique: "Situational Comedy"
+        description: "Humor based on relatable product usage scenarios"
+        example: "The touch controls took a week to master (during which I accidentally hung up on my boss—twice), but they've since become second nature."
+        best_for: "Products that integrate into daily life in ways that create natural comedic moments"
+      
+      - technique: "Observational Humor"
+        description: "Witty observations about product quirks or user interactions"
+        example: "The satisfying magnetic *snap* when the earbuds settle into their charging cradle has joined my collection of oddly pleasing sounds, alongside rain on windows and that perfect guitar chord."
+        best_for: "Products with distinctive sensory experiences or unique interaction patterns"
+      
+      - technique: "Contrast Comedy"
+        description: "Humor based on unexpected contradictions or ironic situations"
+        example: "The case is marketed as 'pocket-sized,' which is technically true if you exclusively wear cargo pants or have pockets designed by Mary Poppins."
+        best_for: "Products with marketing claims that don't quite match reality"
+      
+      - technique: "Exaggeration with Plausible Deniability"
+        description: "Deliberate overstatement that's clearly comedic but makes a valid point"
+        example: "The cable is so durable I'm pretty sure you could tow a car with it, though I stopped my testing after successfully pulling a small bookshelf."
+        best_for: "Products with genuinely impressive features that invite playful exaggeration"
+      
+      - technique: "Relatable Frustrations"
+        description: "Humor that acknowledges common pain points with a wry perspective"
+        example: "Like every USB cable ever manufactured, it refuses to go in correctly on the first try—or the second—maintaining the universal law of USB insertion."
+        best_for: "Products with minor annoyances that are widely experienced"
+      
+      - technique: "Humorous Alternatives"
+        description: "Presenting unrealistic alternatives to highlight a product's value"
+        example: "Before these noise-cancelling headphones, my options were: become one with the airplane engine noise, master telepathic communication, or perfect the art of reading lips."
+        best_for: "Products that solve significant problems in unique ways"
+  
+  section_specific_humor:
+    description: "How different types of humor fit various review sections"
+    
+    section_guidance:
+      - section: "Introduction"
+        suitable_approaches:
+          - "Situational setups that establish context with humor"
+          - "Brief self-deprecating moments that create relatability"
+        example: "After three years of untangling wired earbuds that seemed magnetically attracted to doorknobs, I finally cut the cord with these wireless headphones."
+        note: "Opening humor should establish context for the review while engaging the reader"
+      
+      - section: "Experience Narrative"
+        suitable_approaches:
+          - "Observational humor about unexpected discoveries"
+          - "Relatable situational comedy from real usage"
+        example: "During a particularly brutal HIIT session, these earbuds refused to budge—unlike my previous pair that treated sweat like an ejection signal."
+        note: "Experience-based humor should arise naturally from authentic situations"
+      
+      - section: "Technical Analysis"
+        suitable_approaches:
+          - "Contrast between expectations and reality"
+          - "Mild exaggeration to illustrate performance characteristics"
+        example: "The battery consistently delivers 7.5 hours—more honest than most competitors whose 'all-day battery' apparently assumes your day ends at lunch."
+        note: "Technical humor should clarify rather than obscure specifications"
+      
+      - section: "Pros and Cons"
+        suitable_approaches:
+          - "Witty phrasing that enhances rather than replaces information"
+          - "Contrasts that highlight limitations in memorable ways"
+        example: "Touch controls stop working with cold fingers (discovered during a frosty morning run where I looked like I was aggressively pantomiming to invisible friends)"
+        note: "Limit humor to 30-40% of list items, focusing on those where it adds value"
+      
+      - section: "Verdict"
+        suitable_approaches:
+          - "Full-circle callbacks to introduction humor"
+          - "Balanced perspective with light-hearted final observations"
+        example: "They've relegated my $200 over-ears to home-only duty and made me question why I ever tolerated wires dangling from my ears like some primitive audio caveman."
+        note: "Closing humor should reinforce the overall assessment while leaving a positive impression"
+  
+  implementation_guidance:
+    flexibility:
+      - "Not every section needs humor—some products or sections benefit from a straightforward approach"
+      - "Choose humor techniques that naturally fit the product and your experience"
+      - "Adjust humor based on the product category—tech products differ from kitchen items or clothing"
+      - "Develop humor organically from actual experiences rather than forcing it"
+    
+    priorities:
+      - "Information clarity should never be sacrificed for a joke"
+      - "Humor should enhance the reader's understanding of the product"
+      - "Authentic humor arising from genuine experiences is most effective"
+      - "Balance throughout the review—don't front-load all humor in one section"
+    
+    boundaries:
+      - "Avoid humor at the expense of potential users or accessibility needs"
+      - "Steer clear of overly negative humor that might seem mean-spirited"
+      - "Keep humor appropriate for general audiences"
+      - "Ensure humor doesn't mislead about product performance or features"
 
-# =============================================================================
-# Authenticity Markers
-# =============================================================================
-authenticity_markers:
-  experience_specificity:
-    description: "Include precise details that establish credibility"
-    examples:
-      - "Include precise testing durations (e.g., 'six weeks of daily use')"
-      - "Describe specific usage scenarios (e.g., 'during a thunderstorm run')"
-      - "Reference particular content consumed (e.g., 'while listening to complex piano pieces')"
+helpfulness_framework:
+  description: "Guidance for implementing helpfulness in reviews"
   
-  balanced_assessment_triggers:
-    description: "Establish mixed perspective early in the review"
-    examples:
-      - "Introduce limitations early ('mixed but mostly positive impressions')"
-      - "Acknowledge marketing claims vs. reality"
-      - "Include negative points even in positive sections"
+  philosophy:
+    key_principles:
+      - "The following suggestions provide valuable approaches to creating helpful reviews"
+      - "Adapt these suggestions based on the specific product being reviewed"
+      - "Choose the most appropriate helpfulness elements for each review"
+      - "Focus on creating truly helpful content rather than including every element"
+    implementation_approach: "View these as proven techniques to consider, not a checklist of requirements"
   
-  natural_language_patterns:
-    description: "Use conversational rather than formal language"
-    examples:
-      - "Vary sentence length and structure"
-      - "Include occasional asides and parentheticals"
-      - "Use conversational transitions rather than formal ones"
-  
-  credibility_elements:
-    description: "Demonstrate genuine product interaction"
-    examples:
-      - "Mention unexpected discoveries during testing"
-      - "Include specific comparative context ('better than my previous Sony model')"
-      - "Reference imperfect usage patterns ('I forgot to charge it overnight')"
-  
-  helpfulness_markers:
-    description: "Elements that make the review more useful to potential buyers"
-    examples:
-      - "Include specific model numbers when making comparisons"
-      - "Mention actual measurements or time periods rather than vague terms"
-      - "Describe the exact problem being solved rather than general benefits"
-      - "Specify exact usage conditions that affected performance"
-      - "Note which features were actually used vs. untested"
+  helpfulness_elements:
+    description: "Suggested elements that contribute to review helpfulness"
+    
+    section_specific_suggestions:
+      - section: "Introduction"
+        helpful_elements:
+          - element: "Problem-solution framing"
+            description: "Establish the need the product addresses"
+            example: "After three years of untangling wired earbuds that seemed magnetically attracted to doorknobs, I finally cut the cord with these wireless headphones."
+          - element: "Usage context setup"
+            description: "Briefly establish how the product fits into real life"
+            example: "Six weeks of daily 2-hour use during commutes and workouts have given me a thorough understanding of these headphones."
+        note: "Choose elements that naturally fit the product and your experience"
+      
+      - section: "Experience Narrative"
+        helpful_elements:
+          - element: "Specific usage scenarios"
+            description: "Real-world situations that demonstrate product performance"
+            example: "During a particularly brutal HIIT session, these earbuds refused to budge—unlike my previous pair that treated sweat like an ejection signal."
+          - element: "Comparative insights"
+            description: "Contextual comparisons to alternatives or previous products"
+            example: "While these don't match the noise cancellation of my previous over-ears, they deliver much better call quality in noisy environments."
+        note: "Select scenarios that highlight the product's strengths and limitations"
+      
+      - section: "Technical Details"
+        helpful_elements:
+          - element: "Performance metrics"
+            description: "Quantified performance against manufacturer claims"
+            example: "Battery consistently delivers 7.5 hours versus the claimed 8 hours—more honest than most competitors."
+          - element: "Context-specific performance"
+            description: "How technical features perform in different environments"
+            example: "The Bluetooth connection remains solid through three walls, but drops when my phone is in my back pocket while gardening."
+        note: "Focus on the technical aspects most relevant to buying decisions"
+      
+      - section: "Pros and Cons"
+        helpful_elements:
+          - element: "Prioritized advantages"
+            description: "Benefits with context about why they matter"
+            example: "Seamless device switching between phone and laptop without the usual headaches"
+          - element: "Contextual limitations"
+            description: "Drawbacks with usage impact rather than just listing flaws"
+            example: "Touch controls stop working with cold fingers (discovered during a frosty morning run)"
+        note: "Select pros and cons that would most impact purchase decisions"
+      
+      - section: "Ideal Users"
+        helpful_elements:
+          - element: "Specific user profiles"
+            description: "Clear identification of who would benefit most"
+            example: "Perfect for daily commuters seeking reliable, all-day battery life"
+          - element: "Non-ideal scenarios"
+            description: "Situations where the product underperforms"
+            example: "Might disappoint business callers who depend on crystal-clear microphone quality"
+        note: "Tailor user identification to the specific product category"
+      
+      - section: "Practical Tips"
+        helpful_elements:
+          - element: "Setup recommendations"
+            description: "Initial configuration advice from experience"
+            example: "Update firmware immediately – The out-of-box firmware had random pauses that the update fixed completely"
+          - element: "Maintenance insights"
+            description: "Long-term care guidance not in the manual"
+            example: "Clean the charging contacts weekly – Even invisible ear debris can affect charging reliability"
+        note: "Include tips that would genuinely improve user experience"
+      
+      - section: "Verdict"
+        helpful_elements:
+          - element: "Value assessment"
+            description: "Clear evaluation of price-to-performance ratio"
+            example: "At $79.99, these headphones deliver performance that exceeds their price point, making them an excellent value."
+          - element: "Comparative positioning"
+            description: "Where the product fits in the market landscape"
+            example: "While lacking the premium features of $200+ models, these outperform everything in their price range."
+        note: "Focus on helping readers make informed purchase decisions"
 
-# =============================================================================
-# Quality Assessment Metrics
-# =============================================================================
+  implementation_guidance:
+    flexibility:
+      - "Not every section needs every suggested helpful element"
+      - "Choose elements that naturally fit the product and your experience"
+      - "Combine or adapt elements to create the most helpful review"
+      - "Develop custom helpful elements when appropriate for specific products"
+    
+    priorities:
+      - "Clear purchase guidance is paramount"
+      - "Authentic, specific experiences should take precedence over generic assessments"
+      - "Present helpful information in a natural, engaging way"
+      - "Balance comprehensive information with practical usefulness"
+
+section_selection:
+  description: "Guidance for choosing which sections to include"
+  principle: "Include sections based on relevance to the specific product, not because they exist in the framework"
+  implementation:
+    - "Omit sections that don't add value for the particular product"
+    - "Create custom sections when standard options don't fit"
+    - "Combine sections when it improves flow and readability"
+    - "Focus on what potential buyers need to know"
+  
+  creative_freedom:
+    - "Adjust the structure based on your judgment of what best serves the specific product and review"
+    - "Use your discretion to determine where certain elements will most effectively enhance the review"
+    - "Adapt section organization to best present the product's strengths and limitations"
+    - "Consider the natural flow of information when determining section ordering"
+
 quality_assessment:
-  metrics:
-    - name: "Testing Depth"
-      description: "Comprehensive testing across multiple scenarios"
-      evaluation_criteria:
-        - "Duration of testing period (1-5 points)"
-        - "Variety of usage scenarios (1-10 points)"
-        - "Thoroughness of testing methodology (1-5 points)"
-      score_range: "0-20"
-    
-    - name: "Information Quality"
-      description: "Comprehensive and accurate product information"
-      evaluation_criteria:
-        - "Technical details accuracy and relevance (1-5 points)"
-        - "Comparative analysis with alternatives (1-5 points)"
-        - "Practical usage tips and insights (1-5 points)"
-        - "Value assessment relative to price (1-5 points)"
-      score_range: "0-20"
-    
-    - name: "Authenticity"
-      description: "Genuine voice and personal experience"
-      evaluation_criteria:
-        - "Specific personal experience evidence (1-10 points)"
-        - "Specific incidents and situations described (1-5 points)"
-        - "Discovered features and insights not in marketing (1-5 points)"
-      score_range: "0-20"
-    
-    - name: "Writing Quality"
-      description: "Engaging and well-structured content"
-      evaluation_criteria:
-        - "Reader engagement and interest (1-5 points)"
-        - "Readability and flow (1-5 points)"
-        - "Voice consistency throughout (1-5 points)"
-        - "Appropriate personality and humor integration (1-5 points)"
-      score_range: "0-20"
-    
-    - name: "Helpfulness"
-      description: "Practical value to potential buyers"
-      evaluation_criteria:
-        - "Purchase guidance clarity (1-10 points)"
-        - "Specific user suitability identification (1-5 points)"
-        - "Problem-solution matching (1-5 points)"
-      score_range: "0-20"
+  description: "Framework for assessing review quality"
   
-  helpfulness_requirements:
-    minimum_elements:
-      - "3+ specific usage scenarios with detailed outcomes"
-      - "1+ direct comparison to alternative products or previous models"
-      - "Explicit price-value assessment with context"
-      - "Technical specifications translated to practical implications"
-      - "Both ideal and non-ideal user identification"
-      - "3-5 practical tips from actual usage experience"
-    
-    helpfulness_checklist:
-      comparative_context:
-        - "Names specific alternative products considered/compared"
-        - "Provides direct feature-to-feature comparisons where relevant"
-        - "Discusses how product fits within its category/price range"
+  scoring_categories:
+    - name: "Helpfulness"
+      max_points: 20
+      assessment_philosophy:
+        description: "Reviews should help readers make informed decisions in ways appropriate to the product"
+        implementation: "Use judgment to determine the most effective ways to provide helpful guidance for each specific product"
       
-      use_case_documentation:
-        - "Details multiple real-world usage scenarios"
-        - "Documents performance in different environments"
-        - "Includes unexpected applications discovered during testing"
+      key_elements:
+        - element: "Purchase Guidance"
+          description: "Clear guidance on product value and suitability"
+          flexible_implementation: "Adapt guidance style to match product complexity and target audience"
+        
+        - element: "User Identification"
+          description: "Help readers determine if they are the target user"
+          flexible_implementation: "Choose appropriate methods to describe ideal users based on product type"
+        
+        - element: "Problem Solving"
+          description: "Connect product features to reader needs and problems"
+          flexible_implementation: "Focus on the problems most relevant to the specific product"
       
-      value_assessment:
-        - "Evaluates price-to-performance ratio with specific metrics"
-        - "Considers long-term value (durability, repairability)"
-        - "Addresses whether product justifies its cost"
-      
-      technical_translation:
-        - "Explains what specifications mean in practical terms"
-        - "Connects technical capabilities to everyday usage"
-        - "Uses analogies to clarify technical concepts"
-      
-      user_identification:
-        - "Defines specific user profiles who would benefit most"
-        - "Explicitly states who should avoid the product"
-        - "Identifies usage contexts where performance excels/struggles"
-      
-      practical_tips:
-        - "Provides non-obvious usage recommendations"
-        - "Includes maintenance and longevity advice"
-        - "Shares discovered workarounds for limitations"
+      scoring_guidance:
+        - "Score based on effectiveness rather than inclusion of specific elements"
+        - "Consider how well helpfulness is integrated into the overall review"
+        - "Reward creative approaches to providing guidance that fit the product"
+        - "Value quality of insights over quantity of helpfulness elements"
