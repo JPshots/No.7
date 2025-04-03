@@ -8,7 +8,7 @@ require('dotenv').config();
 const { program } = require('commander');
 const chalk = require('chalk');
 const figlet = require('figlet');
-const { Session } = require('./src/session');
+const { Session } = require('./src/session-class');
 const { listSessions, createNewSession, loadExistingSession } = require('./src/cli');
 const { version } = require('./package.json');
 
