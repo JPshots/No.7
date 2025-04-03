@@ -41,8 +41,11 @@ Thumbs.db
 htmlcov/
 .pytest_cache/
 
-# Framework files will be copied to this directory at runtime
-framework/
+# Session and runtime data
+.sessions/
+images/
+node_modules/
+
 # Environment files
 .env
 .env.local
@@ -51,3 +54,6 @@ framework/
 # API keys and secrets
 *.pem
 *.key
+
+# Temporary files
+tmp/
