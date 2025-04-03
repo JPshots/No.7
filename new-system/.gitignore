@@ -43,3 +43,12 @@ htmlcov/
 
 # Framework files will be copied to this directory at runtime
 framework/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# API keys and secrets
+*.pem
+*.key
