@@ -224,8 +224,8 @@ function getProductTypeNotes(productType) {
 
 module.exports = { FrameworkLoader };
 
-class FrameworkLoader {
-  async getRefiningGuidelines() {
+// Add this method to the existing FrameworkLoader class before the module.exports line
+FrameworkLoader.prototype.getRefiningGuidelines = async function() {
   try {
     // Load key sections from different phases
     const draftFramework = await this.loadPhaseFramework('draft');
@@ -252,4 +252,4 @@ class FrameworkLoader {
     console.error(`Error loading refining guidelines:`, error.message);
     return {};
   }
-  }}
+};
