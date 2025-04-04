@@ -1,1 +1,6 @@
 node amazon-review.js
+To submit your review from this editor:
+
+First press the Esc key to exit INSERT mode
+Then type :wq (colon followed by wq)
+Press Enter

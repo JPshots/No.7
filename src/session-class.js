@@ -185,6 +185,23 @@ class Session {
           this.keywords = this.extractKeywords(this.messages);
           this.productType = this.determineProductType(this.messages);
           
+          // Add research transition message if research was conducted
+          if (this.phaseData[PHASES.INTAKE].data.researchResults) {
+            const transitionMessage = {
+              role: 'user',
+              content: `I'm ready to proceed to the draft creation phase. Please create a complete review draft based on both my personal experiences with the product AND the research insights we've gathered. 
+
+Remember:
+- Factual information from research (specifications, compatibility, measurements) can be integrated seamlessly
+- Subjective information from research (other users' opinions/experiences) must be clearly attributed with phrases like "according to other users" or "many reviewers note that"
+- My direct experiences should always take precedence over any conflicting information from research
+
+Please create a well-balanced review that properly integrates both sources of information.`
+            };
+            
+            this.messages.push(transitionMessage);
+          }
+          
           // Mark phase as complete
           this.phaseData[PHASES.INTAKE].complete = true;
           phaseComplete = true;
