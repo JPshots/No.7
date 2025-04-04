@@ -79,7 +79,17 @@ class ClaudeAPI {
       if (enableSearch) {
         requestOptions.tools = [
           {
-            name: "web_search"
+            name: "web_search",
+            input_schema: {
+              type: "object",
+              properties: {
+                query: {
+                  type: "string",
+                  description: "Search query"
+                }
+              },
+              required: ["query"]
+            }
           }
         ];
       }
