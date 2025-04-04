@@ -2,7 +2,8 @@
  * Conduct product research during the Intake phase with enhanced research planner
  * This should be called during runIntakePhase()
  */
-async conductProductResearch() {
+class ProductResearch {
+  async conductProductResearch() {
     if (!this.webSearchEnabled || !this.claude) {
       console.log(chalk.yellow('\nWeb search is disabled. Enable it in .env file to use research features.'));
       return false;
@@ -132,10 +133,11 @@ async conductProductResearch() {
         }
       }
       
-      console.log(chalk.green('\nResearch completed successfully!'));
-      return true;
-    } catch (error) {
-      console.error(chalk.red('Error conducting product research:'), error.message);
-      return false;
+        console.log(chalk.green('\nResearch completed successfully!'));
+        return true;
+      } catch (error) {
+        console.error(chalk.red('Error conducting product research:'), error.message);
+        return false;
+      }
     }
   }

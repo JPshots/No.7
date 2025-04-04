@@ -1,4 +1,4 @@
-async createSystemPromptWithResearch(phase) {
+async function createSystemPromptWithResearch(phase) {
     // Load the base system prompt
     let systemPrompt = await this.frameworkLoader.loadSystemPrompt(phase);
     
