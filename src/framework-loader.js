@@ -223,3 +223,33 @@ function getProductTypeNotes(productType) {
 }
 
 module.exports = { FrameworkLoader };
+
+class FrameworkLoader {
+  async getRefiningGuidelines() {
+  try {
+    // Load key sections from different phases
+    const draftFramework = await this.loadPhaseFramework('draft');
+    const refineFramework = await this.loadPhaseFramework('refine');
+    const qualityFramework = await this.loadPhaseFramework('quality');
+    
+    // Extract the most relevant sections
+    return {
+      // Personality and humor guidelines
+      humorFramework: draftFramework.humor_framework,
+      personalityTechniques: draftFramework.personality_techniques,
+      informationPersonalityBalance: draftFramework.information_personality_balance,
+      
+      // Formatting guidelines
+      formattingGuidelines: draftFramework.content_structure?.formatting_guidelines,
+      
+      // Redundancy prevention
+      redundancyReview: qualityFramework.redundancy_review,
+      
+      // Balance disruption guidance (important for maintaining balance during edits)
+      balanceDisruption: refineFramework.quality_assurance?.revision_pitfalls?.find(p => p.pitfall === "Balance Disruption")
+    };
+  } catch (error) {
+    console.error(`Error loading refining guidelines:`, error.message);
+    return {};
+  }
+  }}

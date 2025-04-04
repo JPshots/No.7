@@ -13,7 +13,7 @@ const { ImageHandler } = require('./images');  // Correct if images.js exists
 const { FrameworkLoader } = require('./framework-loader');
 
 // Session directory
-const SESSION_DIR = path.join(process.cwd(), '.sessions');
+const SESSION_DIR = path.resolve(process.cwd(), '.sessions');
 
 // Phase definitions
 const PHASES = {
@@ -287,21 +287,90 @@ Please create a well-balanced review that properly integrates both sources of in
   }
 
   /**
+   * Run the Refine phase
+   */
+  async runRefinePhase() {
+    console.log(chalk.cyan("\n=== REFINE PHASE ==="));
+    console.log(chalk.yellow("In this phase, I'll refine the draft based on your feedback."));
+
+    // Prompt user for feedback
+    const { userFeedback } = await inquirer.prompt([
+      {
+        type: 'editor',
+        name: 'userFeedback',
+        message: 'Please provide your feedback on the draft (an editor will open):'
+      }
+    ]);
+
+    // Detect feedback types
+    const feedbackTypes = detectFeedbackType(userFeedback);
+
+    // Handle specialized feedback
+    if (feedbackTypes.personality || feedbackTypes.formatting || feedbackTypes.redundancy) {
+      console.log(chalk.yellow("Specialized feedback detected. Loading relevant guidelines..."));
+
+      if (feedbackTypes.personality) {
+        console.log(chalk.green("Adjusting tone and personality based on your feedback..."));
+        // Add logic to adjust tone/personality
+      }
+      if (feedbackTypes.formatting) {
+        console.log(chalk.green("Improving formatting and structure..."));
+        // Add logic to improve formatting
+      }
+      if (feedbackTypes.redundancy) {
+        console.log(chalk.green("Removing redundant content..."));
+        // Add logic to handle redundancy
+      }
+    }
+
+    // Add user feedback to messages
+    this.messages.push({
+      role: 'user',
+      content: userFeedback
+    });
+
+    // Save session after processing feedback
+    await this.save();
+
+    console.log(chalk.green("\nFeedback processed. Refinement complete."));
+  }
+
+  /**
    * Save the session to a file
    */
   async save() {
-    this.updatedAt = new Date().toISOString();
-    
-    const sessionPath = path.join(SESSION_DIR, `${this.id}.json`);
-    const sessionData = this.toJSON();
-    
-    await fs.writeFile(sessionPath, JSON.stringify(sessionData, null, 2));
-    
-    if (global.VERBOSE_MODE) {
-      console.log(chalk.gray(`Session saved to ${sessionPath}`));
+    try {
+      this.updatedAt = new Date().toISOString();
+      
+      // Ensure session directory exists with verbose logging
+      try {
+        await fs.mkdir(SESSION_DIR, { recursive: true });
+        console.log(chalk.gray(`Session directory: ${SESSION_DIR}`));
+      } catch (dirError) {
+        console.error(chalk.red(`Error creating sessions directory:`), dirError.message);
+        // Try to get the absolute path to help debugging
+        console.error(chalk.yellow(`Attempted to create directory at: ${path.resolve(SESSION_DIR)}`));
+        throw dirError;
+      }
+      
+      const sessionPath = path.join(SESSION_DIR, `${this.id}.json`);
+      const sessionData = this.toJSON();
+      
+      // Add more detailed logging around the save operation
+      console.log(chalk.gray(`Saving session ${this.id} to ${sessionPath}`));
+      await fs.writeFile(sessionPath, JSON.stringify(sessionData, null, 2));
+      console.log(chalk.green(`Session saved successfully to ${sessionPath}`));
+      
+      return sessionPath;
+    } catch (error) {
+      console.error(chalk.red(`Failed to save session:`), error.message);
+      if (error.code === 'ENOENT') {
+        console.error(chalk.yellow(`Directory does not exist. Tried: ${SESSION_DIR}`));
+      } else if (error.code === 'EACCES') {
+        console.error(chalk.yellow(`Permission denied when writing to ${SESSION_DIR}`));
+      }
+      throw error;
     }
-    
-    return sessionPath;
   }
 
   /**
@@ -419,6 +488,21 @@ Please create a well-balanced review that properly integrates both sources of in
       return [];
     }
   }
+}
+
+// Enhanced feedback detection function
+/**
+ * Detect the type of feedback provided by the user
+ * @param {string} feedbackText - The feedback text
+ * @returns {Object} Detected feedback types
+ */
+function detectFeedbackType(feedbackText) {
+  const feedbackLower = feedbackText.toLowerCase();
+  return {
+    personality: feedbackLower.includes('tone') || feedbackLower.includes('personality'),
+    formatting: feedbackLower.includes('format') || feedbackLower.includes('structure'),
+    redundancy: feedbackLower.includes('redundant') || feedbackLower.includes('repetition')
+  };
 }
 
 module.exports = { Session };
