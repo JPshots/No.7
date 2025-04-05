@@ -685,5 +685,33 @@ Session.prototype.jumpToPhase = async function(targetPhase) {
   await this.start();
   return true;
 };
-
+/**
+ * Extract review content from Claude's response
+ * @param {string} content - Claude's response content
+ * @returns {string} Extracted review content
+ */
+function extractReviewContent(content) {
+  // Look for markdown code blocks which might contain the review
+  const markdownMatch = content.match(/```(?:markdown)?\s*([\s\S]+?)\s*```/);
+  if (markdownMatch) return markdownMatch[1].trim();
+  
+  // If no markdown block, look for sections that might be the review
+  const sections = content.split(/\n{2,}/);
+  
+  // Find the longest section that looks like a review
+  const reviewSection = sections.reduce((longest, section) => {
+    if (section.length > longest.length && 
+        (section.includes('PROS') || 
+         section.includes('CONS') ||
+         section.includes('VERDICT'))) {
+      return section;
+    }
+    return longest;
+  }, '');
+  
+  if (reviewSection) return reviewSection;
+  
+  // If no clear review section, return the whole content
+  return content;
+}
 module.exports = { Session };
