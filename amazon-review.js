@@ -28,6 +28,7 @@ if (!process.env.ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
+
 // Set up command-line options
 program
   .version(version)
@@ -155,3 +156,4 @@ main().catch(error => {
   }
   process.exit(1);
 });
+

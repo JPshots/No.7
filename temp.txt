@@ -1,0 +1,60 @@
+overall I think this is a good review, I do think it could use a touch more personality/humor. maybe some more thematic section titles? Also Don't forget the formatting, maybe a few basic special characters.
+
+
+## 1. Personality Spectrum Scale
+Create a defined spectrum for personality/humor with clear anchor points:
+```yaml
+personality_scale:
+  level_1: "Informative & Straightforward" # Minimal personality, fact-focused
+  level_2: "Conversational & Warm" # Friendly, approachable, light touches of humor
+  level_3: "Personality-Forward" # Clear voice, regular humor, distinctive style
+  level_4: "Character-Driven" # Strong persona, frequent humor, highly stylized
+  level_5: "Over-the-Top" # Exaggerated, potentially satirical, humor dominates
+```
+
+## 2. Product-Specific Personality Calibration
+Add guidance for matching personality to product type:
+```yaml
+product_personality_matching:
+  practical_tools: "Prioritize information with personality as seasoning (levels 1-2)"
+  everyday_consumer: "Balance information and personality equally (levels 2-3)"
+  lifestyle_products: "Let personality lead while maintaining information (levels 3-4)"
+  novelty_items: "Match personality to product's inherent humor (levels 3-4)"
+  luxury_items: "Sophisticated personality with restrained humor (levels 2-3)"
+```
+
+## 3. Humor Framework
+Add structured guidance on humor types and their application:
+```yaml
+humor_framework:
+  observational: "Draw humor from genuine product observations"
+  contextual: "Humor from how/where product is used"
+  comparative: "Playful comparisons that illuminate product qualities"
+  self_deprecating: "Humor at reviewer's expense, not product's"
+  wordplay: "Product-relevant puns and wordplay (use sparingly)"
+  avoid:
+    - Forced jokes unrelated to product experience
+    - Humor that undermines product's core purpose
+    - Excessive enthusiasm that feels inauthentic
+```
+
+## 4. Authenticity Guidance
+Add explicit guidance on maintaining authenticity:
+```yaml
+authenticity_principles:
+  - "Humor should emerge naturally from product experience, not be imposed"
+  - "Match enthusiasm level to product category and actual experience"
+  - "Personality should enhance information, never replace it"
+  - "Voice should feel like a real person with consistent perspective"
+```
+
+## 5. Calibration Examples
+Include reference examples showing different personality levels:
+```yaml
+calibration_examples:
+  novelty_products:
+    too_flat: "Example of overly dry review missing product's fun nature"
+    balanced: "Example hitting the right notes of information and personality"
+    too_much: "Example where humor overwhelms useful information"
+```
+

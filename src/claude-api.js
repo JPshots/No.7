@@ -121,9 +121,11 @@ class ClaudeAPI {
       }
       
       return {
-        content: response.content[0].text,
+        content: response.content && response.content[0] && response.content[0].text 
+                 ? response.content[0].text 
+                 : "No response content received from Claude API",
         usage: response.usage,
-        toolUse: response.content.some(c => c.type === 'tool_use')
+        toolUse: response.content && response.content.some(c => c.type === 'tool_use')
       };
     } catch (error) {
       console.error(chalk.red('Error communicating with Claude API:'), error.message);

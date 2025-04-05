@@ -372,7 +372,154 @@ Please create a well-balanced review that properly integrates both sources of in
       throw error;
     }
   }
-
+/**
+ * Run the Quality Control phase
+ */
+async runQualityPhase() {
+  try {
+    console.log(chalk.cyan("\n=== QUALITY CONTROL PHASE ==="));
+    console.log(chalk.yellow("In this phase, I'll finalize the review and ensure it meets all quality standards."));
+    
+    // Load last completed review draft from previous phase
+    const previousPhaseData = this.phaseData[PHASES.REFINE] || this.phaseData[PHASES.DRAFT];
+    let reviewContent = '';
+    
+    if (previousPhaseData && previousPhaseData.reviewContent) {
+      reviewContent = previousPhaseData.reviewContent;
+    } else {
+      // Extract the review from the previous messages if not stored directly
+      const messages = this.messages.filter(msg => msg.role === 'assistant');
+      if (messages.length > 0) {
+        // Get the most recent assistant message
+        const lastMessage = messages[messages.length - 1];
+        reviewContent = this.extractReviewContent(lastMessage.content);
+      }
+    }
+    
+    if (!reviewContent) {
+      console.log(chalk.yellow("\nNo review content found in previous phases. Please complete the Draft phase first."));
+      console.log(chalk.yellow("You can use 'jump draft' to go back to the draft phase."));
+      return;
+    }
+    
+    console.log(chalk.green("\nFinal Review:"));
+    console.log(reviewContent);
+    
+    // Add a pause to let the user read the review
+    const { continueProcess } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'continueProcess',
+        message: 'Review displayed above. Continue to save the review?',
+        default: true
+      }
+    ]);
+    
+    if (!continueProcess) {
+      console.log(chalk.yellow("Process paused. You can resume later."));
+      return;
+    }
+    
+    // Prepare directory for saving
+    const reviewsDir = path.join(process.cwd(), 'reviews');
+    try {
+      await fs.mkdir(reviewsDir, { recursive: true });
+    } catch (err) {
+      console.error(chalk.yellow(`Warning: Could not create directory ${reviewsDir}`));
+    }
+    
+    // Save the review to a file
+    const sanitizedName = this.productName.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+    const date = new Date().toISOString().split('T')[0];
+    const fileName = `${sanitizedName}-${date}.md`;
+    const filePath = path.join(reviewsDir, fileName);
+    
+    try {
+      await fs.writeFile(filePath, reviewContent);
+      console.log(chalk.green(`\nReview successfully saved to: ${filePath}`));
+    } catch (error) {
+      console.error(chalk.red(`Error saving review: ${error.message}`));
+    }
+    
+    // Ask if user wants to see quality assessment
+    const { showQualityAssessment } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'showQualityAssessment',
+        message: 'Would you like to generate a quality assessment for this review?',
+        default: true
+      }
+    ]);
+    
+    if (showQualityAssessment) {
+      // Load quality framework
+      const framework = await this.frameworkLoader.getPhaseFramework(PHASES.QUALITY);
+      const systemPrompt = await this.frameworkLoader.createDynamicPrompt(PHASES.QUALITY, {
+        productType: this.productType,
+        keywords: this.keywords
+      });
+      
+      console.log(chalk.yellow("\nGenerating quality assessment..."));
+      
+      // Create a message asking for assessment
+      this.messages.push({
+        role: 'user',
+        content: "Please provide a quality assessment of this review, including scores for Testing Depth, Information Quality, Authenticity, Writing Quality, and Helpfulness. Give each category a score out of 20 and provide a total score out of 100."
+      });
+      
+      // Get assessment
+      const response = await this.claude.processMessages(this.messages, systemPrompt);
+      
+      // Add to messages
+      this.messages.push({
+        role: 'assistant',
+        content: response.content
+      });
+      
+      console.log(chalk.green("\nQuality Assessment:"));
+      console.log(response.content);
+      
+      // Save assessment
+      this.phaseData[PHASES.QUALITY].data.qualityAssessment = response.content;
+    }
+    
+    // Mark the phase as complete
+    this.phaseData[PHASES.QUALITY] = {
+      complete: true,
+      data: {
+        finalReview: reviewContent,
+        completedAt: new Date().toISOString()
+      }
+    };
+    
+    await this.save();
+    
+    // Final pause
+    const { exitProcess } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'exitProcess',
+        message: 'Review process completed successfully! Exit now?',
+        default: true
+      }
+    ]);
+    
+    if (exitProcess) {
+      console.log(chalk.cyan("\nThank you for using the Amazon Review Framework!"));
+      process.exit(0);
+    } else {
+      console.log(chalk.yellow("Returning to session..."));
+    }
+    
+    return true;
+  } catch (error) {
+    console.error(chalk.red(`Error in Quality Control phase: ${error.message}`));
+    if (global.VERBOSE_MODE && error.stack) {
+      console.error(error.stack);
+    }
+    return false;
+  }
+}
   /**
    * Convert session to JSON for storage
    */
@@ -504,5 +651,39 @@ function detectFeedbackType(feedbackText) {
     redundancy: feedbackLower.includes('redundant') || feedbackLower.includes('repetition')
   };
 }
+
+/**
+ * Jump to a specific phase in the review process
+ * @param {string} targetPhase - The phase to jump to
+ * @returns {Promise<boolean>} Success status
+ */
+Session.prototype.jumpToPhase = async function(targetPhase) {
+  const validPhases = {
+    'intake': PHASES.INTAKE,
+    'draft': PHASES.DRAFT, 
+    'refine': PHASES.REFINE,
+    'quality': PHASES.QUALITY
+  };
+  
+  if (!validPhases[targetPhase]) {
+    console.log(chalk.yellow(`Invalid phase: ${targetPhase}. Valid phases are: intake, draft, refine, quality`));
+    return false;
+  }
+  
+  // Set the phase
+  this.phase = validPhases[targetPhase];
+  console.log(chalk.cyan(`Jumping to ${targetPhase.toUpperCase()} phase...`));
+  
+  // Add a transition message
+  this.messages.push({
+    role: 'user',
+    content: `Please continue this review process in the ${targetPhase.toUpperCase()} phase.`
+  });
+  
+  // Save and continue
+  await this.save();
+  await this.start();
+  return true;
+};
 
 module.exports = { Session };
