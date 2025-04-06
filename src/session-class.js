@@ -115,8 +115,17 @@ class Session {
         {
           type: 'editor',
           name: 'description',
-          message: 'Please describe your product experience (an editor will open for you to type your response):',
-          default: this.phaseData[PHASES.INTAKE].data.initialDescription || ''
+          message: 'Please describe your product experience (an editor will open for your response):',
+          default: this.phaseData[PHASES.INTAKE].data.initialDescription || `To help create an efficient, high-quality review, consider including:
+      
+      - PRODUCT DETAILS: What product are you reviewing? How long have you used it?
+      - EXPERIENCE: What stood out (good and bad) during your experience?
+      - COMPARISONS: How does it compare to alternatives or your expectations?
+      - VALUE: Is it worth the price? Why or why not?
+      - CONTEXT: How and where do you use this product most often?
+      
+      The more complete your initial description, the more efficient our process will be.
+      Feel free to write as much or as little as you prefer.`
         }
       ]);
       
@@ -146,7 +155,45 @@ class Session {
           content: description
         });
       }
-      
+      // In the runIntakePhase method after creating the first message with user description and images
+
+// Add intake optimization reminder for first Claude response
+if (this.messages.length <= 1) {
+  console.log(chalk.gray("Adding intake optimization instructions..."));
+  
+  // Add an optimization message before the first Claude response
+  const optimizationMessage = {
+    role: 'system',
+    content: `
+IMPORTANT GUIDELINE: Limit your first response to 5-10 high-value questions (12 maximum).
+
+Your first response should include:
+1. A thoughtful analysis of the initial product description
+2. A prioritized set of questions organized into clear categories:
+   
+   ESSENTIAL QUESTIONS (3-5 questions about core experience):
+   • Primary usage experience and standout features
+   • Major pros and cons from user perspective
+   • Value assessment and overall satisfaction
+   
+   ADDITIONAL QUESTIONS (2-7 questions for deeper insights):
+   • Comparisons to alternatives
+   • Specific usage scenarios or technical details
+   • Product-specific areas of interest based on category
+
+Keep the total question count between 5-10 (not exceeding 12), prioritizing the most valuable questions.
+
+After receiving the user's response, only follow up if there are genuine information gaps or valuable new insights to explore.
+`
+  };
+  
+  // Add the optimization message to the messages array
+  this.messages.push(optimizationMessage);
+}
+
+// Then proceed with sending the messages to Claude
+console.log(chalk.yellow("\nProcessing your input..."));
+const response = await this.claude.processMessages(this.messages, systemPrompt);
       // Save session after initial setup
       await this.save();
     }
