@@ -157,7 +157,7 @@ phase_prompts:
       
       ## INFORMATION-PERSONALITY BALANCE
       
-      Maintain a baseline ratio of 55% informational content, 40% personality, 5% flexibility.
+      Maintain a baseline ratio of 50% informational content, 45% personality, 5% flexibility.
       
       Apply section-specific adjustments:
       - Opening/Introduction: +5% personality

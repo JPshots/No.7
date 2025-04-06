@@ -217,8 +217,8 @@ information_personality_balance:
   description: "Framework for balancing informational content and personality in reviews"
   
   baseline_ratios:
-    informational: 55
-    personality: 40
+    informational: 50
+    personality: 45
     flexibility: 5
     note: "These percentages represent target allocations across the entire review"
   

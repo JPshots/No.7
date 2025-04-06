@@ -273,8 +273,15 @@ Please create a well-balanced review that properly integrates both sources of in
         role: 'user',
         content: "I'm ready to move to the draft creation phase. Please create a complete review draft based on the information I've provided."
       };
-      
       this.messages.push(transitionMessage);
+
+      // Add explicit personality planning message
+      const personalityPlanningMessage = {
+        role: 'user',
+        content: "Before creating the draft, please plan the personality approach for this review. I want a strong, distinctive voice with regular humor elements (level 3-4 personality). Include creative section titles and formatting elements. Remember that users consistently prefer MORE personality rather than less."
+      };
+      this.messages.push(personalityPlanningMessage);
+
       this.phaseData[PHASES.DRAFT].data.draftStarted = true;
       
       // Save session
@@ -635,6 +642,38 @@ async runQualityPhase() {
       return [];
     }
   }
+
+  /**
+   * Extract review content from Claude's response
+   * @param {string} content - Claude's response content
+   * @returns {string} Extracted review content
+   */
+  extractReviewContent(content) {
+    // Look for markdown code blocks which might contain the review
+    const markdownMatch = content.match(/```(?:markdown)?\s*([\s\S]+?)\s*```/);
+    if (markdownMatch) return markdownMatch[1].trim();
+
+    // If no markdown block, look for sections that might be the review
+    const sections = content.split(/\n{2,}/);
+
+    // Find the longest section that looks like a review
+    const reviewSection = sections.reduce((longest, section) => {
+      if (
+        section.length > longest.length &&
+        (section.includes('PROS') ||
+          section.includes('CONS') ||
+          section.includes('VERDICT'))
+      ) {
+        return section;
+      }
+      return longest;
+    }, '');
+
+    if (reviewSection) return reviewSection;
+
+    // If no clear review section, return the whole content
+    return content;
+  }
 }
 
 // Enhanced feedback detection function
@@ -690,28 +729,6 @@ Session.prototype.jumpToPhase = async function(targetPhase) {
  * @param {string} content - Claude's response content
  * @returns {string} Extracted review content
  */
-function extractReviewContent(content) {
-  // Look for markdown code blocks which might contain the review
-  const markdownMatch = content.match(/```(?:markdown)?\s*([\s\S]+?)\s*```/);
-  if (markdownMatch) return markdownMatch[1].trim();
-  
-  // If no markdown block, look for sections that might be the review
-  const sections = content.split(/\n{2,}/);
-  
-  // Find the longest section that looks like a review
-  const reviewSection = sections.reduce((longest, section) => {
-    if (section.length > longest.length && 
-        (section.includes('PROS') || 
-         section.includes('CONS') ||
-         section.includes('VERDICT'))) {
-      return section;
-    }
-    return longest;
-  }, '');
-  
-  if (reviewSection) return reviewSection;
-  
-  // If no clear review section, return the whole content
-  return content;
-}
+
+// Remove this redundant block as the function is already defined earlier in the file.
 module.exports = { Session };

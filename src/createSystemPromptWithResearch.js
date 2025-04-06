@@ -20,6 +20,17 @@ async function createSystemPromptWithResearch(phase) {
         
         // Add guidance on using research
         systemPrompt += `
+        ## PERSONALITY EMPHASIS REMINDER
+
+IMPORTANT: This review MUST have a strong personality and appropriate humor. The default level should be 3 on a 5-point scale (Personality-Forward: Clear voice, regular humor, distinctive style).
+
+- Include at least one unexpected analogy or absurd specificity element
+- Front-load information but ensure EVERY paragraph has personality elements
+- Section titles should use creative, thematic elements whenever possible
+
+
+Remember: Users consistently prefer reviews with MORE personality and humor than less. When in doubt, add more personality elements (while keeping information accurate).
+
   CRITICAL UPDATE TO FRAMEWORK INSTRUCTIONS:
   
   The above research insights contain two types of information:

@@ -192,7 +192,37 @@ class FrameworkLoader {
       if (customizations.phaseHistory) {
         basePrompt += `\n\n## PREVIOUS PHASE INFORMATION\n\n${customizations.phaseHistory}`;
       }
-      
+      // In createDynamicPrompt method, before returning basePrompt
+      if (phase === 'draft') {
+        const personalityGuidelines = await this.getEnhancedPersonalityGuidelines();
+        
+        basePrompt += "\n\n## ENHANCED PERSONALITY GUIDANCE\n\n";
+        basePrompt += "The following techniques MUST be incorporated into the review:\n\n";
+        
+        // Add humor techniques
+        basePrompt += "### Humor Techniques:\n";
+        personalityGuidelines.humorTechniques.forEach(technique => {
+          basePrompt += `- **${technique.name}**: ${technique.description}\n`;
+          if (technique.example) {
+            basePrompt += `  Example: "${technique.example}"\n`;
+          }
+        });
+        
+        // Add personality elements
+        basePrompt += "\n### Personality Elements:\n";
+        personalityGuidelines.personalityElements.forEach(element => {
+          basePrompt += `- **${element.name}**: ${element.description}\n`;
+          if (element.example) {
+            basePrompt += `  Example: "${element.example}"\n`;
+          }
+        });
+        
+        // Add implementation guidance
+        basePrompt += "\n### Implementation Requirements:\n";
+        personalityGuidelines.implementation.forEach(guidance => {
+          basePrompt += `- ${guidance}\n`;
+        });
+      }
       return basePrompt;
     } catch (error) {
       console.error(`Error creating dynamic prompt:`, error.message);

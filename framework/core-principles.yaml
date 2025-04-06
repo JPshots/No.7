@@ -62,7 +62,7 @@ value_drivers:
   - driver: "Strategic Balance"
     description: "Optimized mix of information and personality creates engaging, helpful content"
     implementation:
-      - "Maintain 55% informational, 40% personality, 5% flexibility ratio"
+      - "Maintain 50% informational, 45% personality, 5% flexibility ratio"
       - "Front-load information before adding personality"
       - "Adjust balance based on product category and section purpose"
 
