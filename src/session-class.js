@@ -116,17 +116,8 @@ class Session {
         {
           type: 'editor',
           name: 'description',
-          message: 'Please describe your product experience (an editor will open for your response):',
-          default: this.phaseData[PHASES.INTAKE].data.initialDescription || `To help create an efficient, high-quality review, consider including:
-      
-      - PRODUCT DETAILS: What product are you reviewing? How long have you used it?
-      - EXPERIENCE: What stood out (good and bad) during your experience?
-      - COMPARISONS: How does it compare to alternatives or your expectations?
-      - VALUE: Is it worth the price? Why or why not?
-      - CONTEXT: How and where do you use this product most often?
-      
-      The more complete your initial description, the more efficient our process will be.
-      Feel free to write as much or as little as you prefer.`
+          message: 'Please describe your product experience (an editor will open for you to type your response):',
+          default: this.phaseData[PHASES.INTAKE].data.initialDescription || ''
         }
       ]);
       
