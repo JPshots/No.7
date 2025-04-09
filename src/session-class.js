@@ -118,6 +118,8 @@ class Session {
           name: 'description',
           message: 'Please describe your product experience (an editor will open for you to type your response):',
           default: this.phaseData[PHASES.INTAKE].data.initialDescription || ''
+          message: 'Please describe your product experience (an editor will open for you to type your response):',
+          default: this.phaseData[PHASES.INTAKE].data.initialDescription || ''
         }
       ]);
       
