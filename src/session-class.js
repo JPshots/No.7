@@ -108,8 +108,7 @@ class Session {
     
     console.log(chalk.cyan("\n=== INTAKE & QUESTIONING PHASE ==="));
     console.log(chalk.yellow("In this phase, I'll gather information about your product experience."));
-    console.log(chalk.yellow("TIP: Use 'show-framework phase.section_name' to view framework sections"));
-    console.log(chalk.yellow("Example: 'show-framework draft.humor_framework'"));
+    
     // If starting fresh, get initial product description
     if (this.messages.length === 0) {
       const { description } = await inquirer.prompt([
@@ -155,7 +154,7 @@ if (this.messages.length <= 1) {
   
   // Add an optimization message before the first Claude response
   const optimizationMessage = {
-    role: 'user',
+    role: 'system',
     content: `
 IMPORTANT GUIDELINE: Limit your first response to 5-10 high-value questions (12 maximum).
 
@@ -259,7 +258,7 @@ Please create a well-balanced review that properly integrates both sources of in
           }
         ]);
         
-// Handle special commands
+        // Handle special commands
         if (userResponse.trim().toLowerCase() === 'exit') {
           console.log(chalk.yellow('\nSaving session and exiting...'));
           await this.save();
@@ -269,31 +268,7 @@ Please create a well-balanced review that properly integrates both sources of in
           console.log(chalk.green('\nSession saved successfully!'));
           continue;
         }
-// Handle special commands
-        if (userResponse.trim().toLowerCase() === 'exit') {
-          console.log(chalk.yellow('\nSaving session and exiting...'));
-          await this.save();
-          process.exit(0);
-        } else if (userResponse.trim().toLowerCase() === 'save') {
-          await this.save();
-          console.log(chalk.green('\nSession saved successfully!'));
-          continue;
-        }
-
-        if (userResponse.trim().toLowerCase() === 'exit') {
-          console.log(chalk.yellow('\nSaving session and exiting...'));
-          await this.save();
-          process.exit(0);
-        } else if (userResponse.trim().toLowerCase() === 'save') {
-          await this.save();
-          console.log(chalk.green('\nSession saved successfully!'));
-          continue;
-        } else if (userResponse.trim().toLowerCase().startsWith('show-framework ')) {
-          // Handle framework section viewing
-          const command = userResponse.trim().replace('show-framework ', '');
-          await this.showFrameworkSection(command);
-          continue;
-        }
+        
         // Add user response to messages
         this.messages.push({
           role: 'user',
@@ -319,8 +294,6 @@ Please create a well-balanced review that properly integrates both sources of in
     
     // Load phase-specific framework and prompts
     const framework = await this.frameworkLoader.getPhaseFramework(PHASES.DRAFT);
-    this.phaseData[PHASES.DRAFT].data.framework = framework;
-    console.log(chalk.gray("Draft framework stored in session data for reference in later phases"));
     const systemPrompt = await this.frameworkLoader.createDynamicPrompt(PHASES.DRAFT, {
       productType: this.productType,
       keywords: this.keywords
@@ -328,9 +301,7 @@ Please create a well-balanced review that properly integrates both sources of in
     
     console.log(chalk.cyan("\n=== DRAFT CREATION PHASE ==="));
     console.log(chalk.yellow("In this phase, I'll create a complete review draft based on the information gathered."));
-    console.log(chalk.yellow("TIP: Use 'show-framework phase.section_name' to view framework sections"));
-    console.log(chalk.yellow("Example: 'show-framework draft.humor_framework'"));
-
+    
     // Extract relevant information for draft creation
     if (!this.phaseData[PHASES.DRAFT].data.draftStarted) {
       console.log(chalk.yellow("\nPreparing to create draft..."));
@@ -366,21 +337,6 @@ Please create a well-balanced review that properly integrates both sources of in
   async runRefinePhase() {
     console.log(chalk.cyan("\n=== REFINE PHASE ==="));
     console.log(chalk.yellow("In this phase, I'll refine the draft based on your feedback."));
-    console.log(chalk.yellow("TIP: Use 'show-framework phase.section_name' to view framework sections"));
-    console.log(chalk.yellow("Example: 'show-framework draft.humor_framework'"));
-
-    // Check if draft framework is stored in session data
-    if (this.phaseData[PHASES.DRAFT].data.framework) {
-      console.log(chalk.green("Draft framework is available from previous phase"));
-    } else {
-      // Load draft framework for reference
-      try {
-        await this.frameworkLoader.loadPhaseFramework('draft');
-        console.log(chalk.green("Draft framework loaded for reference"));
-      } catch (error) {
-        console.log(chalk.yellow("Note: Could not load draft framework: " + error.message));
-      }
-    }
 
     // Prompt user for feedback
     const { userFeedback } = await inquirer.prompt([
@@ -390,22 +346,6 @@ Please create a well-balanced review that properly integrates both sources of in
         message: 'Please provide your feedback on the draft (an editor will open):'
       }
     ]);
-
-    // Handle special commands
-    if (userFeedback.trim().toLowerCase() === 'exit') {
-      console.log(chalk.yellow('\nSaving session and exiting...'));
-      await this.save();
-      process.exit(0);
-    } else if (userFeedback.trim().toLowerCase() === 'save') {
-      await this.save();
-      console.log(chalk.green('\nSession saved successfully!'));
-      return;
-    } else if (userFeedback.trim().toLowerCase().startsWith('show-framework ')) {
-      // Handle framework section viewing
-      const command = userFeedback.trim().replace('show-framework ', '');
-      await this.showFrameworkSection(command);
-      return;
-    }
 
     // Detect feedback types
     const feedbackTypes = detectFeedbackType(userFeedback);
@@ -447,66 +387,26 @@ Please create a well-balanced review that properly integrates both sources of in
     try {
       this.updatedAt = new Date().toISOString();
       
-      // Get absolute path to session directory for clearer logging
-      const absoluteSessionDir = path.resolve(SESSION_DIR);
-      console.log(chalk.gray(`Session directory (absolute): ${absoluteSessionDir}`));
-      
-      // Ensure session directory exists
+      // Ensure session directory exists with verbose logging
       try {
-        await fs.mkdir(absoluteSessionDir, { recursive: true });
-        console.log(chalk.gray(`Session directory created/verified at: ${absoluteSessionDir}`));
+        await fs.mkdir(SESSION_DIR, { recursive: true });
+        console.log(chalk.gray(`Session directory: ${SESSION_DIR}`));
       } catch (dirError) {
         console.error(chalk.red(`Error creating sessions directory:`), dirError.message);
+        // Try to get the absolute path to help debugging
+        console.error(chalk.yellow(`Attempted to create directory at: ${path.resolve(SESSION_DIR)}`));
         throw dirError;
       }
       
-      // Create session file path and prepare data
-      const sessionPath = path.join(absoluteSessionDir, `${this.id}.json`);
+      const sessionPath = path.join(SESSION_DIR, `${this.id}.json`);
       const sessionData = this.toJSON();
       
-      // Add sanity check for session data
-      if (!sessionData || !sessionData.id) {
-        console.error(chalk.red(`Invalid session data! ID missing from session data.`));
-        console.dir(sessionData, { depth: 1 });
-        throw new Error('Invalid session data detected');
-      }
-      
-      // Save with debug info
+      // Add more detailed logging around the save operation
       console.log(chalk.gray(`Saving session ${this.id} to ${sessionPath}`));
-      const jsonData = JSON.stringify(sessionData, null, 2);
-      console.log(chalk.gray(`Prepared ${jsonData.length} bytes of JSON data`));
+      await fs.writeFile(sessionPath, JSON.stringify(sessionData, null, 2));
+      console.log(chalk.green(`Session saved successfully to ${sessionPath}`));
       
-      // Add backup before overwriting
-      try {
-        const backupPath = path.join(absoluteSessionDir, `${this.id}.backup.json`);
-        await fs.access(sessionPath);
-        // File exists, create backup
-        await fs.copyFile(sessionPath, backupPath);
-        console.log(chalk.gray(`Backup created at: ${backupPath}`));
-      } catch (error) {
-        // No existing file to back up or backup failed
-        console.log(chalk.gray(`No existing session file to backup`));
-      }
-      
-      // Write file
-      await fs.writeFile(sessionPath, jsonData);
-      
-      // Verify file was written
-      try {
-        await fs.access(sessionPath);
-        const stats = await fs.stat(sessionPath);
-        console.log(chalk.green(`Session saved successfully: ${sessionPath} (${stats.size} bytes)`));
-        
-        // List directory contents to verify
-        const files = await fs.readdir(absoluteSessionDir);
-        console.log(chalk.gray(`Directory contents (${files.length} files):`));
-        files.forEach(file => console.log(chalk.gray(`- ${file}`)));
-        
-        return sessionPath;
-      } catch (verifyError) {
-        console.error(chalk.red(`Failed to verify saved file:`), verifyError.message);
-        throw verifyError;
-      }
+      return sessionPath;
     } catch (error) {
       console.error(chalk.red(`Failed to save session:`), error.message);
       if (error.code === 'ENOENT') {
@@ -524,9 +424,7 @@ async runQualityPhase() {
   try {
     console.log(chalk.cyan("\n=== QUALITY CONTROL PHASE ==="));
     console.log(chalk.yellow("In this phase, I'll finalize the review and ensure it meets all quality standards."));
-    console.log(chalk.yellow("TIP: Use 'show-framework phase.section_name' to view framework sections"));
-    console.log(chalk.yellow("Example: 'show-framework draft.humor_framework'"));
-
+    
     // Load last completed review draft from previous phase
     const previousPhaseData = this.phaseData[PHASES.REFINE] || this.phaseData[PHASES.DRAFT];
     let reviewContent = '';
@@ -547,7 +445,6 @@ async runQualityPhase() {
       console.log(chalk.yellow("\nNo review content found in previous phases. Please complete the Draft phase first."));
       console.log(chalk.yellow("You can use 'jump draft' to go back to the draft phase."));
       return;
-      
     }
     
     console.log(chalk.green("\nFinal Review:"));
@@ -755,119 +652,35 @@ async runQualityPhase() {
    */
   static async getAllSessions() {
     try {
-      const absoluteSessionDir = path.resolve(SESSION_DIR);
-      console.log(chalk.gray(`Looking for sessions in: ${absoluteSessionDir}`));
-      
       // Ensure session directory exists
-      try {
-        await fs.mkdir(absoluteSessionDir, { recursive: true });
-        console.log(chalk.gray(`Session directory created/verified`));
-      } catch (dirError) {
-        console.error(chalk.red(`Error accessing session directory:`), dirError.message);
-        return [];
-      }
+      await fs.mkdir(SESSION_DIR, { recursive: true });
       
       // Read all files in session directory
-      let files;
-      try {
-        files = await fs.readdir(absoluteSessionDir);
-        console.log(chalk.gray(`Found ${files.length} files in sessions directory`));
-      } catch (readError) {
-        console.error(chalk.red(`Error reading session directory:`), readError.message);
-        return [];
-      }
+      const files = await fs.readdir(SESSION_DIR);
       
-      // Filter for JSON files (excluding backups)
-      const sessionFiles = files.filter(file => 
-        path.extname(file) === '.json' && !file.includes('.backup.')
-      );
-      console.log(chalk.gray(`Found ${sessionFiles.length} JSON session files`));
+      // Filter for JSON files
+      const sessionFiles = files.filter(file => path.extname(file) === '.json');
       
       // Load each session
       const sessions = [];
-      let loadedCount = 0;
       for (const file of sessionFiles) {
         try {
-          const sessionPath = path.join(absoluteSessionDir, file);
-          const fileContents = await fs.readFile(sessionPath, 'utf8');
-          
-          // Validate JSON before parsing
-          try {
-            const sessionData = JSON.parse(fileContents);
-            // Verify it has required fields
-            if (sessionData && sessionData.id && sessionData.phase) {
-              sessions.push(sessionData);
-              loadedCount++;
-            } else {
-              console.warn(chalk.yellow(`Warning: Session file ${file} is missing required fields`));
-            }
-          } catch (jsonError) {
-            console.error(chalk.yellow(`Warning: Invalid JSON in session file ${file}`), jsonError.message);
-            
-            // Try to recover from backup if available
-            try {
-              const backupPath = path.join(absoluteSessionDir, file.replace('.json', '.backup.json'));
-              await fs.access(backupPath);
-              console.log(chalk.yellow(`Attempting recovery from backup for ${file}`));
-              const backupData = JSON.parse(await fs.readFile(backupPath, 'utf8'));
-              if (backupData && backupData.id) {
-                sessions.push(backupData);
-                loadedCount++;
-                console.log(chalk.green(`Successfully recovered session from backup: ${backupData.id}`));
-              }
-            } catch (recoveryError) {
-              console.log(chalk.yellow(`No backup available or recovery failed for ${file}`));
-            }
-          }
+          const sessionPath = path.join(SESSION_DIR, file);
+          const sessionData = JSON.parse(await fs.readFile(sessionPath, 'utf8'));
+          sessions.push(sessionData);
         } catch (error) {
           console.error(chalk.yellow(`Warning: Could not load session file ${file}:`), error.message);
         }
       }
       
-      console.log(chalk.green(`Successfully loaded ${loadedCount} of ${sessionFiles.length} session files`));
-      
       // Sort by updated date (newest first)
-      const sorted = sessions.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-      console.log(chalk.gray(`Sorted ${sorted.length} sessions by updated date`));
-      
-      return sorted;
+      return sessions.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     } catch (error) {
       console.error(chalk.red('Error getting all sessions:'), error.message);
       return [];
     }
   }
-static async recoverMissingSession(productName) {
-  console.log(chalk.yellow(`Attempting to recover session for: ${productName}`));
-  
-  try {
-    const absoluteSessionDir = path.resolve(SESSION_DIR);
-    const files = await fs.readdir(absoluteSessionDir);
-    const sessionFiles = files.filter(file => path.extname(file) === '.json');
-    
-    // Search in all session files
-    for (const file of sessionFiles) {
-      try {
-        const sessionPath = path.join(absoluteSessionDir, file);
-        const sessionData = JSON.parse(await fs.readFile(sessionPath, 'utf8'));
-        
-        // Check if this session matches the product name (case insensitive)
-        if (sessionData.productName && 
-            sessionData.productName.toLowerCase().includes(productName.toLowerCase())) {
-          console.log(chalk.green(`Found matching session: ${sessionData.id} - ${sessionData.productName}`));
-          return sessionData;
-        }
-      } catch (error) {
-        continue; // Skip problematic files
-      }
-    }
-    
-    console.log(chalk.yellow(`No matching session found for product: ${productName}`));
-    return null;
-  } catch (error) {
-    console.error(chalk.red(`Recovery error:`), error.message);
-    return null;
-  }
-}
+
   /**
    * Extract review content from Claude's response
    * @param {string} content - Claude's response content
@@ -948,43 +761,7 @@ Session.prototype.jumpToPhase = async function(targetPhase) {
   await this.save();
   await this.start();
   return true;
-}
-/**
- * Access framework section and display it
- * @param {string} command - Command in format "phase.section_path"
- * @returns {Promise<boolean>} - Success status
- */
-Session.prototype.showFrameworkSection = async function(command) {
-  try {
-    // Parse command
-    const parts = command.split('.');
-    if (parts.length < 2) {
-      console.log(chalk.yellow("Invalid format. Use 'show-framework phase.section_path' (e.g., 'show-framework draft.humor_framework')"));
-      return false;
-    }
-    
-    const phase = parts[0];
-    const sectionPath = parts.slice(1).join('.');
-    
-    console.log(chalk.yellow(`Accessing ${phase} framework section: ${sectionPath}`));
-    
-    // Get section content
-    const section = await this.frameworkLoader.getFrameworkSection(phase, sectionPath);
-    
-    if (section) {
-      console.log(chalk.green(`\n${phase.toUpperCase()}.${sectionPath.toUpperCase()}`));
-      console.log(JSON.stringify(section, null, 2));
-      return true;
-    } else {
-      console.log(chalk.red(`Section not found: ${phase}.${sectionPath}`));
-      return false;
-    }
-  } catch (error) {
-    console.error(chalk.red(`Error processing framework section command:`), error.message);
-    return false;
-  }
 };
-
 /**
  * Extract review content from Claude's response
  * @param {string} content - Claude's response content

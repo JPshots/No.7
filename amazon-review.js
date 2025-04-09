@@ -11,9 +11,6 @@ const figlet = require('figlet');
 const { Session } = require('./src/session-class');
 const { listSessions, createNewSession, loadExistingSession } = require('./src/cli');
 const { version } = require('./package.json');
-const path = require('path');
-const SESSION_DIR = path.resolve(process.cwd(), '.sessions');
-const fs = require('fs').promises;
 
 // Display banner
 console.log(
@@ -53,7 +50,6 @@ if (options.verbose) {
 
 // Main function to handle command-line options
 async function main() {
-  await verifySessionSystem();
   try {
     if (options.list) {
       // List all saved sessions
@@ -130,36 +126,7 @@ async function promptSessionAction() {
 // Function to prompt for session selection
 async function promptSessionSelection() {
   const sessions = await Session.getAllSessions();
-  // If no sessions found, offer recovery option
-if (sessions.length === 0) {
-  console.log(chalk.yellow('No saved sessions found.'));
   
-  const { attemptRecovery } = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'attemptRecovery',
-      message: 'Would you like to attempt to recover a session by product name?',
-      default: true
-    }
-  ]);
-  
-  if (attemptRecovery) {
-    const { productName } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'productName',
-        message: 'Enter part of the product name:',
-      }
-    ]);
-    
-    const recoveredSession = await Session.recoverMissingSession(productName);
-    if (recoveredSession) {
-      return recoveredSession.id;
-    }
-  }
-  
-  return null;
-}
   if (sessions.length === 0) {
     console.log(chalk.yellow('No saved sessions found.'));
     return null;
@@ -181,70 +148,6 @@ if (sessions.length === 0) {
   return sessionId;
 }
 
-
-async function verifySessionSystem() {
-  console.log(chalk.cyan('\nVerifying session system...'));
-  
-  try {
-    // Ensure session directory exists
-    const absoluteSessionDir = path.resolve(SESSION_DIR);
-    console.log(chalk.gray(`Session directory: ${absoluteSessionDir}`));
-    
-    try {
-      await fs.mkdir(absoluteSessionDir, { recursive: true });
-      console.log(chalk.green('✓ Session directory created/verified'));
-    } catch (dirError) {
-      console.error(chalk.red('✗ Session directory creation failed:'), dirError.message);
-      return false;
-    }
-    
-    // Test if we can write and read files
-    const testSession = {
-      id: 'test-' + Date.now(),
-      createdAt: new Date().toISOString(),
-      productName: 'Test Product'
-    };
-    
-    const testPath = path.join(absoluteSessionDir, `${testSession.id}.json`);
-    
-    // Try to write test file
-    try {
-      await fs.writeFile(testPath, JSON.stringify(testSession));
-      console.log(chalk.green('✓ Successfully wrote test session'));
-    } catch (writeError) {
-      console.error(chalk.red('✗ Session write test failed:'), writeError.message);
-      return false;
-    }
-    
-    // Try to read test file
-    try {
-      const readData = JSON.parse(await fs.readFile(testPath, 'utf8'));
-      console.log(chalk.green('✓ Successfully read test session'));
-      
-      // Clean up test file
-      await fs.unlink(testPath);
-      console.log(chalk.green('✓ Cleaned up test session'));
-    } catch (readError) {
-      console.error(chalk.red('✗ Session read test failed:'), readError.message);
-      return false;
-    }
-    
-    // Try to list sessions
-    try {
-      const sessions = await Session.getAllSessions();
-      console.log(chalk.green(`✓ Successfully listed ${sessions.length} sessions`));
-    } catch (listError) {
-      console.error(chalk.red('✗ Session listing test failed:'), listError.message);
-      return false;
-    }
-    
-    console.log(chalk.green('\nSession system verification passed! ✓'));
-    return true;
-  } catch (error) {
-    console.error(chalk.red('\nSession system verification failed! ✗'), error.message);
-    return false;
-  }
-}
 // Run the main function
 main().catch(error => {
   console.error(chalk.red('Fatal error:'), error.message);

@@ -5,14 +5,12 @@
 const fs = require('fs').promises;
 const path = require('path');
 const yaml = require('js-yaml');
-const chalk = require('chalk');
 
 class FrameworkLoader {
   constructor() {
     this.FRAMEWORK_DIR = path.resolve(__dirname, '../framework');
     this.PHASES_DIR = path.resolve(this.FRAMEWORK_DIR, 'phases');
     this.PROMPTS_DIR = path.resolve(this.FRAMEWORK_DIR, 'prompts');
-    this.cachedFrameworks = {};
   }
 
   /**
@@ -166,42 +164,7 @@ class FrameworkLoader {
       throw error;
     }
   }
-/**
- * Get specific section from a phase framework using dot notation
- * @param {string} phase - Phase name (intake, draft, refine, quality)
- * @param {string} sectionPath - Dot notation path to section (e.g., 'humor_framework.humor_techniques')
- * @returns {Promise<any>} - Section content or null if not found
- */
-async getFrameworkSection(phase, sectionPath) {
-  try {
-    // Make sure framework is loaded
-    await this.loadPhaseFramework(phase);
-    
-    if (!this.cachedFrameworks[phase]) {
-      throw new Error(`Phase framework not loaded: ${phase}`);
-    }
-    
-    // Parse the section path
-    const pathParts = sectionPath.split('.');
-    
-    // Start with the full framework
-    let section = this.cachedFrameworks[phase];
-    
-    // Navigate through the path
-    for (const part of pathParts) {
-      if (section && section[part]) {
-        section = section[part];
-      } else {
-        throw new Error(`Section not found: ${sectionPath} in ${phase} framework`);
-      }
-    }
-    
-    return section;
-  } catch (error) {
-    console.error(chalk.red(`Error accessing framework section: ${phase}.${sectionPath}`), error.message);
-    return null;
-  }
-}
+
   /**
    * Create a dynamic system prompt with custom modifications
    * @param {string} phase - Base phase for the prompt
@@ -259,71 +222,6 @@ async getFrameworkSection(phase, sectionPath) {
         personalityGuidelines.implementation.forEach(guidance => {
           basePrompt += `- ${guidance}\n`;
         });
-      }
-      // Add Draft framework info for Refine phase
-      if (phase === 'refine') {
-        try {
-          // Load the draft framework
-          await this.loadPhaseFramework('draft');
-          const draftFramework = this.cachedFrameworks['draft'];
-          
-          if (draftFramework) {
-            basePrompt += "\n\n## DRAFT FRAMEWORK REFERENCE\n\n";
-            
-            // Add humor framework
-            if (draftFramework.humor_framework) {
-              basePrompt += "### Humor Techniques\n";
-              const humorTechniques = draftFramework.humor_framework.humor_techniques?.approaches;
-              if (humorTechniques && Array.isArray(humorTechniques)) {
-                humorTechniques.forEach(technique => {
-                  basePrompt += `- **${technique.technique}**: ${technique.description}\n`;
-                  if (technique.example) {
-                    basePrompt += `  Example: "${technique.example}"\n`;
-                  }
-                });
-              }
-              basePrompt += "\n";
-            }
-            
-            // Add personality techniques
-            if (draftFramework.personality_techniques?.creative_elements) {
-              basePrompt += "### Creative Elements for Personality\n";
-              draftFramework.personality_techniques.creative_elements.forEach(element => {
-                basePrompt += `- **${element.name}**: ${element.description}\n`;
-                if (element.example) {
-                  basePrompt += `  Example: "${element.example}"\n`;
-                }
-              });
-              basePrompt += "\n";
-            }
-            
-            // Add information/personality balance guidance
-            if (draftFramework.information_personality_balance) {
-              basePrompt += "### Information/Personality Balance\n";
-              const ratios = draftFramework.information_personality_balance.baseline_ratios;
-              basePrompt += `- Baseline ratio: ${ratios.informational}% information, ${ratios.personality}% personality\n\n`;
-              
-              if (draftFramework.information_personality_balance.section_specific_adjustments) {
-                basePrompt += "Section-specific adjustments:\n";
-                draftFramework.information_personality_balance.section_specific_adjustments.forEach(adjustment => {
-                  basePrompt += `- ${adjustment.content_type}: ${adjustment.personality_adjustment} (${adjustment.rationale})\n`;
-                });
-              }
-              basePrompt += "\n";
-            }
-            
-            // Include formatting guidelines
-            if (draftFramework.content_structure?.formatting_guidelines) {
-              basePrompt += "### Formatting Guidelines\n";
-              draftFramework.content_structure.formatting_guidelines.forEach(guideline => {
-                basePrompt += `- ${guideline}\n`;
-              });
-              basePrompt += "\n";
-            }
-          }
-        } catch (error) {
-          console.log(chalk.yellow(`Note: Could not include draft framework in refine prompt: ${error.message}`));
-        }
       }
       return basePrompt;
     } catch (error) {
