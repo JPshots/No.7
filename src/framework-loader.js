@@ -309,9 +309,25 @@ async getFrameworkSection(phase, sectionPath) {
                   basePrompt += `- ${adjustment.content_type}: ${adjustment.personality_adjustment} (${adjustment.rationale})\n`;
                 });
               }
+              basePrompt += "\n\n## PERSONALITY GUIDANCE\n\n";
+              basePrompt += "This review MUST have a distinct personality and appropriate humor from the first draft. Remember:\n\n";
+              basePrompt += "- Use your judgment to incorporate humor and personality elements that fit this specific product and experience\n";
+              basePrompt += "- Maintain a strong, distinctive voice throughout - don't default to generic product descriptions\n";
+              basePrompt += "- Find natural opportunities for creative comparisons, analogies, or observations\n";
+              basePrompt += "- Balance factual information with engaging personality (target ~40-45% personality elements)\n\n";
+              basePrompt += "Your first draft should demonstrate a clear personality approach without waiting for additional requests. Choose humor and personality techniques that best suit this specific product and review style.\n";
               basePrompt += "\n";
             }
             
+            // For technical or complex product reviews
+            if (customizations.productType && ['electronics', 'tool', 'software', 'kitchen'].includes(customizations.productType.toLowerCase())) {
+              basePrompt += "\n\n## LIST FORMAT GUIDANCE\n\n";
+              basePrompt += "For this technical product review, consider using concise list formats where appropriate:\n\n";
+              basePrompt += "- Organize key pros and cons in scannable bullet points\n";
+              basePrompt += "- Present technical specifications in a structured format when listing multiple attributes\n";
+              basePrompt += "- Use lists to identify ideal users or use cases\n\n";
+              basePrompt += "Lists should complement paragraph content by providing organized access to key points, not by repeating the same information in the same way. Each format should serve a distinct purpose in the review.\n";
+            }
             // Include formatting guidelines
             if (draftFramework.content_structure?.formatting_guidelines) {
               basePrompt += "### Formatting Guidelines\n";

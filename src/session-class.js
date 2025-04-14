@@ -345,7 +345,15 @@ Please create a well-balanced review that properly integrates both sources of in
       // Add explicit personality planning message
       const personalityPlanningMessage = {
         role: 'user',
-        content: "Before creating the draft, please plan the personality approach for this review. I want a strong, distinctive voice with regular humor elements (level 3-4 personality). Include creative section titles and formatting elements. Remember that users consistently prefer MORE personality rather than less."
+        content: `IMPORTANT: Include a distinct personality and appropriate humor in your first draft response.
+
+      Use your judgment to determine which humor and personality approaches work best for this product, but ensure the review has:
+
+      - A consistent, engaging voice throughout
+      - Creative elements that make the review memorable
+      - Personality that enhances rather than distracts from the product information
+
+      Your first response should be a complete draft with personality fully integrated - don't save personality for a later revision.`
       };
       this.messages.push(personalityPlanningMessage);
 

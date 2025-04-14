@@ -277,12 +277,12 @@ redundancy_review:
       guideline: "Tips should provide actionable guidance not extensively covered elsewhere"
   
   strategic_exceptions:
-    - priority: "medium"
-      guideline: "Key information may be restated when doing so significantly enhances clarity or comprehension"
-    - priority: "medium"
-      guideline: "Critical safety or compatibility information may appear in multiple sections when warranted"
-    - priority: "medium"
-      guideline: "Complex technical points may be introduced in technical sections then reframed in simpler terms elsewhere"
+  - priority: "medium"
+    guideline: "Structured lists (Pros/Cons/Features) should organize key points for scannability without extensive restatement"
+  - priority: "medium"
+    guideline: "Technical specifications may be presented in list format for clarity, with minimal overlap with paragraph content"
+  - priority: "high"
+    guideline: "Lists should provide new presentation of information rather than simply repeating paragraph content"
   
   resolution_strategies:
     optimal_placement:

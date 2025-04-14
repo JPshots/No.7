@@ -1,1 +1,0 @@
-No complete review found in the previous phases.
