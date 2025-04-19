@@ -56,45 +56,80 @@ class Session {
   /**
    * Start or resume the session
    */
-  async start() {
-    console.log(chalk.cyan(`\nSession: ${this.productName} (${this.phase.toUpperCase()} Phase)`));
+  // Add robust error recovery to session.start()
+async start() {
+  console.log(chalk.cyan(`\nSession: ${this.productName} (${this.phase.toUpperCase()} Phase)`));
+  
+  try {
+    // Ensure session directory exists
+    await fs.mkdir(SESSION_DIR, { recursive: true });
     
-    try {
-      // Ensure session directory exists
-      await fs.mkdir(SESSION_DIR, { recursive: true });
-      
-      // Process based on current phase
-      switch (this.phase) {
-        case PHASES.INTAKE:
-          await this.runIntakePhase();
-          break;
-        case PHASES.DRAFT:
-          await this.runDraftPhase();
-          break;
-        case PHASES.REFINE:
-          await this.runRefinePhase();
-          break;
-        case PHASES.QUALITY:
-          await this.runQualityPhase();
-          break;
-        default:
-          throw new Error(`Unknown phase: ${this.phase}`);
+    // Process based on current phase
+    switch (this.phase) {
+      case PHASES.INTAKE:
+        await this.runIntakePhase();
+        break;
+      case PHASES.DRAFT:
+        await this.runDraftPhase();
+        break;
+      case PHASES.REFINE:
+        await this.runRefinePhase();
+        break;
+      case PHASES.QUALITY:
+        await this.runQualityPhase();
+        break;
+      default:
+        throw new Error(`Unknown phase: ${this.phase}`);
+    }
+    
+    // Save session at the end of start
+    await this.save();
+  } catch (error) {
+    console.error(chalk.red('Session error:'), error.message);
+    if (global.VERBOSE_MODE) {
+      console.error(error.stack);
+    }
+    
+    // Improved error recovery options
+    const { recoveryAction } = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'recoveryAction',
+        message: 'An error occurred. How would you like to proceed?',
+        choices: [
+          { name: 'Save session and try to continue', value: 'continue' },
+          { name: 'Save session and exit', value: 'exit' },
+          { name: 'Try to restart the current phase', value: 'restart' },
+          { name: 'Debug: Print detailed error information', value: 'debug' }
+        ]
       }
-      
-      // Save session at the end of start
-      await this.save();
-    } catch (error) {
-      console.error(chalk.red('Session error:'), error.message);
-      if (global.VERBOSE_MODE) {
-        console.error(error.stack);
-      }
-      
-      // Save session on error to prevent data loss
-      await this.save();
-      
-      throw error;
+    ]);
+    
+    // Handle recovery option
+    switch (recoveryAction) {
+      case 'continue':
+        console.log(chalk.yellow('Attempting to continue after error...'));
+        await this.save();
+        return;
+      case 'exit':
+        console.log(chalk.yellow('Saving session and exiting...'));
+        await this.save();
+        process.exit(1);
+      case 'restart':
+        console.log(chalk.yellow(`Restarting ${this.phase} phase...`));
+        await this.save();
+        await this.start(); // Recursive call, be careful!
+        return;
+      case 'debug':
+        console.log(chalk.red('===== DETAILED ERROR INFORMATION ====='));
+        console.error(error);
+        console.log(chalk.red('========================================'));
+        console.log(chalk.yellow('Saving session and exiting...'));
+        await this.save();
+        process.exit(1);
     }
   }
+}
 
   /**
    * Run the Intake & Questioning phase
@@ -147,45 +182,77 @@ class Session {
           content: description
         });
       }
-      // In the runIntakePhase method after creating the first message with user description and images
-
-// Add intake optimization reminder for first Claude response
-if (this.messages.length <= 1) {
-  console.log(chalk.gray("Adding intake optimization instructions..."));
-  
-  // Add an optimization message before the first Claude response
-  const optimizationMessage = {
-    role: 'user',
-    content: `
+      
+      // Add intake optimization reminder for first Claude response
+      if (this.messages.length <= 1) {
+        console.log(chalk.gray("Adding intake optimization instructions..."));
+        
+        // Add an optimization message before the first Claude response
+        const optimizationMessage = {
+          role: 'user',
+          content: `
 IMPORTANT GUIDELINE: Limit your first response to 5-10 high-value questions (12 maximum).
 
-Your first response should include:
-1. A thoughtful analysis of the initial product description
-2. A prioritized set of questions organized into clear categories:
-   
+
    ESSENTIAL QUESTIONS (3-5 questions about core experience):
    • Primary usage experience and standout features
    • Major pros and cons from user perspective
    • Value assessment and overall satisfaction
    
-   ADDITIONAL QUESTIONS (2-7 questions for deeper insights):
+   focused & contextual questions (2-7 questions for deeper insights):
    • Comparisons to alternatives
    • Specific usage scenarios or technical details
    • Product-specific areas of interest based on category
 
 Keep the total question count between 5-10 (not exceeding 12), prioritizing the most valuable questions.
 
-After receiving the user's response, only follow up if there are genuine information gaps or valuable new insights to explore.
-`
-  };
-  
-  // Add the optimization message to the messages array
-  this.messages.push(optimizationMessage);
-}
+After receiving the user's response, ONLY ask additional questions if:
+1. The user's response revealed significant new information that needs exploration
+2. The user mentioned something unexpected that requires clarification
+3. There's a critical information gap that wasn't apparent in the initial description
 
-// Then proceed with sending the messages to Claude
-console.log(chalk.yellow("\nProcessing your input..."));
-const response = await this.claude.processMessages(this.messages, systemPrompt);
+Do not arbitrarily split your questions across multiple interactions. If you have all the essential information after the user responds, move to the draft phase.
+
+`
+        };
+        
+        // Add the optimization message to the messages array
+        this.messages.push(optimizationMessage);
+      }
+
+      // Then proceed with sending the messages to Claude
+      console.log(chalk.yellow("\nProcessing your input..."));
+      let response = await this.claude.processMessages(this.messages, systemPrompt);
+      
+      if (this.messages.length > 2) {
+        // Check if this is just follow-up questions without real new insights
+        const isJustFollowupQuestions = 
+          response.content.includes("follow-up") &&
+          !response.content.includes("Based on your response about") &&
+          !response.content.includes("I notice you mentioned");
+        
+        if (isJustFollowupQuestions) {
+          console.log(chalk.yellow("Detected unnecessary follow-up questions. Modifying response..."));
+          
+          // Add a message to guide Claude away from unnecessary follow-ups
+          this.messages.push({
+            role: 'user',
+            content: `
+Please consolidate your remaining questions into a single response rather than splitting them across multiple interactions. Only ask truly new questions that emerged from my previous answers, not questions you could have asked initially. If you have no genuinely new questions based on my responses, please indicate we can move to the draft phase once I've answered these questions.
+            `
+          });
+          
+          // Get a new response with the guidance
+          response = await this.claude.processMessages(this.messages, systemPrompt);
+        }
+      }
+      
+      // Add Claude's response to messages
+      this.messages.push({
+        role: 'assistant',
+        content: response.content
+      });
+      
       // Save session after initial setup
       await this.save();
     }
@@ -196,7 +263,30 @@ const response = await this.claude.processMessages(this.messages, systemPrompt);
     while (!phaseComplete) {
       // Send current messages to Claude
       console.log(chalk.yellow("\nProcessing your input..."));
-      const response = await this.claude.processMessages(this.messages, systemPrompt);
+      let response = await this.claude.processMessages(this.messages, systemPrompt);
+
+      if (this.messages.length > 2) {
+        // Check if this is just follow-up questions without real new insights
+        const isJustFollowupQuestions = 
+          response.content.includes("follow-up") &&
+          !response.content.includes("Based on your response about") &&
+          !response.content.includes("I notice you mentioned");
+        
+        if (isJustFollowupQuestions) {
+          console.log(chalk.yellow("Detected unnecessary follow-up questions. Modifying response..."));
+          
+          // Add a message to guide Claude away from unnecessary follow-ups
+          this.messages.push({
+            role: 'user',
+            content: `
+Please consolidate your remaining questions into a single response rather than splitting them across multiple interactions. Only ask truly new questions that emerged from my previous answers, not questions you could have asked initially. If you have no genuinely new questions based on my responses, please indicate we can move to the draft phase once I've answered these questions.
+            `
+          });
+          
+          // Get a new response with the guidance
+          response = await this.claude.processMessages(this.messages, systemPrompt);
+        }
+      }
       
       // Add Claude's response to messages
       this.messages.push({
@@ -259,27 +349,7 @@ Please create a well-balanced review that properly integrates both sources of in
           }
         ]);
         
-// Handle special commands
-        if (userResponse.trim().toLowerCase() === 'exit') {
-          console.log(chalk.yellow('\nSaving session and exiting...'));
-          await this.save();
-          process.exit(0);
-        } else if (userResponse.trim().toLowerCase() === 'save') {
-          await this.save();
-          console.log(chalk.green('\nSession saved successfully!'));
-          continue;
-        }
-// Handle special commands
-        if (userResponse.trim().toLowerCase() === 'exit') {
-          console.log(chalk.yellow('\nSaving session and exiting...'));
-          await this.save();
-          process.exit(0);
-        } else if (userResponse.trim().toLowerCase() === 'save') {
-          await this.save();
-          console.log(chalk.green('\nSession saved successfully!'));
-          continue;
-        }
-
+        // Handle special commands
         if (userResponse.trim().toLowerCase() === 'exit') {
           console.log(chalk.yellow('\nSaving session and exiting...'));
           await this.save();
@@ -294,6 +364,7 @@ Please create a well-balanced review that properly integrates both sources of in
           await this.showFrameworkSection(command);
           continue;
         }
+        
         // Add user response to messages
         this.messages.push({
           role: 'user',
@@ -452,6 +523,10 @@ Please create a well-balanced review that properly integrates both sources of in
    * Save the session to a file
    */
   async save() {
+    if (!this.id) {
+      console.error(chalk.red('Error: Cannot save session - missing session ID'));
+      throw new Error('Invalid session: missing ID');
+    }
     try {
       this.updatedAt = new Date().toISOString();
       
@@ -501,181 +576,254 @@ Please create a well-balanced review that properly integrates both sources of in
       
       // Verify file was written
       try {
-        await fs.access(sessionPath);
+        // Verify file exists and is readable
+        await fs.access(sessionPath, fs.constants.R_OK | fs.constants.W_OK);
         const stats = await fs.stat(sessionPath);
-        console.log(chalk.green(`Session saved successfully: ${sessionPath} (${stats.size} bytes)`));
-        
-        // List directory contents to verify
-        const files = await fs.readdir(absoluteSessionDir);
-        console.log(chalk.gray(`Directory contents (${files.length} files):`));
-        files.forEach(file => console.log(chalk.gray(`- ${file}`)));
-        
-        return sessionPath;
-      } catch (verifyError) {
-        console.error(chalk.red(`Failed to verify saved file:`), verifyError.message);
-        throw verifyError;
+        if (stats.size === 0) {
+          throw new Error('Empty file after save');
+        }
+        console.log(chalk.green(`Session saved successfully: ${this.id} (${stats.size} bytes)`));
+      } catch (error) {
+        console.error(chalk.red(`Failed to verify saved file: ${error.message}`));
+        throw new Error(`Session save verification failed: ${error.message}`);
       }
     } catch (error) {
-      console.error(chalk.red(`Failed to save session:`), error.message);
-      if (error.code === 'ENOENT') {
-        console.error(chalk.yellow(`Directory does not exist. Tried: ${SESSION_DIR}`));
-      } else if (error.code === 'EACCES') {
-        console.error(chalk.yellow(`Permission denied when writing to ${SESSION_DIR}`));
-      }
+      console.error(chalk.red('Error saving session:'), error.message);
       throw error;
     }
   }
-/**
- * Run the Quality Control phase
- */
-async runQualityPhase() {
-  try {
-    console.log(chalk.cyan("\n=== QUALITY CONTROL PHASE ==="));
-    console.log(chalk.yellow("In this phase, I'll finalize the review and ensure it meets all quality standards."));
-    console.log(chalk.yellow("TIP: Use 'show-framework phase.section_name' to view framework sections"));
-    console.log(chalk.yellow("Example: 'show-framework draft.humor_framework'"));
 
-    // Load last completed review draft from previous phase
-    const previousPhaseData = this.phaseData[PHASES.REFINE] || this.phaseData[PHASES.DRAFT];
-    let reviewContent = '';
-    
-    if (previousPhaseData && previousPhaseData.reviewContent) {
-      reviewContent = previousPhaseData.reviewContent;
-    } else {
-      // Extract the review from the previous messages if not stored directly
-      const messages = this.messages.filter(msg => msg.role === 'assistant');
-      if (messages.length > 0) {
-        // Get the most recent assistant message
-        const lastMessage = messages[messages.length - 1];
-        reviewContent = this.extractReviewContent(lastMessage.content);
-      }
+  /**
+   * Run the Quality Control phase
+   */
+  async runQualityPhase() {
+    // Add this to the beginning of runQualityPhase()
+if (!this.phaseData[PHASES.REFINE].complete && !this.phaseData[PHASES.DRAFT].complete) {
+  console.log(chalk.yellow("\nNeither Draft nor Refinement phase is marked as complete."));
+  console.log(chalk.yellow("Please complete at least one of these phases before quality control."));
+  
+  // Ask user which phase to return to
+  const { returnPhase } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'returnPhase',
+      message: 'Which phase would you like to return to?',
+      choices: [
+        { name: 'Draft Creation', value: PHASES.DRAFT },
+        { name: 'Refinement', value: PHASES.REFINE }
+      ]
     }
-    
-    if (!reviewContent) {
-      console.log(chalk.yellow("\nNo review content found in previous phases. Please complete the Draft phase first."));
-      console.log(chalk.yellow("You can use 'jump draft' to go back to the draft phase."));
-      return;
-      
-    }
-    
-    console.log(chalk.green("\nFinal Review:"));
-    console.log(reviewContent);
-    
-    // Add a pause to let the user read the review
-    const { continueProcess } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'continueProcess',
-        message: 'Review displayed above. Continue to save the review?',
-        default: true
-      }
-    ]);
-    
-    if (!continueProcess) {
-      console.log(chalk.yellow("Process paused. You can resume later."));
-      return;
-    }
-    
-    // Prepare directory for saving
-    const reviewsDir = path.join(process.cwd(), 'reviews');
-    try {
-      await fs.mkdir(reviewsDir, { recursive: true });
-    } catch (err) {
-      console.error(chalk.yellow(`Warning: Could not create directory ${reviewsDir}`));
-    }
-    
-    // Save the review to a file
-    const sanitizedName = this.productName.replace(/[^a-z0-9]/gi, '-').toLowerCase();
-    const date = new Date().toISOString().split('T')[0];
-    const fileName = `${sanitizedName}-${date}.md`;
-    const filePath = path.join(reviewsDir, fileName);
-    
-    try {
-      await fs.writeFile(filePath, reviewContent);
-      console.log(chalk.green(`\nReview successfully saved to: ${filePath}`));
-    } catch (error) {
-      console.error(chalk.red(`Error saving review: ${error.message}`));
-    }
-    
-    // Ask if user wants to see quality assessment
-    const { showQualityAssessment } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'showQualityAssessment',
-        message: 'Would you like to generate a quality assessment for this review?',
-        default: true
-      }
-    ]);
-    
-    if (showQualityAssessment) {
-      // Load quality framework
-      const framework = await this.frameworkLoader.getPhaseFramework(PHASES.QUALITY);
-      const systemPrompt = await this.frameworkLoader.createDynamicPrompt(PHASES.QUALITY, {
-        productType: this.productType,
-        keywords: this.keywords
-      });
-      
-      console.log(chalk.yellow("\nGenerating quality assessment..."));
-      
-      // Create a message asking for assessment
-      this.messages.push({
-        role: 'user',
-        content: "Please provide a quality assessment of this review, including scores for Testing Depth, Information Quality, Authenticity, Writing Quality, and Helpfulness. Give each category a score out of 20 and provide a total score out of 100."
-      });
-      
-      // Get assessment
-      const response = await this.claude.processMessages(this.messages, systemPrompt);
-      
-      // Add to messages
-      this.messages.push({
-        role: 'assistant',
-        content: response.content
-      });
-      
-      console.log(chalk.green("\nQuality Assessment:"));
-      console.log(response.content);
-      
-      // Save assessment
-      this.phaseData[PHASES.QUALITY].data.qualityAssessment = response.content;
-    }
-    
-    // Mark the phase as complete
-    this.phaseData[PHASES.QUALITY] = {
-      complete: true,
-      data: {
-        finalReview: reviewContent,
-        completedAt: new Date().toISOString()
-      }
-    };
-    
-    await this.save();
-    
-    // Final pause
-    const { exitProcess } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'exitProcess',
-        message: 'Review process completed successfully! Exit now?',
-        default: true
-      }
-    ]);
-    
-    if (exitProcess) {
-      console.log(chalk.cyan("\nThank you for using the Amazon Review Framework!"));
-      process.exit(0);
-    } else {
-      console.log(chalk.yellow("Returning to session..."));
-    }
-    
-    return true;
-  } catch (error) {
-    console.error(chalk.red(`Error in Quality Control phase: ${error.message}`));
-    if (global.VERBOSE_MODE && error.stack) {
-      console.error(error.stack);
-    }
-    return false;
+  ]);
+  
+  this.phase = returnPhase;
+  if (returnPhase === PHASES.DRAFT) {
+    return this.runDraftPhase();
+  } else {
+    return this.runRefinePhase();
   }
 }
+    try {
+      console.log(chalk.cyan("\n=== QUALITY CONTROL PHASE ==="));
+      console.log(chalk.yellow("In this phase, I'll finalize the review and ensure it meets all quality standards."));
+      console.log(chalk.yellow("TIP: Use 'show-framework phase.section_name' to view framework sections"));
+      console.log(chalk.yellow("Example: 'show-framework draft.humor_framework'"));
+
+      // Load last completed review draft from previous phase
+      const previousPhaseData = this.phaseData[PHASES.REFINE] || this.phaseData[PHASES.DRAFT];
+      let reviewContent = '';
+      
+      if (previousPhaseData && previousPhaseData.reviewContent) {
+        reviewContent = previousPhaseData.reviewContent;
+      } else {
+        // Extract the review from the previous messages if not stored directly
+        const messages = this.messages.filter(msg => msg.role === 'assistant');
+        if (messages.length > 0) {
+          // Get the most recent assistant message
+          const lastMessage = messages[messages.length - 1];
+          reviewContent = this.extractReviewContent(lastMessage.content);
+        }
+      }
+      
+      if (!reviewContent) {
+        console.log(chalk.yellow("\nNo review content found in previous phases. Please complete the Draft phase first."));
+        console.log(chalk.yellow("You can use 'jump draft' to go back to the draft phase."));
+        return;
+        
+      }
+      
+      console.log(chalk.green("\nFinal Review:"));
+      console.log(reviewContent);
+      
+      // Add a pause to let the user read the review
+      const { continueProcess } = await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'continueProcess',
+          message: 'Review displayed above. Continue to save the review?',
+          default: true
+        }
+      ]);
+      
+      if (!continueProcess) {
+        console.log(chalk.yellow("Process paused. You can resume later."));
+        return;
+      }
+      
+      // Prepare directory for saving
+      const reviewsDir = path.join(process.cwd(), 'reviews');
+      try {
+        await fs.mkdir(reviewsDir, { recursive: true });
+      } catch (err) {
+        console.error(chalk.yellow(`Warning: Could not create directory ${reviewsDir}`));
+      }
+      
+      // Save the review to a file
+      const sanitizedName = this.productName.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+      const date = new Date().toISOString().split('T')[0];
+      const fileName = `${sanitizedName}-${date}.md`;
+      const filePath = path.join(reviewsDir, fileName);
+      
+      try {
+        await fs.writeFile(filePath, reviewContent);
+        console.log(chalk.green(`\nReview successfully saved to: ${filePath}`));
+      } catch (error) {
+        console.error(chalk.red(`Error saving review: ${error.message}`));
+      }
+      
+      // Ask if user wants to see quality assessment
+      const { showQualityAssessment } = await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'showQualityAssessment',
+          message: 'Would you like to generate a quality assessment for this review?',
+          default: true
+        }
+      ]);
+      
+      if (showQualityAssessment) {
+        // Load quality framework
+        const framework = await this.frameworkLoader.getPhaseFramework(PHASES.QUALITY);
+        const systemPrompt = await this.frameworkLoader.createDynamicPrompt(PHASES.QUALITY, {
+          productType: this.productType,
+          keywords: this.keywords
+        });
+        
+        console.log(chalk.yellow("\nGenerating quality assessment..."));
+        
+        // Create a message asking for assessment
+        this.messages.push({
+          role: 'user',
+          content: "Please provide a quality assessment of this review, including scores for Testing Depth, Information Quality, Authenticity, Writing Quality, and Helpfulness. Give each category a score out of 20 and provide a total score out of 100."
+        });
+        
+        // Get assessment
+// After getting Claude's response for quality assessment
+console.log(chalk.green("\nQuality Assessment:"));
+console.log(response.content);
+
+// Save assessment to session data
+this.phaseData[PHASES.QUALITY].data.qualityAssessment = response.content;
+
+// Add an explicit pause to review the quality assessment
+const { reviewAssessment } = await inquirer.prompt([
+  {
+    type: 'confirm',
+    name: 'reviewAssessment',
+    message: 'Would you like to make additional refinements based on this assessment?',
+    default: false
+  }
+]);
+
+if (reviewAssessment) {
+  console.log(chalk.yellow("\nMoving back to refinement phase for final adjustments..."));
+  this.phase = PHASES.REFINE;
+  
+  // Add a message to indicate this is a quality-based refinement
+  this.messages.push({
+    role: 'user',
+    content: "I'd like to make some final refinements based on the quality assessment. Please help me implement these improvements while maintaining the review's core structure and personality."
+  });
+  
+  await this.save();
+  return this.runRefinePhase();
+}
+        // Add to messages
+        this.messages.push({
+          role: 'assistant',
+          content: response.content
+        });
+        
+        console.log(chalk.green("\nQuality Assessment:"));
+        console.log(response.content);
+        
+        // Save assessment
+        this.phaseData[PHASES.QUALITY].data.qualityAssessment = response.content;
+      }
+      
+      // Mark the phase as complete
+      this.phaseData[PHASES.QUALITY] = {
+        complete: true,
+        data: {
+          finalReview: reviewContent,
+          completedAt: new Date().toISOString()
+        }
+      };
+      
+      await this.save();
+      // Add this after the quality assessment section in runQualityPhase()
+// Inside the existing try/catch block, before the finally block
+
+// Format the final review for display with better spacing
+const formattedReview = reviewContent.split('\n').join('\n');
+console.log(chalk.cyan("\n=== FINAL REVIEW ===\n"));
+console.log(formattedReview);
+
+// Save the final review with additional metadata
+const reviewMetadata = {
+  productName: this.productName,
+  productType: this.productType || 'general',
+  createdAt: this.createdAt,
+  completedAt: new Date().toISOString(),
+  keywords: this.keywords || [],
+  qualityScore: extractQualityScore(this.phaseData[PHASES.QUALITY].data.qualityAssessment || ''),
+  finalReviewPath: filePath
+};
+
+// Save metadata alongside review
+const metadataPath = path.join(reviewsDir, `${sanitizedName}-${date}.json`);
+try {
+  await fs.writeFile(metadataPath, JSON.stringify(reviewMetadata, null, 2));
+  console.log(chalk.green(`Review metadata saved to: ${metadataPath}`));
+} catch (metadataError) {
+  console.error(chalk.yellow(`Warning: Could not save review metadata: ${metadataError.message}`));
+}
+      // Final pause
+      const { exitProcess } = await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'exitProcess',
+          message: 'Review process completed successfully! Exit now?',
+          default: true
+        }
+      ]);
+      
+      if (exitProcess) {
+        console.log(chalk.cyan("\nThank you for using the Amazon Review Framework!"));
+        process.exit(0);
+      } else {
+        console.log(chalk.yellow("Returning to session..."));
+      }
+      
+      return true;
+    } catch (error) {
+      console.error(chalk.red(`Error in Quality Control phase: ${error.message}`));
+      if (global.VERBOSE_MODE && error.stack) {
+        console.error(error.stack);
+      }
+      return false;
+    }
+  }
+
   /**
    * Convert session to JSON for storage
    */
@@ -844,66 +992,105 @@ async runQualityPhase() {
       return [];
     }
   }
-static async recoverMissingSession(productName) {
-  console.log(chalk.yellow(`Attempting to recover session for: ${productName}`));
-  
-  try {
-    const absoluteSessionDir = path.resolve(SESSION_DIR);
-    const files = await fs.readdir(absoluteSessionDir);
-    const sessionFiles = files.filter(file => path.extname(file) === '.json');
+
+  static async recoverMissingSession(productName) {
+    console.log(chalk.yellow(`Attempting to recover session for: ${productName}`));
     
-    // Search in all session files
-    for (const file of sessionFiles) {
-      try {
-        const sessionPath = path.join(absoluteSessionDir, file);
-        const sessionData = JSON.parse(await fs.readFile(sessionPath, 'utf8'));
-        
-        // Check if this session matches the product name (case insensitive)
-        if (sessionData.productName && 
-            sessionData.productName.toLowerCase().includes(productName.toLowerCase())) {
-          console.log(chalk.green(`Found matching session: ${sessionData.id} - ${sessionData.productName}`));
-          return sessionData;
+    try {
+      const absoluteSessionDir = path.resolve(SESSION_DIR);
+      const files = await fs.readdir(absoluteSessionDir);
+      const sessionFiles = files.filter(file => path.extname(file) === '.json');
+      
+      // Search in all session files
+      for (const file of sessionFiles) {
+        try {
+          const sessionPath = path.join(absoluteSessionDir, file);
+          const sessionData = JSON.parse(await fs.readFile(sessionPath, 'utf8'));
+          
+          // Check if this session matches the product name (case insensitive)
+          if (sessionData.productName && 
+              sessionData.productName.toLowerCase().includes(productName.toLowerCase())) {
+            console.log(chalk.green(`Found matching session: ${sessionData.id} - ${sessionData.productName}`));
+            return sessionData;
+          }
+        } catch (error) {
+          continue; // Skip problematic files
         }
-      } catch (error) {
-        continue; // Skip problematic files
       }
+      
+      console.log(chalk.yellow(`No matching session found for product: ${productName}`));
+      return null;
+    } catch (error) {
+      console.error(chalk.red(`Recovery error:`), error.message);
+      return null;
     }
-    
-    console.log(chalk.yellow(`No matching session found for product: ${productName}`));
-    return null;
-  } catch (error) {
-    console.error(chalk.red(`Recovery error:`), error.message);
-    return null;
   }
-}
+
   /**
-   * Extract review content from Claude's response
+   * Extract review content from Claude's response more accurately
    * @param {string} content - Claude's response content
    * @returns {string} Extracted review content
    */
   extractReviewContent(content) {
-    // Look for markdown code blocks which might contain the review
+    // First look for content between markdown code blocks
     const markdownMatch = content.match(/```(?:markdown)?\s*([\s\S]+?)\s*```/);
     if (markdownMatch) return markdownMatch[1].trim();
-
-    // If no markdown block, look for sections that might be the review
-    const sections = content.split(/\n{2,}/);
-
-    // Find the longest section that looks like a review
-    const reviewSection = sections.reduce((longest, section) => {
-      if (
-        section.length > longest.length &&
-        (section.includes('PROS') ||
-          section.includes('CONS') ||
-          section.includes('VERDICT'))
-      ) {
-        return section;
+    
+    // Next, look for sections that appear to be a review with headers
+    const headerPattern = /(^|\n)## .+/g;
+    if (content.match(headerPattern)) {
+      // Find where the review starts (first heading)
+      const firstHeaderMatch = content.match(/(^|\n)(# |## ).+/);
+      if (firstHeaderMatch) {
+        const startIndex = firstHeaderMatch.index;
+        // Extract from first heading to end (or before any "In conclusion" type text)
+        const endMarkers = [
+          "\n\nI hope this review",
+          "\n\nLet me know if",
+          "\n\nIs there anything"
+        ];
+        
+        let endIndex = content.length;
+        for (const marker of endMarkers) {
+          const markerIndex = content.indexOf(marker);
+          if (markerIndex !== -1 && markerIndex < endIndex) {
+            endIndex = markerIndex;
+          }
+        }
+        
+        return content.substring(startIndex, endIndex).trim();
+      }
+    }
+    
+    // Look for sections that might be the review based on keywords
+    const reviewKeywords = ['PROS', 'CONS', 'VERDICT', 'REVIEW', 'RATING'];
+    const paragraphs = content.split(/\n{2,}/);
+    
+    // Find the longest section containing review keywords
+    const reviewSection = paragraphs.reduce((longest, paragraph) => {
+      const hasKeywords = reviewKeywords.some(keyword => 
+        paragraph.toUpperCase().includes(keyword)
+      );
+      
+      if (hasKeywords && paragraph.length > longest.length) {
+        return paragraph;
       }
       return longest;
     }, '');
-
-    if (reviewSection) return reviewSection;
-
+    
+    if (reviewSection && reviewSection.length > 100) {
+      return reviewSection;
+    }
+    
+    // If all else fails, look for the longest paragraph
+    const longestParagraph = paragraphs.reduce((longest, paragraph) => 
+      paragraph.length > longest.length ? paragraph : longest, '');
+    
+    // If the longest paragraph is substantial, it might be part of the review
+    if (longestParagraph && longestParagraph.length > 200) {
+      return longestParagraph;
+    }
+    
     // If no clear review section, return the whole content
     return content;
   }
@@ -957,6 +1144,7 @@ Session.prototype.jumpToPhase = async function(targetPhase) {
   await this.start();
   return true;
 }
+
 /**
  * Access framework section and display it
  * @param {string} command - Command in format "phase.section_path"
@@ -992,12 +1180,42 @@ Session.prototype.showFrameworkSection = async function(command) {
     return false;
   }
 };
-
 /**
- * Extract review content from Claude's response
- * @param {string} content - Claude's response content
- * @returns {string} Extracted review content
+ * Extract quality score from assessment text
+ * @param {string} assessmentText - Quality assessment text
+ * @returns {Object|null} Extracted scores or null if not found
  */
+function extractQualityScore(assessmentText) {
+  const scores = {};
+  
+  // Look for overall score
+  const totalScoreMatch = assessmentText.match(/Total Score:\s*(\d+)\/100/i) || 
+                           assessmentText.match(/Overall.+?(\d+)\/100/i);
+  
+  if (totalScoreMatch) {
+    scores.total = parseInt(totalScoreMatch[1]);
+  }
+  
+  // Look for category scores
+  const categories = ['Testing Depth', 'Information Quality', 'Authenticity', 
+                     'Writing Quality', 'Helpfulness'];
+  
+  categories.forEach(category => {
+    const categoryRegex = new RegExp(`${category}\\D+(\\d+)\/20`, 'i');
+    const match = assessmentText.match(categoryRegex);
+    
+    if (match) {
+      // Convert category name to camelCase for the object
+      const key = category.replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+                          .replace(/\s/g, '')
+                          .replace(/^(.)/, function($1) { return $1.toLowerCase(); });
+      
+      scores[key] = parseInt(match[1]);
+    }
+  });
+  
+  // Only return if we found something
+  return Object.keys(scores).length > 0 ? scores : null;
+}
 
-// Remove this redundant block as the function is already defined earlier in the file.
 module.exports = { Session };
